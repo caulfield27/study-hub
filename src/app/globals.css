@@ -1,0 +1,38 @@
+@font-face {
+    font-family: "Inter";
+    src: url("./fonts/Inter_18pt-Regular.woff2") format("woff2");
+    font-display: swap;
+
+}
+
+:root {
+    --bgColor: white;
+    --textColor: black;
+    --primaryMainColor: #F2613F;
+    --primaryAccentColor: #fdc830;
+    --mentorColor: rgb(143, 142, 142);
+    --libraryHeaderBg:gainsboro;
+    --booksCardBg: rgb(48, 48, 48);
+    --spanText: white;
+    --resultColor: #F2613F;
+    --sidebar-width: 250px
+}
+
+
+*{
+    box-sizing: border-box;
+}
+
+body,html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+}
+
+#root {
+    width: 100%;
+    min-height: 100vh;
+}

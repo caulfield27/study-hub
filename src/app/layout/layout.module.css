@@ -1,0 +1,12 @@
+.pages_container{
+    width: 100%;
+    flex-grow: 1;
+    max-width: calc(100% - var(--sidebar-width));
+    padding: 30px 50px;
+}
+
+.app_container{
+    width: 100%;
+    display: flex;
+    min-height: 100vh;
+}
