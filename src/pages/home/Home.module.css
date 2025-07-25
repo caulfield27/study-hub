@@ -28,12 +28,11 @@
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 1s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .header_text button:hover {
-  scale: 1.04;
-  background: orangered;
+  background: #df4f2f;
 }
 
 @media screen and (max-width: 1200px) {

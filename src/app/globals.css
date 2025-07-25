@@ -12,10 +12,10 @@
     --primaryAccentColor: #fdc830;
     --mentorColor: rgb(143, 142, 142);
     --libraryHeaderBg:gainsboro;
-    --booksCardBg: rgb(48, 48, 48);
-    --spanText: white;
+    --booksCardBg: whiteSmoke;
+    --spanText: #383838;
     --resultColor: #F2613F;
-    --sidebar-width: 250px
+    --sidebar-width: 270px;
 }
 
 

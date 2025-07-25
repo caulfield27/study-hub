@@ -1,0 +1,157 @@
+.modal_content {
+  display: flex;
+  flex-direction: row;
+  gap: 35px;
+  width: fit-content !important;
+  height: auto !important;
+}
+
+.left_wrap img {
+  width: 200px;
+}
+
+.left_wrap h2 {
+  color: grey;
+}
+
+.right_wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.modal_textWrap {
+  display: flex;
+  flex-direction: row;
+  gap: 7px;
+}
+
+.head {
+  font-family: "roboto";
+  font-weight: bold;
+}
+.second {
+  font-family: "roboto";
+  font-weight: 400;
+  color: grey;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.rating_button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal_button {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.modal_button button {
+  margin-right: 7px;
+  border: none;
+  outline: none;
+  position: relative;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.favorite {
+  color: rgb(174, 168, 168);
+}
+
+.favoriteActive {
+  color: red;
+}
+
+.favoriteText {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  display: none;
+}
+
+.modal_button button:hover .favoriteText {
+  display: block;
+}
+
+.description {
+  color: grey;
+  font-weight: 400;
+  overflow-y: scroll;
+  height: 220px;
+}
+
+.description::-webkit-scrollbar {
+  width: 5px;
+}
+.description::-webkit-scrollbar-track {
+  background: gainsboro;
+  border-radius: 5px;
+}
+
+.description::-webkit-scrollbar-thumb {
+  background: orangered;
+  border-radius: 5px;
+  width: 5px;
+}
+
+/*MEDIA REQUESTS */
+
+@media only screen and (max-width: 768px) {
+  .left_wrap img {
+    width: 100%;
+  }
+
+  .right_wrap {
+    margin-top: 20px;
+  }
+
+  .head,
+  .second {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .modal_content {
+    flex-direction: column;
+    width: 80% !important;
+    max-width: 400px !important;
+    height: auto !important;
+  }
+
+  .left_wrap img {
+    width: 100%;
+  }
+
+  .right_wrap {
+    margin-top: 20px;
+  }
+
+  .head,
+  .second {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .modal_content {
+    max-width: 600px !important;
+  }
+}
+
+@media screen and (max-width: 775px) {
+  .modal_content {
+    max-height: fit-content !important;
+  }
+}
