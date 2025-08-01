@@ -3,8 +3,6 @@ export interface IQuestion{
     question: string,
     variants: string[],
     correct:string,
-    selected: null | string,
-    isCorrect: boolean
 }
 
 export interface IQuiz{
