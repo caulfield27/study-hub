@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useSwr from "swr";
 import { apiRoutes } from "../../shared/api/api.routes";
 import { sendRequest } from "../../shared/api/api.handlers";
@@ -6,11 +6,14 @@ import type { IQuiz } from "../quizes/types/types";
 import { useState, type ChangeEvent } from "react";
 import { Button, FormControlLabel, Radio, RadioGroup, Rating } from "@mui/material";
 import { PageLoader } from "../../shared/ui/Loader/PageLoader";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { darcula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import styles from "./Quiz.module.css";
 // import { ProgressBar } from "./ui/ProgressBar/ProgressBar";
 import { Timer } from "./ui/Timer/Timer";
 import Swal from "sweetalert2";
 import { Result } from "./ui/Result/Result";
+import { splitQuestion } from "../../shared/utils/utils";
 
 function Quiz() {
   // api
@@ -22,6 +25,7 @@ function Quiz() {
   const { data: quiz, isLoading } = useSwr<IQuiz>(swrKey, sendRequest);
 
   // locale states
+  const navigate = useNavigate();
   const [questionIndex, setQuestionIndex] = useState<number>(0);
   const [isFinished, setIsFinished] = useState(false);
   const [userSelects, setUserSelects] = useState<string[]>([]);
@@ -29,8 +33,10 @@ function Quiz() {
     setQuestionIndex(0);
     setIsFinished(false);
     setUserSelects([]);
+    setResult(0);
   };
   const [result, setResult] = useState(0);
+  const [questionText, formattedCode] = splitQuestion(quiz?.questions?.[questionIndex]?.question);
 
   // event handlers
   function handleSelectChange(event: ChangeEvent<HTMLInputElement>) {
@@ -63,8 +69,8 @@ function Quiz() {
 
   // render ui
   if (isFinished) {
-    return <Result result={result} quiz={quiz!} onReset={reset} userSelects={userSelects} />;
-  };
+    return <Result result={result} quiz={quiz!} onReset={()=> navigate("/quizes")} userSelects={userSelects} />;
+  }
 
   return isLoading ? (
     <PageLoader />
@@ -84,15 +90,20 @@ function Quiz() {
       <div className={styles.quiz_content}>
         <div className={styles.quiz_header}>
           <div className={styles.question}>
-            <span className={styles.q}>Question:</span>
+            <span className={styles.q}>Вопрос:</span>
             <span className={styles.id}>{quiz.questions[questionIndex].id}</span>
             <span className={styles.length}> | {quiz.questions.length}</span>
           </div>
-          <Timer seconds={0} mintes={1} onTimeOver={handleTimeOver} />
+          <Timer seconds={0} mintes={3} onTimeOver={handleTimeOver} />
           {/* {<ProgressBar value={0} />} */}
         </div>
-        <div>
-          <p>{quiz.questions[questionIndex].question}</p>
+        <div className={styles.question_wrapper}>
+          <p>{questionText}</p>
+          {formattedCode ? (
+            <SyntaxHighlighter language={quiz.lang ?? ""} showLineNumbers style={darcula}>
+              {formattedCode}
+            </SyntaxHighlighter>
+          ) : null}
         </div>
         <div className={styles.quiz_body}>
           <RadioGroup

@@ -8,6 +8,7 @@ import { DataLoader } from "../../shared/ui/DataLoader/DataLoader";
 import type { IQuiz } from "./types/types";
 import AvTimerIcon from "@mui/icons-material/AvTimer";
 import { useNavigate } from "react-router";
+// import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
 // import { quizes } from '@/store/quizes/quizUtils/questions';
 // import { IGlobalQuestions } from '@/store/quizes/quizUtils/quizesTypes';
 // import { useQuizes } from '@/store/quizes/quizes';
@@ -51,7 +52,7 @@ function Quizes() {
               <div className={styles.quiz_card} key={quiz.id}>
                 <span className={styles.quiz_name}>{quiz.name}</span>
                 <img src={quiz.img} alt={quiz.name} />
-                <span>complexity:</span>
+                <span>сложность:</span>
                 <Rating
                   className={styles.raiting}
                   name="quiz-complex"
@@ -71,17 +72,18 @@ function Quizes() {
                   {/* <AvTimerIcon style={theme ? {color:'white'} : {color: 'black'}}/> */}
                   <AvTimerIcon style={{ color: "black" }} />
                   <span style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    5 min
+                    3 мин
                   </span>
                 </div>
                 <Button
                   // onClick={()=> OpenQuiz(quiz)}
                   onClick={() => navigate(`/quizes/${quiz.id}`)}
                   // variant={theme ? 'contained' : 'outlined'}
+                  style={{width: "100%"}}
                   variant="contained"
                   color="primary"
                 >
-                  start
+                  Начать
                 </Button>
               </div>
             );

@@ -95,6 +95,10 @@
   width: 60px;
 }
 
+.question_wrapper{
+  width: 100%;
+}
+
 @media screen and (max-width: 350px) {
   .quiz_container_header {
     flex-direction: column;

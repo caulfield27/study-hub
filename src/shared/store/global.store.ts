@@ -6,6 +6,8 @@ interface IStates {
     message: string;
     type: "success" | "error";
   };
+  isAuthed: boolean;
+  setIsAuthed: (payload: boolean) => void;
 }
 
 type Actions = {
@@ -19,6 +21,8 @@ export const useGlobalStore = create<IStates & Actions>((set) => ({
     message: "",
     type: "success",
   },
+  isAuthed: !!localStorage.getItem("token"),
+  setIsAuthed: (payload) => set({ isAuthed: payload }),
   openSnackbar: (msg, type) =>
     set({
       snackbar: {

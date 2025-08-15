@@ -10,5 +10,6 @@ export interface IQuiz{
     name:string,
     complexity: number,
     img: string,
-    questions: IQuestion[]
+    questions: IQuestion[],
+    lang: string;
 }

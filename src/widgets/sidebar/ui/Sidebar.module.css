@@ -11,6 +11,7 @@
     position: sticky;
     top: 0;
     padding: 20px;
+    position: relative;
 }
 
 .sidebar_container hr{
@@ -59,7 +60,7 @@
     background: #db4422;
 }
 
-.account{
+/* .account{
     position: fixed;
     bottom: 0;
     margin-bottom: 30px;
@@ -106,59 +107,6 @@
     display: none;
 }
 
-.dropdown_btn{
-    display: none;
-}
-
-.quest_dropdown_btn{
-    display: none;
-}
-
-.dropdown{
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 15px;
-    padding: 15px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: var(--primaryMainColor);
-    width: 100%;
-    height: fit-content;
-    transition: all 0.3s ease;
-}
-
-.dropdown_active{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 15px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: var(--primaryMainColor);
-    width: 100%;
-    height: fit-content;
-
-}
-
-.x_wrap{
-    width: 100%;
-    display: flex;
-    justify-content:flex-end;
-    
-}
-
-.x{
-    background: none;
-    border: none;
-    cursor: pointer;
-    width: 50px;
-    color: white;
-    margin-right: 30px;
-    
-}
 
 .theme_btn{
     background: rgb(48, 48, 48);
@@ -194,80 +142,6 @@
 .theme_icon{
     width: 22px;
     height: 22px;
-    /* z-index: 99; */
-}
+} */
 
 
-
-                                    /* MEDIA REQUESTS */
-
-
-
-@media screen and (min-width: 1000px){
-    .dropdown_active{
-        display: none;
-    }
-    
-    
-}
-
-@media screen and (max-width: 1000px) {
-    .hr{
-        display: none;
-    }
-    .sidebar_container{
-        position:fixed;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        height: 55px;
-        width: 100%;
-        background: var(--primaryMainColor);
-        z-index: 99;    
-        box-shadow: 6px 0px 18px 4px rgba(0,0,0,0.1);
-        padding: 20px;
-
-    }
-    .sidebar_header img{
-        width: 70px;
-        border-radius: 50%;
-    }
-    .sidebar_header{
-        color: white;
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        margin-bottom: 0;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .navigation_wrap{
-        display: none;
-    }
-    .dropdown_btn{
-        display: block;
-        cursor: pointer;
-    }
-    .quest_dropdown_btn{
-        display: block;
-        cursor: pointer;
-        margin-right: 50px;
-    }
-   
-    .account{
-        position: fixed;
-        top: 25px;
-        right: 100px;
-        height: 50px;
-    }
-    
-}
-
-@media screen and (max-width:490px) {
-    .logo_wrap h3{
-        display: none;
-    }
-    
-}
