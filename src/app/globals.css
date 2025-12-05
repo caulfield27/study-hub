@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 @font-face {
     font-family: "Inter";
     src: url("./fonts/Inter_18pt-Regular.woff2") format("woff2");
@@ -6,15 +8,9 @@
 }
 
 :root {
-    --bgColor: white;
-    --textColor: black;
-    --primaryMainColor: #F2613F;
-    --primaryAccentColor: #fdc830;
-    --mentorColor: rgb(143, 142, 142);
-    --libraryHeaderBg:gainsboro;
-    --booksCardBg: whiteSmoke;
-    --spanText: #383838;
-    --resultColor: #F2613F;
+    --bgColor: #f97316;
+    --primary: #ea580c;
+    --accent: #fff8f8;
     --sidebar-width: 270px;
 }
 
@@ -24,12 +20,14 @@
 }
 
 body,html {
+    background-color: var(--bgColor);
     margin: 0;
     padding: 0;
     width: 100%;
     min-height: 100vh;
     font-family: "Inter", sans-serif;
     font-size: 16px;
+    color: var(--textColor);
 }
 
 #root {

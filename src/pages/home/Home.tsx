@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import styles from "./Home.module.css";
+import { Button } from "../../shared/ui/Button/Button";
 
 function Home() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function Home() {
           мобильных приложений — у нас есть всё необходимое, чтобы помочь вам добиться успеха.
           Присоединяйтесь к нам в увлекательном путешествии обучения и инноваций уже сегодня!
         </p>
-        <button onClick={()=> navigate("/quizes")}>Проверить свои знания</button>
+        <Button onClick={()=> navigate("/quizes")}>Проверить свои знания</Button>
       </div>
       <div className={styles.header_img}>
         <img src="/mainImg.svg" alt="programming computer photo" />

@@ -2,10 +2,10 @@ import { NavLink } from "react-router";
 import { navLinks } from "../config/data";
 import styles from "./Sidebar.module.css";
 import logo from "/sh_logo_white.png";
-import { useGlobalStore } from "../../../shared/store/global.store";
+import { useGlobalStore } from "@/shared/store";
 
 export function Sidebar() {
-  const {isAuthed} = useGlobalStore();
+  const { isAuthed } = useGlobalStore();
   return (
     <aside className={styles.sidebar_container}>
       <div className={styles.sidebar_wrapper}>
@@ -22,12 +22,8 @@ export function Sidebar() {
                 <NavLink
                   to={link.path}
                   key={link.path}
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? `${styles.nav_item} ${styles.pending}`
-                      : isActive
-                      ? `${styles.nav_item} ${styles.active}`
-                      : styles.nav_item
+                  className={({ isActive }) =>
+                    isActive ? `${styles.nav_item} ${styles.active}` : styles.nav_item
                   }
                 >
                   {link.icon} {link.name}
@@ -36,9 +32,7 @@ export function Sidebar() {
             })}
           </div>
         </div>
-        <div className={styles.user}>
-          {!isAuthed }
-        </div>
+        <div className={styles.user}>{!isAuthed}</div>
       </div>
     </aside>
   );
