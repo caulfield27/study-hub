@@ -4,7 +4,6 @@ import { useLibrary } from "../../store/library.store";
 import type { IBook } from "../../types/types";
 import { BooksModal } from "../bookInfoModal/BookModal";
 import styles from "./BookCard.module.css";
-import { Button } from "@mui/material";
 // import { useBooks } from "@/store/books/books"
 // import { useTheme } from '@/store/global/theme'
 
@@ -32,7 +31,7 @@ export const Book = ({ book, isOpen }: { book: IBook; isOpen: boolean }) => {
             <span className={styles.author}>{book.author}</span>
           </div>
           <div className={styles.card_button}>
-            <Button
+            {/* <Button
               value={book.pdf}
               onClick={handleRead}
               // variant={!theme ? `outlined` : 'contained'}
@@ -48,7 +47,7 @@ export const Book = ({ book, isOpen }: { book: IBook; isOpen: boolean }) => {
               color="primary"
             >
               подробнее
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

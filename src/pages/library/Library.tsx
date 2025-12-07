@@ -1,7 +1,5 @@
-import { Button } from "@mui/material";
 import { PostBookModal } from "./ui/postBookModal/PostBookModal";
 import styles from "./Library.module.css";
-import SearchIcon from "@mui/icons-material/Search";
 import { useLibrary } from "./store/library.store";
 import useSwr, { mutate } from "swr";
 import { sendRequest } from "../../shared/api/api.handlers";
@@ -61,15 +59,15 @@ function Library() {
       </div>
       <div className={styles.header_container}>
         <div className={styles.library_navigation}>
-          <SearchIcon />
+          {/* <SearchIcon /> */}
           <input
             placeholder="Поиск..."
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
           />
         </div>
-        <Button onClick={() => setPostModal(true)} variant="contained" color="primary">
+        {/* <Button onClick={() => setPostModal(true)} variant="contained" color="primary">
           Добавить книгу
-        </Button>
+        </Button> */}
         {isPostModalOpen && <PostBookModal onSuccess={() => mutate(swrParams)} />}
       </div>
       <div className={styles.books_wrapper}>

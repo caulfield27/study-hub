@@ -1,7 +1,5 @@
 import "../../../../app/globals.css";
 import styles from "./Result.module.css";
-import { Button, Rating } from "@mui/material";
-import ChecklistIcon from "@mui/icons-material/Checklist";
 import { Modal } from "../../../../shared/ui/Modal/Modal";
 import type { IQuiz } from "../../../quizes/types/types";
 import { useState } from "react";
@@ -92,13 +90,13 @@ export function Result({ result, quiz, onReset, userSelects }: Props) {
               </span>
               <div className={styles.complex}>
                 <span className={styles.complex_text}>Сложность:</span>
-                <Rating
+                {/* <Rating
                   className={styles.raiting}
                   name="quiz-complex"
                   value={quiz.complexity}
                   precision={0.5}
                   readOnly
-                />
+                /> */}
               </div>
             </div>
           </div>
@@ -108,13 +106,13 @@ export function Result({ result, quiz, onReset, userSelects }: Props) {
           <span className={styles.final_result}>{`${result} из ${maxPoint} баллов`}</span>
           {/* <ProgressBar value={result} /> */}
           <div className={styles.complete_button_wrap}>
-            <Button variant="contained" color="success" onClick={() => setIsModalOpen(true)}>
+            {/* <Button variant="contained" color="success" onClick={() => setIsModalOpen(true)}>
               <ChecklistIcon className={styles.button_icon} />
               Показать ответы
             </Button>
             <Button variant="contained" color="primary" onClick={onReset}>
               Вернуться к тестам
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

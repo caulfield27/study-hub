@@ -1,12 +1,10 @@
 import styles from "./Quizes.module.css";
 // import { useRouter } from 'next/navigation';
-import { Button, Rating } from "@mui/material";
 import useSwr from "swr";
 import { apiRoutes } from "../../shared/api/api.routes";
 import { sendRequest } from "../../shared/api/api.handlers";
 import { DataLoader } from "../../shared/ui/DataLoader/DataLoader";
 import type { IQuiz } from "./types/types";
-import AvTimerIcon from "@mui/icons-material/AvTimer";
 import { useNavigate } from "react-router";
 // import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
 // import { quizes } from '@/store/quizes/quizUtils/questions';
@@ -14,7 +12,6 @@ import { useNavigate } from "react-router";
 // import { useQuizes } from '@/store/quizes/quizes';
 // import { setToStorage } from '@/utils/useLocaleStorage';
 // import { Wrapper } from '@/components/wrapper/wrapper';
-// import AvTimerIcon from '@mui/icons-material/AvTimer';
 // import { useTheme } from '@/store/global/theme';
 
 function Quizes() {
@@ -53,13 +50,13 @@ function Quizes() {
                 <span className={styles.quiz_name}>{quiz.name}</span>
                 <img src={quiz.img} alt={quiz.name} />
                 <span>сложность:</span>
-                <Rating
+                {/* <Rating
                   className={styles.raiting}
                   name="quiz-complex"
                   value={quiz.complexity}
                   precision={0.5}
                   readOnly
-                />
+                /> */}
                 <div
                   style={{
                     display: "flex",
@@ -70,12 +67,12 @@ function Quizes() {
                   }}
                 >
                   {/* <AvTimerIcon style={theme ? {color:'white'} : {color: 'black'}}/> */}
-                  <AvTimerIcon style={{ color: "black" }} />
+                  {/* <AvTimerIcon style={{ color: "black" }} /> */}
                   <span style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     3 мин
                   </span>
                 </div>
-                <Button
+                {/* <Button
                   // onClick={()=> OpenQuiz(quiz)}
                   onClick={() => navigate(`/quizes/${quiz.id}`)}
                   // variant={theme ? 'contained' : 'outlined'}
@@ -84,7 +81,7 @@ function Quizes() {
                   color="primary"
                 >
                   Начать
-                </Button>
+                </Button> */}
               </div>
             );
           })

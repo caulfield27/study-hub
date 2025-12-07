@@ -4,14 +4,12 @@ import { apiRoutes } from "../../shared/api/api.routes";
 import { sendRequest } from "../../shared/api/api.handlers";
 import type { IQuiz } from "../quizes/types/types";
 import { useState, type ChangeEvent } from "react";
-import { Button, FormControlLabel, Radio, RadioGroup, Rating } from "@mui/material";
 import { PageLoader } from "../../shared/ui/Loader/PageLoader";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import styles from "./Quiz.module.css";
 // import { ProgressBar } from "./ui/ProgressBar/ProgressBar";
 import { Timer } from "./ui/Timer/Timer";
-import Swal from "sweetalert2";
 import { Result } from "./ui/Result/Result";
 import { splitQuestion } from "../../shared/utils/utils";
 
@@ -56,15 +54,15 @@ function Quiz() {
   }
 
   function handleTimeOver() {
-    Swal.fire({
-      icon: "error",
-      title: "Время вышло :(",
-      text: "вы не успели пройти тест во время",
-      confirmButtonText: "Повторить",
-      confirmButtonColor: "var(--primaryMainColor)",
-    }).then(() => {
-      reset();
-    });
+    // Swal.fire({
+    //   icon: "error",
+    //   title: "Время вышло :(",
+    //   text: "вы не успели пройти тест во время",
+    //   confirmButtonText: "Повторить",
+    //   confirmButtonColor: "var(--primaryMainColor)",
+    // }).then(() => {
+    //   reset();
+    // });
   }
 
   // render ui
@@ -79,13 +77,13 @@ function Quiz() {
       <div className={styles.quiz_container_header}>
         <img src={quiz?.img} alt={quiz?.name} />
         <span>{quiz.name}</span>
-        <Rating
+        {/* <Rating
           className={styles.raiting}
           name="quiz-complex"
           value={quiz.complexity}
           precision={0.5}
           readOnly
-        />
+        /> */}
       </div>
       <div className={styles.quiz_content}>
         <div className={styles.quiz_header}>
@@ -105,7 +103,7 @@ function Quiz() {
             </SyntaxHighlighter>
           ) : null}
         </div>
-        <div className={styles.quiz_body}>
+        {/* <div className={styles.quiz_body}>
           <RadioGroup
             aria-labelledby="quiz-options"
             defaultValue="quiz"
@@ -136,7 +134,7 @@ function Quiz() {
           >
             {questionIndex == quiz.questions.length - 1 ? "Finish" : `Next`}
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   ) : null;

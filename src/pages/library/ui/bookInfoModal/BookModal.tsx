@@ -1,8 +1,6 @@
 import styles from "./BookModal.module.css";
 // import { useEffect, useState } from 'react'
 // import { useBooks } from '@/store/books/books';
-import Rating from "@mui/material/Rating";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 // import Swal from 'sweetalert2'
 // import { IFavBooks } from '@/store/books/booksTypes';
 // import useAuth from '@/store/auth/auth';
@@ -105,14 +103,14 @@ export function BooksModal() {
       <div className={styles.right_wrap}>
         <div className={styles.rating_button}>
           <div className={styles.rating}>
-            <Rating name="half-rating-read" value={currentBook?.rating} precision={0.5} readOnly />
+            {/* <Rating name="half-rating-read" value={currentBook?.rating} precision={0.5} readOnly /> */}
             <span>{currentBook?.rating}</span>
           </div>
           <div className={styles.modal_button}>
             {/* <button onClick={() => handleFavorites(currentBook)}> */}
             <button onClick={() => {}}>
               {/* <FavoriteIcon className={favorites.some((book: { currentBook: { id: any; }; }) => book.currentBook.id === currentBook.id) ? styles.favoriteActive : styles.favorite} /> */}
-              <FavoriteIcon className={styles.favorite} />
+              {/* <FavoriteIcon className={styles.favorite} /> */}
               <span className={styles.favoriteText}>Add to favorites</span>
             </button>
             <button></button>

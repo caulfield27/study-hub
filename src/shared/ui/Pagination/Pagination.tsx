@@ -1,5 +1,4 @@
 import styles from "./Pagination.module.css";
-import { Pagination, Stack } from "@mui/material";
 // import { useRouter, useSearchParams, usePathname } from "next/navigation"
 
 interface Props {
@@ -10,15 +9,16 @@ interface Props {
 }
 
 export function CustomPagination({ total, currentPage, limit, handleChange }: Props) {
-  return (
-    <Stack spacing={2}>
-      <Pagination
-        defaultValue={currentPage}
-        className={styles.pagination}
-        count={Math.ceil(total / limit)}
-        page={currentPage}
-        onChange={handleChange}
-      />
-    </Stack>
-  );
+  // return (
+  //   <Stack spacing={2}>
+  //     <Pagination
+  //       defaultValue={currentPage}
+  //       className={styles.pagination}
+  //       count={Math.ceil(total / limit)}
+  //       page={currentPage}
+  //       onChange={handleChange}
+  //     />
+  //   </Stack>
+  // );
+  return null;
 }

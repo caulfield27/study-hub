@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import styles from "./PostBookModal.module.css";
 import { isLink, urlToBase64 } from "../../../../shared/utils/utils";
-import { Button, TextField } from "@mui/material";
 import { useLibrary } from "../../store/library.store";
 import { Modal } from "../../../../shared/ui/Modal/Modal";
 import type { IBook, IPostBookValidation } from "../../types/types";
@@ -152,7 +151,7 @@ export function PostBookModal({ onSuccess }: Props) {
       </div>
 
       <form className={styles.postModal_body} onSubmit={handleSubmit}>
-        <TextField
+        {/* <TextField
           name="name"
           label="name"
           variant="outlined"
@@ -170,9 +169,9 @@ export function PostBookModal({ onSuccess }: Props) {
           }
           onBlur={handleBlur}
           // onBlur={() => setValidation({ ...validation, name: true })}
-        />
+        /> */}
         {!validation.name.isValid && <span>{validation.name.message}</span>}
-        <TextField
+        {/* <TextField
           name="author"
           label="author"
           variant="outlined"
@@ -190,10 +189,10 @@ export function PostBookModal({ onSuccess }: Props) {
           }
           onBlur={handleBlur}
           // onBlur={() => setValidation({ ...validation, author: true })}
-        />
+        /> */}
         {!validation.author.isValid && <span>{validation.author.message}</span>}
         {/* {postData.author === "" && validation.author && <span>required field</span>} */}
-        <TextField
+        {/* <TextField
           name="image"
           label="poster src"
           variant="outlined"
@@ -211,13 +210,13 @@ export function PostBookModal({ onSuccess }: Props) {
           }
           onBlur={handleBlur}
           // onBlur={() => setValidation({ ...validation, image: true })}
-        ></TextField>
+        ></TextField> */}
         {!validation.image.isValid && <span>{validation.image.message}</span>}
         {/* {postData.image === "" && validation.image && <span>required field</span>}
         {postData.image === ""
           ? ""
           : !isLink(postData.image) && validation.pdf && <span>field is not link</span>} */}
-        <TextField
+        {/* <TextField
           name="pdf"
           label="pdf link"
           variant="outlined"
@@ -235,13 +234,13 @@ export function PostBookModal({ onSuccess }: Props) {
           }
           onBlur={handleBlur}
           // onBlur={() => setValidation({ ...validation, pdf: true })}
-        />
+        /> */}
         {!validation.pdf.isValid && <span>{validation.pdf.message}</span>}
         {/* {postData.pdf === "" && validation.pdf && <span>required field</span>}
         {postData.pdf === ""
           ? ""
           : !isLink(postData.pdf) && validation.pdf && <span>field is not link</span>} */}
-        <TextField
+        {/* <TextField
           type="number"
           name="rating"
           label="rating"
@@ -259,14 +258,14 @@ export function PostBookModal({ onSuccess }: Props) {
           }
           onBlur={handleBlur}
           // onBlur={() => setValidation({ ...validation, rating: true })}
-        />
+        /> */}
         {!validation.rating.isValid && <span>{validation.rating.message}</span>}
         {/* {postData.rating === null && validation.rating && <span>required field</span>}
         {postData.rating === null
           ? ""
           : postData.rating > 5 &&
             validation.rating && <span>rating can&apos;t be higher then 5</span>} */}
-        <TextField
+        {/* <TextField
           name="released"
           label="released"
           variant="outlined"
@@ -283,10 +282,10 @@ export function PostBookModal({ onSuccess }: Props) {
           }
           onBlur={handleBlur}
           // onBlur={() => setValidation({ ...validation, released: true })}
-        />
+        /> */}
         {!validation.released.isValid && <span>{validation.released.message}</span>}
         {/* {postData.released === "" && validation.released && <span>required field</span>} */}
-        <TextField
+        {/* <TextField
           label="Description"
           multiline
           rows={4}
@@ -304,17 +303,17 @@ export function PostBookModal({ onSuccess }: Props) {
           }
           onBlur={handleBlur}
           // onBlur={() => setValidation({ ...validation, description: true })}
-        />
+        /> */}
         {!validation.description.isValid && <span>{validation.description.message}</span>}
         {/* {postData.description === "" && validation.description && <span>required field</span>} */}
-        <Button
+        {/* <Button
           disabled={!readyToSend() || loading}
           variant="contained"
           color="success"
           type="submit"
         >
           {loading ? "Добавляется..." : "Добавить в бибилиотеку"}
-        </Button>
+        </Button> */}
       </form>
     </Modal>
   );

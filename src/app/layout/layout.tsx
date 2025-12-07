@@ -1,34 +1,31 @@
 import { Outlet } from "react-router";
-import { Sidebar } from "../../widgets/sidebar";
-import styles from "./layout.module.css";
-import Snackbar from "@mui/material/Snackbar";
-import { useGlobalStore } from "../../shared/store/global.store";
+import { MobileNavbar, Sidebar } from "./_components";
 
 function Layout() {
-  const { snackbar, closeSnackbar } = useGlobalStore();
   return (
-    <>
-      <div className={styles.app_container}>
+    <div className="w-full min-h-screen flex">
+      <div className="block max-sm:hidden">
         <Sidebar />
-        <main className={styles.pages_container}>
-          <Outlet />
-        </main>
       </div>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        open={snackbar.isOpen}
-        onClose={closeSnackbar}
-        message={snackbar.message}
-        autoHideDuration={5000}
-        key={"top-right"}
-        ContentProps={{
-          sx: {
-            backgroundColor: snackbar.type === "success" ? "#06923E" : "#DC3C22",
-            color: "#fff",
-          },
-        }}
-      />
-    </>
+      <main
+        className="
+          w-full 
+          grow 
+          ml-[calc(var(--sidebar-width)+20px)] 
+          px-[50px] 
+          py-[30px]
+          max-[930px]:ml-[100px]
+          max-sm:mb-16
+          max-sm:ml-0
+          max-sm:p-4
+        "
+      >
+        <Outlet />
+      </main>
+      <div className="hidden max-sm:block">
+        <MobileNavbar/>
+      </div>
+    </div>
   );
 }
 
