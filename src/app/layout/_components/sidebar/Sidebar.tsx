@@ -18,6 +18,7 @@ export function Sidebar() {
       }
     };
 
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -45,7 +46,7 @@ export function Sidebar() {
           <img src={logo} className="w-[60px]" />
         </div>
 
-        <Divider className="bg-(--foreground)" />
+        <Divider className="bg-[#404040]" />
 
         {/* Content */}
         <div className="mt-5">

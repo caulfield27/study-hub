@@ -1,8 +1,7 @@
-
-import styles from "./DataLoader.module.css";
+import {Spinner} from '@heroui/spinner';
 
 export function DataLoader(){
-    return <div className={styles.data_loader_container}>
-        {/* <CircularProgress/> */}
+    return <div className="w-full h-full p-20 flex justify-center items-center">
+        <Spinner size='lg' color='primary' label='Загрузка...'/>
     </div>
 }

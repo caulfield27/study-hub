@@ -1,11 +1,10 @@
 import { create } from "zustand";
-import type { IBook } from "../types/types";
+import type { IBook } from "./Library.types";
 // import { IFavBooks, IStates, books } from "./booksTypes";
 // import { IUserItem } from "../auth/auth";
 // import { setToStorage } from "@/utils/useLocaleStorage";
 
 interface IStates {
-  isPostModalOpen: boolean;
   isDropdownOpen: boolean;
   currentBook: IBook | null;
   // favorites: IFavBooks[],
@@ -22,18 +21,15 @@ type Actions = {
   // decrementCounter: (payload: number)=> void,
   //   getBooksCounter: (payload: number) => void;
   // resetNotifications: (payload: number)=> void,
-  setPostModal: (pl: boolean) => void;
   //   setTotalNotifications: (payload: number) => void;
 };
 
 export const useLibrary = create<IStates & Actions>((set) => ({
-  isPostModalOpen: false,
   isDropdownOpen: false,
   currentBook: null,
   favorites: [],
   // booksNotifications: 0,
   // totalNotifications: 0,
-  setPostModal: (pl) => set(() => ({ isPostModalOpen: pl })),
   setCurrentBook: (payload) => set(() => ({ currentBook: payload })),
   setDropdown: (pl) => set(() => ({ isDropdownOpen: pl })),
   // getUserFavorites: (payload) => set(()=> ({favorites: payload})),

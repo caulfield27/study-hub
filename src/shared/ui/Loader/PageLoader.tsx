@@ -1,4 +1,3 @@
-import { createPortal } from "react-dom";
 import styles from "./Loader.module.css";
 import { useEffect } from "react";
 

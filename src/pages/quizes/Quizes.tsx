@@ -1,18 +1,13 @@
-import styles from "./Quizes.module.css";
-// import { useRouter } from 'next/navigation';
 import useSwr from "swr";
-import { apiRoutes } from "../../shared/api/api.routes";
-import { sendRequest } from "../../shared/api/api.handlers";
-import { DataLoader } from "../../shared/ui/DataLoader/DataLoader";
-import type { IQuiz } from "./types/types";
+import { apiRoutes } from "@/shared/api/api.routes";
+import { sendRequest } from "@/shared/api/api.handlers";
+import { DataLoader } from "@/shared/ui/DataLoader/DataLoader";
+import type { IQuiz } from "@/shared/types/types";
 import { useNavigate } from "react-router";
-// import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
-// import { quizes } from '@/store/quizes/quizUtils/questions';
-// import { IGlobalQuestions } from '@/store/quizes/quizUtils/quizesTypes';
-// import { useQuizes } from '@/store/quizes/quizes';
-// import { setToStorage } from '@/utils/useLocaleStorage';
-// import { Wrapper } from '@/components/wrapper/wrapper';
-// import { useTheme } from '@/store/global/theme';
+import { Timer } from "lucide-react";
+import { Rating } from "@/shared/ui/Rating/Rating";
+import { Card, CardBody } from "@heroui/card";
+import { Button } from "@heroui/button";
 
 function Quizes() {
   const navigate = useNavigate();
@@ -23,69 +18,51 @@ function Quizes() {
   const { data: quizes, isLoading } = useSwr<IQuiz[]>(swrKey, sendRequest, {
     revalidateOnFocus: false,
   });
-  // const navigate = useRouter()
-  // const setQuestions = useQuizes((state) => state.setQuestions)
-  // const resetQuiz = useQuizes((state) => state.resetQuiz)
-  // const theme = useTheme((state)=> state.theme)
-
-  // const OpenQuiz = (quiz: IGlobalQuestions) => {
-  //     navigate.push('/quizes/quiz')
-  //     setQuestions(quiz)
-  //     setToStorage('questions', quiz)
-  //     resetQuiz()
-  // }
 
   return (
     <>
-      <div className={styles.quizes_header}>
-        <h1>Тесты и практика</h1>
-      </div>
-      <div className={styles.quizes_container}>
-        {isLoading ? (
-          <DataLoader />
-        ) : quizes ? (
-          quizes.map((quiz) => {
-            return (
-              <div className={styles.quiz_card} key={quiz.id}>
-                <span className={styles.quiz_name}>{quiz.name}</span>
-                <img src={quiz.img} alt={quiz.name} />
-                <span>сложность:</span>
-                {/* <Rating
-                  className={styles.raiting}
-                  name="quiz-complex"
-                  value={quiz.complexity}
-                  precision={0.5}
-                  readOnly
-                /> */}
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignContent: "center",
-                    gap: "5px",
-                  }}
-                >
-                  {/* <AvTimerIcon style={theme ? {color:'white'} : {color: 'black'}}/> */}
-                  {/* <AvTimerIcon style={{ color: "black" }} /> */}
-                  <span style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    3 мин
+      <div>
+        {/* <h1 className="font-bold text-3xl">Тесты и практика</h1> */}
+        <div className="mt-12 w-full flex flex-wrap justify-center items-start gap-8 max-sm:gap-5">
+          {isLoading ? (
+            <DataLoader />
+          ) : quizes ? (
+            quizes.map((quiz) => (
+              <Card key={quiz.id} className="w-[250px] max-sm:w-[120px]">
+                <CardBody className="flex flex-col gap-6 max-sm:gap-2 justify-center items-center">
+                  <span
+                    className="
+                  font-bold text-center text-[20px] max-sm:text-[14px]
+                  h-6 overflow-hidden text-ellipsis
+                  line-clamp-1
+                "
+                  >
+                    {quiz.name}
                   </span>
-                </div>
-                {/* <Button
-                  // onClick={()=> OpenQuiz(quiz)}
-                  onClick={() => navigate(`/quizes/${quiz.id}`)}
-                  // variant={theme ? 'contained' : 'outlined'}
-                  style={{width: "100%"}}
-                  variant="contained"
-                  color="primary"
-                >
-                  Начать
-                </Button> */}
-              </div>
-            );
-          })
-        ) : null}
+
+                  <img
+                    src={quiz.img}
+                    alt={quiz.name}
+                    className="w-[100px] h-[100px] max-sm:w-[50px] max-sm:h-[50px]"
+                  />
+                  <Rating rating={quiz.complexity} />
+                  <div className="flex flex-row justify-center items-center gap-1">
+                    <Timer className="max-sm:w-4"/>
+                    <span className="max-sm:text-[12px]">3 мин</span>
+                  </div>
+                  <Button
+                    onPress={() => navigate(`/quizes/${quiz.id}`)}
+                    color="primary"
+                    variant="ghost"
+                    className="w-full"
+                  >
+                    Начать
+                  </Button>
+                </CardBody>
+              </Card>
+            ))
+          ) : null}
+        </div>
       </div>
     </>
   );

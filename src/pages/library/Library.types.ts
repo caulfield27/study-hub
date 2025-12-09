@@ -20,7 +20,6 @@ export interface IPostBookValidation{
     image: IValidation,
     pdf: IValidation,
     rating: IValidation,
-    released: IValidation,
     description: IValidation,
     [key: string] : IValidation
 }
