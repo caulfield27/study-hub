@@ -1,5 +1,5 @@
 [context.production.environment]
-    BASE_API_URL="https://study-hub-back.onrender.com"
+    VITE_BASE_API_URL="https://study-hub-back.onrender.com"
 
 [[redirects]]
   from = "/*"

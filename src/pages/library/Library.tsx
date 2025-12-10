@@ -60,28 +60,23 @@ function Library() {
         </div> */}
         <div
           className="
-        max-w-full max-h-fit 
+        w-full max-h-fit 
         px-[35px] py-2.5
         bg-(--sidebar-bg)
         rounded
         flex flex-row justify-start items-center
         gap-[50px]
-        max-[785px]:flex-col
-        max-[785px]:bg-transparent
-        max-[785px]:gap-[15px]
-
-        max-[590px]:flex-col
       "
         >
-          <div className="flex items-center gap-[15px]">
+          <div className="w-full flex items-center gap-[15px] max-sm:flex-col-reverse">
             <input
               placeholder="Поиск..."
               className="text-black bg-(--foreground) border-0 rounded px-2.5 py-2.5 outline-none
             placeholder:text-[16px]
-            max-[785px]:border max-[785px]:border-gray-400"
+            max-[785px]:border max-[785px]:border-gray-400 max-sm:w-full"
               onChange={(e) => setSearchValue(e.target.value)}
             />
-            <Button variant="ghost" onPress={() => setIsPostModalOpen(true)} color="primary">Предложить книгу</Button>
+            <Button variant="ghost" className="max-sm:w-full" onPress={() => setIsPostModalOpen(true)} color="primary">Предложить книгу</Button>
           </div>
         </div>
 
