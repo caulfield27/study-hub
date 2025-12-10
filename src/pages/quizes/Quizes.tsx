@@ -28,7 +28,7 @@ function Quizes() {
             <DataLoader />
           ) : quizes ? (
             quizes.map((quiz) => (
-              <Card key={quiz.id} className="w-[250px] max-sm:w-[120px]">
+              <Card key={quiz.id} className="w-[250px] max-sm:w-full">
                 <CardBody className="flex flex-col gap-6 max-sm:gap-2 justify-center items-center">
                   <span
                     className="
@@ -43,7 +43,7 @@ function Quizes() {
                   <img
                     src={quiz.img}
                     alt={quiz.name}
-                    className="w-[100px] h-[100px] max-sm:w-[50px] max-sm:h-[50px]"
+                    className="w-[100px] h-[100px]"
                   />
                   <Rating rating={quiz.complexity} />
                   <div className="flex flex-row justify-center items-center gap-1">

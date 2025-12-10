@@ -9,13 +9,13 @@ export const Book = ({ book, onBookOpen }: Props) => {
   }
 
   return (
-    <Card className="w-48">
+    <Card className="w-48 max-sm:w-full">
       <CardBody>
         <div className="flex flex-col gap-[15px]">
           <img
             src={`${base_url}/${book.image}`}
             alt={book.name}
-            className="max-w-full h-[200px] object-cover"
+            className="max-w-full h-[200px] max-sm:h-[300px] object-cover"
           />
           <div className="flex flex-col gap-[5px]">
             <span className="h-12 overflow-hidden font-bold line-clamp-2">
