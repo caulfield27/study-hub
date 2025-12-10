@@ -1,6 +1,6 @@
 import { useLibrary } from "./Library.store";
 import useSwr, { mutate } from "swr";
-import { sendRequest } from "@/shared/api/api.handlers";
+import { api } from "@/shared/api/api.handlers";
 import { apiRoutes } from "@/shared/api/api.routes";
 import { DataLoader } from "@/shared/ui/DataLoader/DataLoader";
 import type { IBook } from "./Library.types";
@@ -36,7 +36,7 @@ function Library() {
   } = useSwr<{
     data: IBook[];
     total: number;
-  }>(swrParams, sendRequest, { revalidateOnFocus: false });
+  }>([swrParams,'public'], api.sendRequest, { revalidateOnFocus: false });
 
   // effect handlers
   useEffect(() => {
@@ -55,9 +55,9 @@ function Library() {
   return (
     <>
       <div className="flex flex-col gap-6">
-        <div className="text-[32px] max-sm:text-[24px] font-bold max-[1150px]:flex max-[1150px]:justify-center max-[590px]:mx-[15px]">
+        {/* <div className="text-[32px] max-sm:text-[24px] font-bold max-[1150px]:flex max-[1150px]:justify-center max-[590px]:mx-[15px]">
           <h1>Подборка книг от сообщества Study Hub</h1>
-        </div>
+        </div> */}
         <div
           className="
         max-w-full max-h-fit 

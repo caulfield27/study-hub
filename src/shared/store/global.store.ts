@@ -1,42 +1,20 @@
 import { create } from "zustand";
+import { isAuthed } from "../utils/auth";
+import type { User } from "../types/types";
 
 interface IStates {
-  snackbar: {
-    isOpen: boolean;
-    message: string;
-    type: "success" | "error";
-  };
   isAuthed: boolean;
-  setIsAuthed: (payload: boolean) => void;
+  user: User | null;
 }
 
 type Actions = {
-  openSnackbar: (msg: string, type: "success" | "error") => void;
-  closeSnackbar: () => void;
+  setIsAuthed: (payload: boolean) => void;
+  setUser: (user: User) => void;
 };
 
 export const useGlobalStore = create<IStates & Actions>((set) => ({
-  snackbar: {
-    isOpen: false,
-    message: "",
-    type: "success",
-  },
-  isAuthed: !!localStorage.getItem("token"),
+  isAuthed: isAuthed(),
+  user: null,
+  setUser: (user) => set({ user }),
   setIsAuthed: (payload) => set({ isAuthed: payload }),
-  openSnackbar: (msg, type) =>
-    set({
-      snackbar: {
-        isOpen: true,
-        message: msg,
-        type,
-      },
-    }),
-  closeSnackbar: () =>
-    set({
-      snackbar: {
-        isOpen: false,
-        message: "",
-        type: "success",
-      },
-    }),
 }));

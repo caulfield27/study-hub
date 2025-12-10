@@ -1,12 +1,14 @@
 import { NavLink } from "react-router";
-import { navLinks } from "./Sidebar.constants";
+import { authedNavLinks, publicNavLinks } from "./Sidebar.constants";
 import logo from "/sh_logo_white.png";
-import { useGlobalStore } from "@/shared/store";
 import { Divider } from "@heroui/divider";
 import { useEffect } from "react";
+import { useGlobalStore } from "@/shared/store";
+import { Profile } from "./_components";
 
 export function Sidebar() {
-  const { isAuthed } = useGlobalStore();
+  const { isAuthed, user } = useGlobalStore();
+  const links = isAuthed ? authedNavLinks : publicNavLinks;
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,17 +43,15 @@ export function Sidebar() {
       "
     >
       <div className="relative p-5">
-        {/* Header */}
         <div className="flex flex-row gap-3 mb-5 pr-10 max-[930px]:pr-0 items-center text-white">
           <img src={logo} className="w-[60px]" />
         </div>
 
         <Divider className="bg-[#404040]" />
 
-        {/* Content */}
-        <div className="mt-5">
+        <div className="h-full mt-5">
           <nav className="flex flex-col gap-5">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <NavLink
                 key={link.path}
                 to={link.path}
@@ -72,10 +72,13 @@ export function Sidebar() {
               </NavLink>
             ))}
           </nav>
+          {isAuthed && user && (
+            <div className="fixed bottom-8 left-0 w-full">
+              <Divider className="bg-[#404040] mb-5" />
+              <Profile />
+            </div>
+          )}
         </div>
-
-        {/* User */}
-        <div className="text-white mt-5">{!isAuthed}</div>
       </div>
     </aside>
   );

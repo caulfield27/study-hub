@@ -1,11 +1,26 @@
 import { Outlet } from "react-router";
-import { MobileNavbar, Sidebar } from "./_components";
+import { MobileHeader, MobileNavbar, Sidebar } from "./_components";
+import { Suspense, useEffect } from "react";
+import { PageLoader } from "@/shared/ui/Loader/PageLoader";
+import { useGlobalStore } from "@/shared/store";
+import { api } from "@/shared/api/api.handlers";
 
 function Layout() {
+  const isAuthed = useGlobalStore((state) => state.isAuthed);
+
+  useEffect(() => {
+    if (isAuthed) {
+      api.getMe();
+    }
+  }, [isAuthed]);
+
   return (
-    <div className="w-full min-h-screen flex">
+    <div className="w-full min-h-screen flex max-sm:flex-col">
       <div className="block max-sm:hidden">
         <Sidebar />
+      </div>
+      <div className="hidden max-sm:block">
+        <MobileHeader />
       </div>
       <main
         className="
@@ -20,10 +35,12 @@ function Layout() {
           max-sm:p-4
         "
       >
-        <Outlet />
+        <Suspense fallback={<PageLoader />}>
+          <Outlet />
+        </Suspense>
       </main>
       <div className="hidden max-sm:block">
-        <MobileNavbar/>
+        <MobileNavbar />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import useSwr from "swr";
 import { apiRoutes } from "@/shared/api/api.routes";
-import { sendRequest } from "@/shared/api/api.handlers";
+import { api } from "@/shared/api/api.handlers";
 import type { IQuiz } from "@/shared/types/types";
 import { useState } from "react";
 import { PageLoader } from "@/shared/ui/Loader/PageLoader";
@@ -23,7 +23,7 @@ function Quiz() {
     method: "get",
     url: apiRoutes.quizes.getById(id ?? ""),
   };
-  const { data: quiz, isLoading } = useSwr<IQuiz>(swrKey, sendRequest);
+  const { data: quiz, isLoading } = useSwr<IQuiz>([swrKey,'public'], api.sendRequest);
 
   // locale states
   const [questionIndex, setQuestionIndex] = useState<number>(0);

@@ -1,6 +1,6 @@
 import useSwr from "swr";
 import { apiRoutes } from "@/shared/api/api.routes";
-import { sendRequest } from "@/shared/api/api.handlers";
+import { api } from "@/shared/api/api.handlers";
 import { DataLoader } from "@/shared/ui/DataLoader/DataLoader";
 import type { IQuiz } from "@/shared/types/types";
 import { useNavigate } from "react-router";
@@ -15,7 +15,7 @@ function Quizes() {
     method: "get",
     url: apiRoutes.quizes.get,
   };
-  const { data: quizes, isLoading } = useSwr<IQuiz[]>(swrKey, sendRequest, {
+  const { data: quizes, isLoading } = useSwr<IQuiz[]>([swrKey,'public'], api.sendRequest, {
     revalidateOnFocus: false,
   });
 
@@ -23,7 +23,7 @@ function Quizes() {
     <>
       <div>
         {/* <h1 className="font-bold text-3xl">Тесты и практика</h1> */}
-        <div className="mt-12 w-full flex flex-wrap justify-center items-start gap-8 max-sm:gap-5">
+        <div className="w-full flex flex-wrap justify-center items-start gap-8 max-sm:gap-5">
           {isLoading ? (
             <DataLoader />
           ) : quizes ? (

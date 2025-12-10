@@ -1,8 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import Layout from "../../layout/layout";
-import { Suspense } from "react";
-import { PageLoader } from "../../../shared/ui/Loader/PageLoader";
-import { Home, Library, Quiz, Quizes, VideoCourses } from "../../lazy";
+import { Auth, Home, Library, Quiz, Quizes, VideoCourses } from "../../lazy";
+import { GuestRoutes } from "../accessProviders/GuestRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -11,42 +10,30 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <Suspense fallback={<PageLoader />}>
-            <Home />
-          </Suspense>
-        ),
+        element: <Home />,
       },
       {
         path: "/quizes",
-        element: (
-          <Suspense fallback={<PageLoader />}>
-            <Quizes />
-          </Suspense>
-        ),
+        element: <Quizes />,
       },
       {
         path: "/quizes/:id",
-        element: (
-          <Suspense fallback={<PageLoader />}>
-            <Quiz />
-          </Suspense>
-        ),
+        element: <Quiz />,
       },
       {
         path: "/library",
-        element: (
-          <Suspense fallback={<PageLoader />}>
-            <Library />
-          </Suspense>
-        ),
+        element: <Library />,
       },
       {
         path: "/video-courses",
+        element: <VideoCourses />,
+      },
+      {
+        path: "/auth",
         element: (
-          <Suspense fallback={<PageLoader />}>
-            <VideoCourses />
-          </Suspense>
+          <GuestRoutes>
+            <Auth />
+          </GuestRoutes>
         ),
       },
     ],

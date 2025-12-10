@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { isLink } from "@/shared/utils/utils";
 import type { IBook, IPostBookValidation } from "../../Library.types";
-import { sendRequest } from "@/shared/api/api.handlers";
+import { api } from "@/shared/api/api.handlers";
 import { apiRoutes } from "@/shared/api/api.routes";
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
 import type { Props } from "./PostBookModal.types";
@@ -131,14 +131,17 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
       formData.append("released", postData.released);
       formData.append("description", postData.description);
 
-      const result = await sendRequest({
-        method: "post",
-        url: apiRoutes.books.post,
-        data: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
+      const result = await api.sendRequest(
+        [{
+          method: "post",
+          url: apiRoutes.books.post,
+          data: formData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         },
-      });
+        "public"]
+      );
 
       addToast({
         color: "success",

@@ -2,10 +2,15 @@ export const apiRoutes = {
   books: {
     post: "/books",
     get: (search: string, page: number, pageSize: number) =>
-      `/books?page=${page}&pageSize=${pageSize}${search ? `&search=${search}` : ""}`,
+      `/books?page=${page}&pageSize=${pageSize}${
+        search ? `&search=${search}` : ""
+      }`,
   },
   quizes: {
     get: "/quizes",
-    getById: (id: string) => `/quizes/${id}`
-  }
+    getById: (id: string) => `/quizes/${id}`,
+  },
+  login: "/login",
+  register: "/register",
+  me: "/me",
 };

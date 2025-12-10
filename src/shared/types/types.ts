@@ -13,3 +13,9 @@ export interface IQuiz{
     questions: IQuestion[],
     lang: string;
 }
+
+export interface User{
+    id: number;
+    username: string;
+    email: string;
+}
