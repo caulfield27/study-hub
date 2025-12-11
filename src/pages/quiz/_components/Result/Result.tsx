@@ -11,7 +11,6 @@ import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 import type { Props } from "./Result.types";
 
-
 export function Result({ result, quiz, userSelects }: Props) {
   const maxPoint = quiz.questions.length * 10;
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ export function Result({ result, quiz, userSelects }: Props) {
       >
         <ModalContent>
           <div className="p-4">
-            <div className="h-[430px] flex flex-col gap-6 overflow-y-scroll overflow-x-hidden mt-5 max-md:h-screen">
+            <div className="h-[430px] flex flex-col gap-6 overflow-y-scroll overflow-x-hidden mt-5 max-md:h-screen max-md:overflow-y-auto max-md:pb-[50px]">
               {quiz.questions.map((question, ind) => {
                 const [questionText, questionCode] = splitQuestion(
                   question.question

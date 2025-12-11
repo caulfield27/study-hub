@@ -53,7 +53,7 @@ function Quizes() {
                   <Button
                     onPress={() => navigate(`/quizes/${quiz.id}`)}
                     color="primary"
-                    variant="ghost"
+                    variant="shadow"
                     className="w-full"
                   >
                     Начать

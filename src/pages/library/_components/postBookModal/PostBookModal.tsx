@@ -157,7 +157,7 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
   }
 
   return (
-    <Modal onClose={onClose} isOpen={isOpen}>
+    <Modal onClose={onClose} isOpen={isOpen} size={window.innerWidth <= 768 ? 'full' : 'xl'}>
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1">
           Добавить книгу в библиотеку
