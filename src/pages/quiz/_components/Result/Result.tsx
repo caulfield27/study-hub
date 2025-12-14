@@ -39,7 +39,7 @@ export function Result({ result, quiz, userSelects }: Props) {
                       <p className="m-0">{questionText}</p>
                       {questionCode ? (
                         <SyntaxHighlighter
-                          language={quiz.lang ?? ""}
+                          language={quiz.name.toLowerCase()}
                           style={darcula}
                         >
                           {questionCode}
