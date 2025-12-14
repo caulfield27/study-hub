@@ -71,7 +71,7 @@ export function Result({ result, quiz, userSelects }: Props) {
                                 />
                               )}
                             <div className="w-full flex flex-row justify-between items-center">
-                              <div className="max-w-[350px]">{option}</div>
+                              <div className="max-w-[300px]">{option}</div>
                               <span
                                 className={`${
                                   isSelected

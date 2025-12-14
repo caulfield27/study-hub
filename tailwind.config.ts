@@ -10,7 +10,11 @@ export default {
     "./node_modules/@heroui/theme/dist/components/*.js",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screen: {
+        md: '768px'
+      }
+    },
   },
   darkMode: "class",
   plugins: [
@@ -30,7 +34,7 @@ export default {
               "800": "#0a0a0a",
               "900": "#0a0a0a",
               foreground: "#fff",
-              DEFAULT: "#d4d4d8",
+              DEFAULT: "#414141",
             },
             primary: {
               "50": "#fbe8e3",
@@ -47,18 +51,18 @@ export default {
               DEFAULT: "#db4422",
             },
             secondary: {
-              "50": "#e6e6e6",
-              "100": "#c3c3c3",
-              "200": "#a0a0a0",
-              "300": "#7d7d7d",
-              "400": "#5a5a5a",
-              "500": "#373737",
-              "600": "#2d2d2d",
-              "700": "#242424",
-              "800": "#1a1a1a",
-              "900": "#111111",
-              foreground: "#fff",
-              DEFAULT: "#373737",
+              "50": "#2c2c2c",
+              "100": "#1d1d1d",
+              "200": "#252424",
+              "300": "#272626",
+              "400": "#2c2b2b",
+              "500": "#3a3a3a",
+              "600": "#3a3a3a",
+              "700": "#3a3a3a",
+              "800": "#494949",
+              "900": "#494949",
+              foreground: "#000",
+              DEFAULT: "#fff",
             },
             success: {
               "50": "#e2f8ec",
@@ -71,7 +75,7 @@ export default {
               "700": "#0f8341",
               "800": "#0b5f30",
               "900": "#073c1e",
-              foreground: "#000",
+              foreground: "#fff",
               DEFAULT: "#17c964",
             },
             warning: {

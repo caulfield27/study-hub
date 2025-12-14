@@ -1,23 +1,17 @@
-import { useLibrary } from "./Library.store";
 import useSwr, { mutate } from "swr";
 import { api } from "@/shared/api/api.handlers";
 import { apiRoutes } from "@/shared/api/api.routes";
-import { DataLoader } from "@/shared/ui/DataLoader/DataLoader";
-import type { IBook } from "./Library.types";
-import { Book, PostBookModal, BooksModal } from "./_components";
+import type { IBook } from "@/shared/types/types";
+import { Book, PostBookModal } from "./_components";
 import { useEffect, useState } from "react";
 import useDebounce from "@/shared/hooks/useDebounce";
 import { Pagination } from "@heroui/pagination";
 import { Button } from "@heroui/button";
+import { PageLoader } from "@/shared/ui/Loader/PageLoader";
 
 function Library() {
-  // zustand store states
-  const currentBook = useLibrary((state) => state.currentBook);
-  const setCurrentBook = useLibrary((state) => state.setCurrentBook);
-
   // locale states
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  const [isBookModalOpen, setIsBookModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const debouncedValue = useDebounce(searchValue, 1000);
   const [query, setQuery] = useState({
@@ -52,12 +46,9 @@ function Library() {
     });
   }
 
-  return (
+  return isLoading ? <PageLoader/> : (
     <>
       <div className="flex flex-col gap-6">
-        {/* <div className="text-[32px] max-sm:text-[24px] font-bold max-[1150px]:flex max-[1150px]:justify-center max-[590px]:mx-[15px]">
-          <h1>Подборка книг от сообщества Study Hub</h1>
-        </div> */}
         <div
           className="
         w-full max-h-fit 
@@ -80,18 +71,11 @@ function Library() {
           </div>
         </div>
 
-        {/* BOOKS WRAPPER */}
         <div className="flex flex-col">
           <div className="flex f ex-row flex-wrap gap-5 mb-[50px] justify-center items-start">
-            {isLoading ? (
-              <DataLoader />
-            ) : error ? null : (
+            {error ? null : (
               books?.data?.map((book) => (
                 <Book
-                  onBookOpen={() => {
-                    setIsBookModalOpen(true);
-                    setCurrentBook(book);
-                  }}
                   key={book.id}
                   book={book}
                 />
@@ -109,15 +93,6 @@ function Library() {
           ) : null}
         </div>
       </div>
-      {currentBook && (
-        <BooksModal
-          isOpen={isBookModalOpen}
-          onClose={() => {
-            setIsBookModalOpen(false);
-            setCurrentBook(null);
-          }}
-        /> 
-      )}
       {isPostModalOpen && (
         <PostBookModal
           onSuccess={() => mutate(swrParams)}

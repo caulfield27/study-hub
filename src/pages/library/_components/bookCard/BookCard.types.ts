@@ -1,6 +1,5 @@
-import type { IBook } from "../../Library.types";
+import type { IBook } from "@/shared/types/types";
 
 export interface Props{
     book: IBook;
-    onBookOpen: () => void;
 }

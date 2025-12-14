@@ -2,6 +2,8 @@ import { lazy } from "react";
 
 export const Library = lazy(() => import("../../pages/library/Library"));
 
+export const Book = lazy(() => import("../../pages/book/Book"));
+
 export const Quizes = lazy(() => import("../../pages/quizes/Quizes"));
 
 export const Quiz = lazy(() => import("../../pages/quiz/Quiz"));

@@ -63,7 +63,7 @@ export const Register = ({
         name="username"
         placeholder="Введите имя"
         type="text"
-        variant="bordered"
+        color="secondary"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, username: e.target.value }))
         }
@@ -76,7 +76,7 @@ export const Register = ({
         name="email"
         placeholder="Введите свою почту"
         type="email"
-        variant="bordered"
+        color="secondary"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, email: e.target.value }))
         }
@@ -102,7 +102,7 @@ export const Register = ({
         placeholder="Введите пароль"
         type={isVisible ? "text" : "password"}
         name="password"
-        variant="bordered"
+        color="secondary"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, password: e.target.value }))
         }
@@ -125,8 +125,7 @@ export const Register = ({
         isLoading={submitting}
         className="w-full"
         type="submit"
-        variant="shadow"
-        color="secondary"
+        color="primary"
       >
         Регистрация
       </Button>

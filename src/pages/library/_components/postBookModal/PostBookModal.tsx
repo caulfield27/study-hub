@@ -1,22 +1,21 @@
 import { useState } from "react";
 import { isLink } from "@/shared/utils/utils";
-import type { IBook, IPostBookValidation } from "../../Library.types";
+import type { IPostBookValidation } from "../../Library.types";
 import { api } from "@/shared/api/api.handlers";
 import { apiRoutes } from "@/shared/api/api.routes";
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
-import type { Props } from "./PostBookModal.types";
+import type { PostData, Props } from "./PostBookModal.types";
 import { Input, Textarea } from "@heroui/input";
 import { Button } from "@heroui//button";
 import { DateInput } from "@heroui/date-input";
 import { addToast } from "@heroui/toast";
 
 export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
-  const [postData, setPostData] = useState<IBook>({
+  const [postData, setPostData] = useState<PostData>({
     name: "",
     author: "",
     image: "",
     pdf: "",
-    rating: null,
     released: "",
     description: "",
   });
@@ -35,10 +34,6 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
       message: "",
     },
     pdf: {
-      isValid: true,
-      message: "",
-    },
-    rating: {
       isValid: true,
       message: "",
     },
@@ -127,7 +122,6 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
       formData.append("author", postData.author);
       formData.append("image", postData.image);
       formData.append("pdf", postData.pdf);
-      formData.append("rating", String(postData.rating));
       formData.append("released", postData.released);
       formData.append("description", postData.description);
 
@@ -162,7 +156,7 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
         <ModalHeader className="flex flex-col gap-1">
           Добавить книгу в библиотеку
         </ModalHeader>
-        <ModalBody>
+        <ModalBody className="max-md:overflow-scroll max-md:pb-8">
           <form
             className="
           flex flex-col gap-8
@@ -233,27 +227,6 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
                 setValidation({
                   ...validation,
                   pdf: {
-                    isValid: true,
-                    message: "",
-                  },
-                })
-              }
-              onBlur={handleBlur}
-            />
-            <Input
-              value={String(postData.rating ?? "")}
-              name="rating"
-              color="secondary"
-              type="number"
-              label="Рейтинг"
-              placeholder="Введите рейтинг книги"
-              isInvalid={!validation.rating.isValid}
-              errorMessage={validation.rating.message}
-              onChange={handleDataChange}
-              onFocus={() =>
-                setValidation({
-                  ...validation,
-                  rating: {
                     isValid: true,
                     message: "",
                   },

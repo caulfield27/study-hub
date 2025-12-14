@@ -5,6 +5,8 @@ export const apiRoutes = {
       `/books?page=${page}&pageSize=${pageSize}${
         search ? `&search=${search}` : ""
       }`,
+    getById: (id: string) => `/books/${id}`,
+    postReview: (id: number) => `/books/review/${id}`
   },
   quizes: {
     get: "/quizes",

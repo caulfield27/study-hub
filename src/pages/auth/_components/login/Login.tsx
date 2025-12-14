@@ -34,7 +34,7 @@ export const Login = () => {
       localStorage.setItem("token", result.data);
       addToast({ color: "success", title: "Вход выполнен успешно" });
       setIsAuthed(true);
-      navigate("/");
+      navigate(-1);
     } catch (e: any) {
       setRequestError(e?.response?.data?.message ?? "Неизвестная ошибка");
     } finally {
@@ -52,6 +52,7 @@ export const Login = () => {
       className="flex flex-col gap-6"
     >
       <Input
+        color="secondary"
         isRequired
         errorMessage="Поле обязательно для заполнения"
         label="Имя"
@@ -59,7 +60,6 @@ export const Login = () => {
         name="username"
         placeholder="Введите имя"
         type="text"
-        variant="bordered"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, username: e.target.value }))
         }
@@ -85,7 +85,7 @@ export const Login = () => {
         placeholder="Введите пароль"
         type={isVisible ? "text" : "password"}
         name="password"
-        variant="bordered"
+        color="secondary"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, password: e.target.value }))
         }
@@ -108,8 +108,7 @@ export const Login = () => {
         isLoading={submitting}
         className="w-full"
         type="submit"
-        variant="shadow"
-        color="secondary"
+        color="primary"
       >
         Войти
       </Button>

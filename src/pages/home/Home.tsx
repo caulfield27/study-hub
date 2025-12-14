@@ -11,7 +11,6 @@ function Home() {
         max-xl:flex-col
       "
     >
-      {/* TEXT */}
       <div
         className="
           max-w-[700px]
@@ -38,15 +37,13 @@ function Home() {
         </p>
 
         <Button
-          onClick={() => navigate("/quizes")}
+          onPress={() => navigate("/quizes")}
           color="primary"
           className="mt-6 max-sm:w-full"
         >
           Проверить свои знания
         </Button>
       </div>
-
-      {/* IMAGE */}
       <div className="max-sm:mt-12">
         <img
           src="/mainImg.svg"

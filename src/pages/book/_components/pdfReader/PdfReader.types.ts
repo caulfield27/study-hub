@@ -1,4 +1,6 @@
+
 export interface Props{
-    isOpen: boolean;
+    name: string;
+    href: string;
     onClose: () => void;
 }

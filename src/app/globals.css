@@ -31,7 +31,7 @@ body,html {
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
-  -webkit-text-fill-color: hsl(var(--heroui-foreground) / 1) !important;
+  -webkit-text-fill-color: #e05435 !important;
   transition: background-color 9999s ease-in-out 0s;
-  caret-color: hsl(var(--heroui-foreground) / 1) !important;
+  caret-color: #e05435 !important;
 }
