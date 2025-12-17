@@ -117,11 +117,11 @@ export default {
               foreground: "#000",
             },
             content3: {
-              DEFAULT: "#e4e4e7",
+              DEFAULT: "#525252",
               foreground: "#000",
             },
             content4: {
-              DEFAULT: "#d4d4d8",
+              DEFAULT: "#6e6e6e",
               foreground: "#000",
             },
             focus: "#ed3b00",

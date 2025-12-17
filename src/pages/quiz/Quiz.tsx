@@ -110,7 +110,7 @@ function Quiz() {
           >
             <div className="flex flex-row justify-center items-center gap-1">
               <span className="font-bold">Вопрос:</span>
-              <span className="text-[#db4422] font-semibold">
+              <span className="text-(--primary-color) font-semibold">
                 {quiz.questions[questionIndex].id}
               </span>
               <span> | {quiz.questions.length}</span>

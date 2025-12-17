@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import useDebounce from "@/shared/hooks/useDebounce";
 import { Pagination } from "@heroui/pagination";
 import { Button } from "@heroui/button";
-import { PageLoader } from "@/shared/ui/Loader/PageLoader";
+import { BooksSkeleton } from "@/shared/skeletons/books/BooksSkeleton";
 
 function Library() {
   // locale states
@@ -30,7 +30,7 @@ function Library() {
   } = useSwr<{
     data: IBook[];
     total: number;
-  }>([swrParams,'public'], api.sendRequest, { revalidateOnFocus: false });
+  }>([swrParams, "public"], api.sendRequest, { revalidateOnFocus: false });
 
   // effect handlers
   useEffect(() => {
@@ -46,7 +46,7 @@ function Library() {
     });
   }
 
-  return isLoading ? <PageLoader/> : (
+  return (
     <>
       <div className="flex flex-col gap-6">
         <div
@@ -67,30 +67,35 @@ function Library() {
             max-[785px]:border max-[785px]:border-gray-400 max-sm:w-full"
               onChange={(e) => setSearchValue(e.target.value)}
             />
-            <Button variant="ghost" className="max-sm:w-full" onPress={() => setIsPostModalOpen(true)} color="primary">Предложить книгу</Button>
+            <Button
+              variant="ghost"
+              className="max-sm:w-full"
+              onPress={() => setIsPostModalOpen(true)}
+              color="primary"
+            >
+              Предложить книгу
+            </Button>
           </div>
         </div>
 
         <div className="flex flex-col">
-          <div className="flex f ex-row flex-wrap gap-5 mb-[50px] justify-center items-start">
-            {error ? null : (
-              books?.data?.map((book) => (
-                <Book
-                  key={book.id}
-                  book={book}
+          {isLoading ? (
+            <BooksSkeleton size={10} />
+          ) : (
+            <>
+              <div className="flex flex-row flex-wrap gap-5 mb-[50px] justify-center items-start">
+                {error ? null : books?.data?.map((book) => <Book key={book.id} book={book} />)}
+              </div>
+              {books?.total && books.total > query.pageSize ? (
+                <Pagination
+                  showControls
+                  total={Math.ceil(books.total / query.pageSize)}
+                  initialPage={query.page}
+                  onChange={handlePageChange}
                 />
-              ))
-            )}
-          </div>
-
-          {books?.total && books.total > query.pageSize ? (
-            <Pagination
-              showControls
-              total={Math.ceil(books.total / query.pageSize)}
-              initialPage={query.page}
-              onChange={handlePageChange}
-            />
-          ) : null}
+              ) : null}
+            </>
+          )}
         </div>
       </div>
       {isPostModalOpen && (

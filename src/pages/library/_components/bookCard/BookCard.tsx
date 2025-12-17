@@ -6,15 +6,16 @@ import { getFile } from "@/shared/utils/getFile";
 import { PencilLine } from "lucide-react";
 import { Rating } from "@/shared/ui/Rating/Rating";
 import { useNavigate } from "react-router";
+import { cn } from "@/shared/utils/clx";
 
-export const Book = ({ book }: Props) => {
+export const Book = ({ book, isScrollable }: Props) => {
   const navigate = useNavigate();
 
   return (
-    <Card className="w-48 max-sm:w-full">
+    <Card className={cn("w-48 shrink-0", !isScrollable && 'max-sm:w-full')}>
       <CardBody className="p-0">
         <div className="flex flex-col gap-3.5">
-          <div className="w-full flex max-sm:justify-center max-sm:mt-2">
+          <div className={cn("w-full flex", !isScrollable && "max-sm:justify-center max-sm:mt-2")}>
             <Image
               alt={book.name}
               src={getFile(book.image)}

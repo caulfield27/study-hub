@@ -4,7 +4,9 @@
 
 :root {
     --bgColor: #171717;
-    --sidebar-bg: #262626;
+    --primary-color: #db4422;
+    --primary-color-dark: #b62100b9;
+    --sidebar-bg: #262626; 
     --foreground: #f3f0f0;
     --sidebar-width: 270px;
 }

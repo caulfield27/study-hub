@@ -58,10 +58,10 @@ export function Sidebar() {
                 className={({ isActive }) =>
                   `
                     flex items-center max-[930px]:justify-center gap-2 px-2 py-2 rounded-xl text-white transition 
-                    hover:bg-[#db4422]
+                    hover:bg-(--primary-color)
                     ${
                       isActive
-                        ? "bg-[#db4422] text-yellow-400 pointer-events-none"
+                        ? "bg-(--primary-color) text-yellow-400 pointer-events-none"
                         : ""
                     }
                   `
