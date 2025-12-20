@@ -26,7 +26,7 @@ export const PdfReader = ({ name, href, onClose }: Props) => {
   return (
     <div className="fixed inset-0 bg-neutral-900 bg-opacity-90 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-xl w-full max-w-6xl h-[90vh] flex flex-col">
-        <div className="p-4 border-b border-slate-200 flex items-center justify-between">
+        <div className="p-4 border-b border-slate-200 flex items-center justify-between max-md:flex-col-reverse max-md:items-start max-md:gap-4">
           <h3 className="text-lg font-semibold text-neutral-900">Читаешь: {name}</h3>
           <div className="flex flex-row gap-2.5">
             <Button onPress={handleFullScreen} color="primary" startContent={<Maximize />}>

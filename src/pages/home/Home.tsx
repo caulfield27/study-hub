@@ -9,11 +9,11 @@ function Home() {
 
   return (
     <div className="flex flex-col gap-14">
-      <section className="relative min-h-screen flex items-centeroverflow-hidden">
+      <section className="relative flex items-center">
         <div className="relative w-full">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-8">
+          <div className="w-full">
+            <div className="flex flex-row max-[1600px]:flex-col gap-12 items-start justify-between">
+              <div className="space-y-8 w-full">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-(--primary-color)/10 border border-orange-500/20 rounded-full">
                   <Sparkles className="w-4 h-4 text-(--primary-color)" />
                   <span className="text-sm font-medium text-(--primary-color)">
@@ -22,7 +22,7 @@ function Home() {
                 </div>
 
                 <div className="space-y-4">
-                  <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight">
+                  <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight">
                     Учитесь кодить
                     <span className="block bg-linear-to-r from-(--primary-color) to-(--primary-color-dark) bg-clip-text text-transparent">
                       По-своему
@@ -81,14 +81,14 @@ function Home() {
                 </div>
               </div>
 
-              <div className="relative lg:block">
+              <div className="w-full relative lg:block min-[1600px]:mt-24">
                 <div className="absolute inset-0 bg-linear-to-tr from-(--primary-color)/20 to-(--primary-color-dark)/20 rounded-3xl blur-3xl" />
                 <div className="relative">
                   <div className="relative rounded-2xl overflow-hidden border border-neutral-800 shadow-2xl shadow-black/50">
                     <img
                       src={hero}
                       alt="Developer coding on laptop with multiple screens"
-                      className="w-full h-auto object-cover"
+                      className="w-full h-auto object-cover min-[1600px]:max-w-3xl"
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-neutral-950/80 via-transparent to-transparent" />
                   </div>
@@ -122,10 +122,20 @@ function Home() {
         </div>
       </section>
       <section className="flex flex-col gap-6">
-        <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight">
-          Популярные книги
-        </h2>
+        <div className="w-full flex flex-row items-center justify-between">
+          <h2 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-white leading-tight">
+            Популярные книги
+          </h2>
+          <Button size="lg" color="primary" onClick={() => navigate("/library")} variant="light">
+            Все книги
+          </Button>
+        </div>
         <PopularBooks />
+      </section>
+      <section className="flex flex-col gap-6">
+        <h2 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-white leading-tight">
+          Рекомендуемые тесты
+        </h2>
       </section>
     </div>
   );

@@ -17,9 +17,9 @@ export const PopularBooks = () => {
   }>([swrParams, "public"], api.sendRequest);
 
   return (
-    <div className="flex flex-row gap-8 flex-nowrap overflow-x-auto">
+    <div className="flex flex-row flex-nowrap gap-6 overflow-x-auto no-scrollbar">
       {isLoading ? (
-        <BooksSkeleton size={4} />
+        <BooksSkeleton size={4} isScrollable/>
       ) : (
         books?.data?.map((book) => <Book key={book.id} book={book} isScrollable={true}/>)
       )}

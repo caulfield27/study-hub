@@ -11,7 +11,7 @@ import { apiRoutes } from "@/shared/api/api.routes";
 import { Avatar } from "@heroui/avatar";
 import { formatDate } from "@/shared/utils/formateDate";
 
-export const PostReview = ({ bookId, reviews }: Props) => {
+export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
   // zustand store states
   const { isAuthed, user } = useGlobalStore();
 
@@ -40,6 +40,7 @@ export const PostReview = ({ bookId, reviews }: Props) => {
         },
         "private",
       ]);
+      onSuccess();
       setIsSuccess(true);
     } catch (e: any) {
       setError(e?.response?.data?.message ?? "Неизвестная ошибка");
@@ -61,14 +62,14 @@ export const PostReview = ({ bookId, reviews }: Props) => {
           setNewRating(5);
           setNewReview("");
         }}
-        className="mb-8 bg-neutral-700 rounded-xl p-6"
+        className="mb-8 bg-neutral-700 rounded-xl p-6 max-sm:p-4"
       >
         {!isAuthed && (
           <div className="flex items-center justify-center w-full">
             <Alert
               color="warning"
               endContent={<Link to={"/auth"}>Войти</Link>}
-              title="Оставить отзыв могут толь зарегистрированные пользователи"
+              description="Войдите в аккаунт чтобы оставить отзыв"
               variant="faded"
             />
           </div>
@@ -99,15 +100,11 @@ export const PostReview = ({ bookId, reviews }: Props) => {
           </div>
         ) : (
           <>
-            <h3 className="text-lg font-semibold mb-4">
-              Поделитесь своими мыслями
-            </h3>
+            <h3 className="text-lg font-semibold mb-4">Поделитесь своими мыслями</h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">
-                  Ваш рейтинг
-                </label>
+                <label className="block text-sm font-medium mb-2">Ваш рейтинг</label>
                 <ControlledRating
                   value={newRating}
                   onChange={(rating) => setNewRating(rating)}
@@ -116,9 +113,7 @@ export const PostReview = ({ bookId, reviews }: Props) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
-                  Ваш отзыв
-                </label>
+                <label className="block text-sm font-medium mb-2">Ваш отзыв</label>
                 <textarea
                   value={newReview}
                   onChange={(e) => setNewReview(e.target.value)}
@@ -162,18 +157,12 @@ export const PostReview = ({ bookId, reviews }: Props) => {
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h4 className="font-semibold">
-                        {review.username}
-                      </h4>
-                      <p className="text-sm text-neutral-400">
-                        {formatDate(review.created_at)}
-                      </p>
+                      <h4 className="font-semibold">{review.username}</h4>
+                      <p className="text-sm text-neutral-400">{formatDate(review.created_at)}</p>
                     </div>
                     <Rating rating={review.rating} />
                   </div>
-                  <p className="leading-relaxed">
-                    {review.comment}
-                  </p>
+                  <p className="leading-relaxed">{review.comment}</p>
                 </div>
               </div>
             </div>

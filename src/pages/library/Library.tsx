@@ -83,7 +83,7 @@ function Library() {
             <BooksSkeleton size={10} />
           ) : (
             <>
-              <div className="flex flex-row flex-wrap gap-5 mb-[50px] justify-center items-start">
+              <div className="flex flex-row flex-wrap gap-8 mb-[50px] justify-center items-start">
                 {error ? null : books?.data?.map((book) => <Book key={book.id} book={book} />)}
               </div>
               {books?.total && books.total > query.pageSize ? (

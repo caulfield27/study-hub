@@ -12,14 +12,15 @@ export const Book = ({ book, isScrollable }: Props) => {
   const navigate = useNavigate();
 
   return (
-    <Card className={cn("w-48 shrink-0", !isScrollable && 'max-sm:w-full')}>
+    <Card className={cn("w-[270px] shrink-0", !isScrollable && 'max-sm:w-full')}>
       <CardBody className="p-0">
         <div className="flex flex-col gap-3.5">
           <div className={cn("w-full flex", !isScrollable && "max-sm:justify-center max-sm:mt-2")}>
             <Image
               alt={book.name}
               src={getFile(book.image)}
-              className="w-48 h-64 object-cover"
+              width={270}
+              height={330}
             />
           </div>
           <div className="px-3 pb-3 flex flex-col gap-3">

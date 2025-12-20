@@ -26,6 +26,8 @@ function Layout() {
         className="
           w-full 
           grow 
+          max-w-full
+          overflow-x-hidden
           ml-[calc(var(--sidebar-width)+20px)] 
           px-[50px] 
           py-[30px]
