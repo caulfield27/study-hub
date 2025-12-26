@@ -9,7 +9,7 @@ export const PopularBooks = () => {
   // api
   const swrParams = {
     method: "get",
-    url: apiRoutes.books.get("", 1, 4),
+    url: apiRoutes.books.get("", 1, 7),
   };
   const { data: books, isLoading } = useSwr<{
     data: IBook[];

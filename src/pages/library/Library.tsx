@@ -49,7 +49,15 @@ function Library() {
   return (
     <>
       <div className="flex flex-col gap-6">
-        <div
+        <Button
+          variant="ghost"
+          className="w-fit max-sm:w-full"
+          onPress={() => setIsPostModalOpen(true)}
+          color="primary"
+        >
+          Предложить книгу
+        </Button>
+        {/* <div
           className="
         w-full max-h-fit 
         px-[35px] py-2.5
@@ -61,7 +69,7 @@ function Library() {
         >
           <div className="w-full flex items-center gap-[15px] max-sm:flex-col-reverse">
             <input
-              placeholder="Поиск..."
+              placeholder="название книги, автора..."
               className="text-black bg-(--foreground) border-0 rounded px-2.5 py-2.5 outline-none
             placeholder:text-[16px]
             max-[785px]:border max-[785px]:border-gray-400 max-sm:w-full"
@@ -76,7 +84,7 @@ function Library() {
               Предложить книгу
             </Button>
           </div>
-        </div>
+        </div> */}
 
         <div className="flex flex-col">
           {isLoading ? (

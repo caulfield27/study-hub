@@ -4,7 +4,7 @@ import logo from "/sh_logo_white.png";
 import { Divider } from "@heroui/divider";
 import { useEffect } from "react";
 import { useGlobalStore } from "@/shared/store";
-import { Profile } from "./_components";
+import { GlobalSearch, Profile } from "./_components";
 
 export function Sidebar() {
   const { isAuthed, user } = useGlobalStore();
@@ -43,8 +43,9 @@ export function Sidebar() {
       "
     >
       <div className="relative p-5">
-        <div className="flex flex-row gap-3 mb-5 pr-10 max-[930px]:pr-0 items-center text-white">
+        <div className="flex flex-col gap-3 mb-2 text-white w-full">
           <img src={logo} className="w-[60px]" />
+          <GlobalSearch />
         </div>
 
         <Divider className="bg-[#404040]" />
@@ -59,11 +60,7 @@ export function Sidebar() {
                   `
                     flex items-center max-[930px]:justify-center gap-2 px-2 py-2 rounded-xl text-white transition 
                     hover:bg-(--primary-color)
-                    ${
-                      isActive
-                        ? "bg-(--primary-color) text-yellow-400 pointer-events-none"
-                        : ""
-                    }
+                    ${isActive ? "bg-(--primary-color) text-yellow-400 pointer-events-none" : ""}
                   `
                 }
               >

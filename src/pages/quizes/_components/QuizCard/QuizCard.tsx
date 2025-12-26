@@ -6,12 +6,13 @@ import { Timer } from "lucide-react";
 import { Button } from "@heroui/button";
 import { useNavigate } from "react-router";
 import { Select, SelectItem } from "@heroui/select";
+import { cn } from "@/shared/utils/clx";
 
-export const QuizCard = ({ quizes }: Props) => {
+export const QuizCard = ({ quizes, isScrollable }: Props) => {
   const navigate = useNavigate();
   const [selectedQuiz, setSelectedQuiz] = useState(quizes[0]);
   return (
-    <Card className="w-[250px] max-sm:w-full">
+    <Card className={cn("w-[250px] shrink-0", !isScrollable && "max-sm:w-full")}>
       <CardBody className="flex flex-col gap-6 max-sm:gap-2 justify-center items-center">
         <Select
           color="secondary"

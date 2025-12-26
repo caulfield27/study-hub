@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
 import { Button } from "@heroui/button";
-import { ArrowRight, BookOpen, Code2, Sparkles, Trophy } from "lucide-react";
+import { ArrowRight, BookOpen, Code2, GraduationCap, Sparkles, Trophy } from "lucide-react";
 import hero from "/hero.webp";
-import { PopularBooks } from "./_components";
+import { PopularBooks, RecomendedQuizes } from "./_components";
 
 function Home() {
   const navigate = useNavigate();
@@ -42,11 +42,18 @@ function Home() {
                     variant="shadow"
                     size={"lg"}
                     endContent={<ArrowRight />}
+                    onPress={() => navigate("video-courses")}
                   >
                     Начать обучение
                   </Button>
-                  <Button className="max-sm:w-full" variant="shadow" size={"lg"}>
-                    Посмотреть курсы
+                  <Button
+                    onPress={() => navigate("quizes")}
+                    className="max-sm:w-full"
+                    variant="shadow"
+                    size={"lg"}
+                    endContent={<GraduationCap />}
+                  >
+                    Проверь свои знания
                   </Button>
                 </div>
 
@@ -133,9 +140,15 @@ function Home() {
         <PopularBooks />
       </section>
       <section className="flex flex-col gap-6">
-        <h2 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-white leading-tight">
-          Рекомендуемые тесты
-        </h2>
+        <div className="w-full flex flex-row items-center justify-between">
+          <h2 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-white leading-tight">
+            Рекомендуемые тесты
+          </h2>
+          <Button size="lg" color="primary" onClick={() => navigate("/quizes")} variant="light">
+            Все тесты
+          </Button>
+        </div>
+        <RecomendedQuizes />
       </section>
     </div>
   );

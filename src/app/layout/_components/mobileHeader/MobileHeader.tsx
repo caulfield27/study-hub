@@ -1,12 +1,12 @@
 import logo from "/sh_logo_white.png";
 import { useGlobalStore } from "@/shared/store";
 import { Button } from "@heroui/button";
-import { Avatar } from "@heroui/avatar";
 import { useNavigate } from "react-router";
+import { ProfileDropdown } from "../profileDropdown/ProfileDropdown";
 
 export const MobileHeader = () => {
   const navigate = useNavigate();
-  const { isAuthed, user } = useGlobalStore();
+  const { isAuthed } = useGlobalStore();
   return (
     <header className="w-full p-4 flex flex-row justify-between items-center">
       <img src={logo} alt="logo" className="w-13" />
@@ -15,7 +15,7 @@ export const MobileHeader = () => {
           Войти
         </Button>
       ) : (
-        <Avatar color="primary" name={user?.username ?? ""} />
+        <ProfileDropdown/>
       )}
     </header>
   );

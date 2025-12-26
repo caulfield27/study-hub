@@ -14,7 +14,7 @@ export const BooksSkeleton = ({ size, isScrollable }: { size: number; isScrollab
         return (
           <Card
             key={idx}
-            className={cn("w-[270px] h-[450px] space-y-5 p-4", isScrollable && "max-sm:w-full")}
+            className={cn("w-[270px] h-[450px] space-y-5 p-4", !isScrollable && "max-sm:w-full")}
             radius="lg"
           >
             <Skeleton className="rounded-lg">

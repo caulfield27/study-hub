@@ -1,29 +1,29 @@
-// import { api } from "@/shared/api/api.handlers";
-// import { apiRoutes } from "@/shared/api/api.routes";
-// import type { IQuizResponse } from "@/shared/types/types";
-// import useSwr from "swr";
+import { QuizCard } from "@/pages/quizes/_components";
+import { getQuizes } from "@/pages/quizes/Quizes.utils";
+import { api } from "@/shared/api/api.handlers";
+import { apiRoutes } from "@/shared/api/api.routes";
+import { QuizesSkeleton } from "@/shared/skeletons/quizes/QuizesSkeleton";
+import type { IQuizResponse } from "@/shared/types/types";
+import useSwr from "swr";
 
 export const RecomendedQuizes = () => {
-  return <></>
-    // api
-  // const swrParams = {
-  //   method: "get",
-  //   url: apiRoutes.quizes,
-  // };
-  // const { data: quizes, isLoading } = useSwr<{
-  //   data: IQuizResponse[];
-  //   total: number;
-  // }>([swrParams, "public"], api.sendRequest);
-  // // temp slice until backend ready
-  // const slicedQuizes = quizes?.data.slice(0,4) ?? [];
+  //api
+  const swrParams = {
+    method: "get",
+    url: apiRoutes.quizes.get,
+  };
+  const { data, isLoading } = useSwr<IQuizResponse[]>([swrParams, "public"], api.sendRequest);
+  const quizes = getQuizes(data ?? []);
+  // temp slice until backend ready
+  const slicedQuizes = quizes.slice(0, 7) ?? [];
 
-//   return (
-//     <div className="flex flex-row flex-nowrap gap-6 overflow-x-auto no-scrollbar">
-//       {isLoading ? (
-//         <BooksSkeleton size={4} isScrollable/>
-//       ) : (
-//         books?.data?.map((book) => <Book key={book.id} book={book} isScrollable={true}/>)
-//       )}
-//     </div>
-//   );
-}
+  return (
+    <div className="flex flex-row flex-nowrap gap-6 overflow-x-auto no-scrollbar">
+      {isLoading ? (
+        <QuizesSkeleton size={4} isScrollable />
+      ) : (
+        slicedQuizes.map((quiz) => <QuizCard key={quiz.name} quizes={quiz.quizes} isScrollable/>)
+      )}
+    </div>
+  );
+};

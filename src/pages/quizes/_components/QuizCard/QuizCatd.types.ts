@@ -1,5 +1,6 @@
 import type { IQuizeDetails } from "@/shared/types/types";
 
 export interface Props{
-    quizes: IQuizeDetails[]
+    quizes: IQuizeDetails[];
+    isScrollable?: boolean;
 }
