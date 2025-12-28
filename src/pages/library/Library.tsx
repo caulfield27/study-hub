@@ -3,8 +3,8 @@ import { api } from "@/shared/api/api.handlers";
 import { apiRoutes } from "@/shared/api/api.routes";
 import type { IBook } from "@/shared/types/types";
 import { Book, PostBookModal } from "./_components";
-import { useEffect, useState } from "react";
-import useDebounce from "@/shared/hooks/useDebounce";
+import { useState } from "react";
+// import useDebounce from "@/shared/hooks/useDebounce";
 import { Pagination } from "@heroui/pagination";
 import { Button } from "@heroui/button";
 import { BooksSkeleton } from "@/shared/skeletons/books/BooksSkeleton";
@@ -12,8 +12,8 @@ import { BooksSkeleton } from "@/shared/skeletons/books/BooksSkeleton";
 function Library() {
   // locale states
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
-  const debouncedValue = useDebounce(searchValue, 1000);
+  // const [searchValue, setSearchValue] = useState("");
+  // const debouncedValue = useDebounce(searchValue, 1000);
   const [query, setQuery] = useState({
     page: 1,
     pageSize: 15,
@@ -33,9 +33,9 @@ function Library() {
   }>([swrParams, "public"], api.sendRequest, { revalidateOnFocus: false });
 
   // effect handlers
-  useEffect(() => {
-    setQuery((prev) => ({ ...prev, page: 1, search: debouncedValue }));
-  }, [debouncedValue]);
+  // useEffect(() => {
+  //   setQuery((prev) => ({ ...prev, page: 1, search: debouncedValue }));
+  // }, [debouncedValue]);
 
   // event handlers
   function handlePageChange(page: number) {
