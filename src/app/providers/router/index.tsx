@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import Layout from "../../layout/layout";
-import { Auth, Book, Home, Library, Quiz, Quizes, VideoCourses } from "../../lazy";
+import { Auth, Book, Home, Library, Quiz, Quizes, Search, VideoCourses } from "../../lazy";
 import { GuestRoutes } from "../accessProviders/GuestRoutes";
 
 export const router = createBrowserRouter([
@@ -31,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "/video-courses",
         element: <VideoCourses />,
+      },
+      {
+        path: "/search",
+        element: <Search/>,
       },
       {
         path: "/auth",
