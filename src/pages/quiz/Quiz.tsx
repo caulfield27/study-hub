@@ -6,7 +6,7 @@ import type { IQuizResponse } from "@/shared/types/types";
 import { useState } from "react";
 import { PageLoader } from "@/shared/ui/Loader/PageLoader";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { darcula, monokai, nord } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { nord } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { Timer } from "../../shared/ui/Timer/Timer";
 import { Result } from "./_components";
 import { splitQuestion } from "@/shared/utils/utils";
@@ -16,7 +16,6 @@ import { cn } from "@/shared/utils/clx";
 import { Button } from "@heroui/button";
 import { Alert } from "@heroui/alert";
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/breadcrumbs";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 function Quiz() {
   // api

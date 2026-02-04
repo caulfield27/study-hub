@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { api } from "@/shared/api/api.handlers";
 import { apiRoutes } from "@/shared/api/api.routes";
 import { useSearchParams } from "react-router"
@@ -25,5 +26,16 @@ function Search(){
 
     return null;
 };
+=======
+import { useSearchParams } from "react-router";
+
+
+const Search = () => {
+    const [searchParams] = useSearchParams();
+    const query = searchParams.get('q');
+
+    return <span>{query}</span>
+}
+>>>>>>> 4f50631cda848285aa674019ba8f58edc241ad22
 
 export default Search;

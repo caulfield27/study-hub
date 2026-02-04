@@ -21,6 +21,7 @@ export const Book = ({ book, isScrollable }: Props) => {
               src={getFile(book.image)}
               width={270}
               height={330}
+              className="rounded-none rounded-tl-large rounded-tr-large"
             />
           </div>
           <div className="px-3 pb-3 flex flex-col gap-3">

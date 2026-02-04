@@ -14,6 +14,8 @@ export const VideoCourses = lazy(
   () => import("../../pages/videoCourses/VideoCourses")
 );
 
+export const Search = lazy(() => import("../../pages/search/Search"));
+
 export const Auth = lazy(() => import("../../pages/auth/Auth"));
 
 export const Search = lazy(() => import("../../pages/search/Search"));
