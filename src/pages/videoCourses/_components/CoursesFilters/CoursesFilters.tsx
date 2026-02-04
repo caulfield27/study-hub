@@ -24,9 +24,7 @@ interface FilterControlsProps {
 
 export function FilterControls({
   filters,
-  sortBy,
   onFilterChange,
-  onSortChange,
   technologies,
 }: FilterControlsProps) {
   const hasActiveFilters = Object.values(filters).some((v) => v !== "all");
@@ -63,7 +61,7 @@ export function FilterControls({
             className="max-w-xs max-sm:max-w-full"
             labelPlacement="outside"
             label="Технология"
-            onSelectionChange={(key) => {}}
+            onSelectionChange={() => {}}
           >
             {technologies.map((tech) => (
               <SelectItem textValue={tech} key={tech}>
@@ -80,7 +78,7 @@ export function FilterControls({
             className="max-w-xs max-sm:max-w-full"
             labelPlacement="outside"
             label="Сложность"
-            onSelectionChange={(key) => {}}
+            onSelectionChange={() => {}}
           >
             <SelectItem textValue={"all"}>{"Все"}</SelectItem>
             <SelectItem textValue={"begginer"}>{"Начинающий"}</SelectItem>
@@ -96,7 +94,7 @@ export function FilterControls({
             className="max-w-xs max-sm:max-w-full"
             labelPlacement="outside"
             label="Продолжительность"
-            onSelectionChange={(key) => {}}
+            onSelectionChange={() => {}}
           >
             <SelectItem textValue={"all"}>{"Все"}</SelectItem>
             <SelectItem textValue={"short"}>{"Короткие"}</SelectItem>
@@ -112,7 +110,7 @@ export function FilterControls({
             className="max-w-xs max-sm:max-w-full"
             labelPlacement="outside"
             label="Цена"
-            onSelectionChange={(key) => {}}
+            onSelectionChange={() => {}}
           >
             <SelectItem textValue={"all"}>{"Все курсы"}</SelectItem>
             <SelectItem textValue={"paid"}>{"Платные"}</SelectItem>

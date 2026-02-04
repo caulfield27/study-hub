@@ -33,7 +33,7 @@ export const SearchResult = ({ data, total, query }: Props) => {
                 </span>
               </div>
               <div className="flex flex-row flex-nowrap gap-6 overflow-auto no-scrollbar">
-                {courses.map((course) => (
+                {courses.map(() => (
                   <div></div>
                 ))}
               </div>
