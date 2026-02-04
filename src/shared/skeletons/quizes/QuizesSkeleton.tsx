@@ -6,7 +6,7 @@ export const QuizesSkeleton = ({ size, isScrollable }: { size: number; isScrolla
   return (
     <div
       className={cn(
-        "w-full flex flex-wrap justify-center items-start gap-8 max-sm:gap-5",
+        "w-full flex flex-wrap justify-start items-start gap-8 max-sm:gap-5",
         isScrollable && "flex-nowrap"
       )}
     >

@@ -13,7 +13,8 @@ import { formatDate } from "@/shared/utils/formateDate";
 
 export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
   // zustand store states
-  const { isAuthed, user } = useGlobalStore();
+  const isAuthed = useGlobalStore((state) => state.isAuthed);
+  const user = useGlobalStore((state) => state.user);
 
   // locale states
   const [isSubmitting, setIsSubmitting] = useState(false);

@@ -11,7 +11,7 @@ import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 
 export const Login = () => {
-  const { setIsAuthed } = useGlobalStore();
+  const setIsAuthed = useGlobalStore((state) => state.setIsAuthed);
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [submitting, setSubmitting] = useState(false);

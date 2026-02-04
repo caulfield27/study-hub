@@ -5,17 +5,23 @@ import { Divider } from "@heroui/divider";
 import { useEffect } from "react";
 import { useGlobalStore } from "@/shared/store";
 import { GlobalSearch, Profile } from "./_components";
+import { cn } from "@/shared/utils/clx";
 
 export function Sidebar() {
-  const { isAuthed, user } = useGlobalStore();
+  const isAuthed = useGlobalStore((state) => state.isAuthed);
+  const user = useGlobalStore((state) => state.user);
+  const isSidebarHidden = useGlobalStore((state) => state.isSidebarHidden);
+  const setIsSidebarHidden = useGlobalStore((state) => state.setIsSidebarHidden);
   const links = isAuthed ? authedNavLinks : publicNavLinks;
 
   useEffect(() => {
     const handleResize = () => {
       const root = document.documentElement;
       if (window.innerWidth <= 930) {
+        setIsSidebarHidden(true);
         root.style.setProperty("--sidebar-width", "fit-content");
       } else {
+        setIsSidebarHidden(false);
         root.style.setProperty("--sidebar-width", "270px");
       }
     };
@@ -35,7 +41,7 @@ export function Sidebar() {
         top-1/2 
         -translate-y-1/2 
         left-5 
-        z-10 
+        z-100
         min-h-[95vh] 
         w-(--sidebar-width) 
         bg-(--sidebar-bg) 
@@ -48,7 +54,7 @@ export function Sidebar() {
           <GlobalSearch />
         </div>
 
-        <Divider className="bg-[#404040]" />
+        <Divider className={cn("bg-[#404040]")}/>
 
         <div className="h-full mt-5">
           <nav className="flex flex-col gap-5">
@@ -58,14 +64,15 @@ export function Sidebar() {
                 to={link.path}
                 className={({ isActive }) =>
                   `
-                    flex items-center max-[930px]:justify-center gap-2 px-2 py-2 rounded-xl text-white transition 
+                    flex items-center gap-2 px-2 py-2 rounded-xl text-white transition 
                     hover:bg-(--primary-color)
                     ${isActive ? "bg-(--primary-color) text-yellow-400 pointer-events-none" : ""}
+                    ${isSidebarHidden ? 'justify-center' : ''}
                   `
                 }
               >
                 <link.icon />
-                <span className="block max-[930px]:hidden">{link.name}</span>
+                {!isSidebarHidden && <span>{link.name}</span>}
               </NavLink>
             ))}
           </nav>
