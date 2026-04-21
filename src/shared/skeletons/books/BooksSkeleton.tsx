@@ -6,15 +6,15 @@ export const BooksSkeleton = ({ size, isScrollable }: { size: number; isScrollab
   return (
     <div
       className={cn(
-        "flex flex-row flex-wrap gap-5 justify-center items-start",
-        isScrollable && "flex-nowrap justify-start items-start overflow-x-auto no-scrollbar"
+        "w-full flex flex-wrap justify-start items-start gap-8 max-sm:gap-5",
+        isScrollable && "flex-nowrap"
       )}
     >
       {Array.from({ length: size }).map((_, idx) => {
         return (
           <Card
             key={idx}
-            className={cn("w-[270px] h-[450px] space-y-5 p-4", !isScrollable && "max-sm:w-full")}
+            className={cn("w-[270px] h-[450px] space-y-5 p-4 shrink-0", !isScrollable && "max-sm:w-full")}
             radius="lg"
           >
             <Skeleton className="rounded-lg">
