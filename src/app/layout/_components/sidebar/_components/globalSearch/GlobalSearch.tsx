@@ -2,7 +2,7 @@ import { useGlobalStore } from "@/shared/store";
 import { cn } from "@/shared/utils/clx";
 import { Input } from "@heroui/input";
 import { Search } from "lucide-react";
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 
 export const GlobalSearch = () => {
@@ -12,11 +12,11 @@ export const GlobalSearch = () => {
   const setIsSidebarHidden = useGlobalStore((state) => state.setIsSidebarHidden);
   const searchClicked = useRef(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  
   const handleSearch = () => {
-    // if (window.innerWidth <= 930 && window.innerWidth > 640) {
-    //   setIsSidebarHidden(true);
-    // }
+    if (window.innerWidth <= 930) {
+      console.log('case 1')
+      setIsSidebarHidden(true);
+    }
 
     if (!searchValue) return;
     navigate(`/search?q=${searchValue}`);
@@ -28,8 +28,7 @@ export const GlobalSearch = () => {
     }
   }, [isSidebarHidden]);
 
-  function handleOpenSearch(e: MouseEvent) {
-    e.stopPropagation();
+  function handleOpenSearch() {
     if (!searchClicked.current) {
       searchClicked.current = true;
     }
