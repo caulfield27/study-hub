@@ -14,7 +14,7 @@ export const GlobalSearch = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   
   const handleSearch = () => {
-    if (window.innerWidth <= 930 && window.innerHeight > 640) {
+    if (window.innerWidth <= 930 && window.innerWidth > 640) {
       setIsSidebarHidden(true);
     }
 
