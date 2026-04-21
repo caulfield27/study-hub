@@ -1,7 +1,7 @@
 import { cn } from "@/shared/utils/clx";
 import { Input } from "@heroui/input";
 import { Search } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 
 export const GlobalSearch = () => {
@@ -17,10 +17,11 @@ export const GlobalSearch = () => {
     navigate(`/search?q=${searchValue}`);
   };
 
-  const openSearchInput = () => {
-    setShowInput(true);
-    inputRef.current?.focus();
-  };
+  useEffect(() => {
+    if (showInput) {
+      inputRef.current?.focus();
+    }
+  }, [showInput]);
 
   return (
     <>
@@ -46,7 +47,7 @@ export const GlobalSearch = () => {
       </div>
       <div className="max-[930px]:flex hidden justify-center items-center">
         <button
-          onClick={openSearchInput}
+          onClick={() => setShowInput(true)}
           className={cn(
             "cursor-pointer flex justify-center items-center border-0 outline-0 bg-[#1d1d1d] p-2 rounded-xl",
             showInput && "hidden",

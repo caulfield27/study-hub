@@ -18,8 +18,6 @@ export function Sidebar() {
     const handleResize = () => {
       const root = document.documentElement;
       if (window.innerWidth <= 930) {
-        console.log('case 2');
-        
         setIsSidebarHidden(true);
         root.style.setProperty("--sidebar-width", "fit-content");
       } else {
