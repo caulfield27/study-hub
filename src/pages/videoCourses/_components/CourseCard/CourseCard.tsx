@@ -1,87 +1,111 @@
-import { Card } from "@heroui/card";
-import { BookOpen, Clock, DollarSign, User } from "lucide-react";
-import type { ICourse } from "../../VideoCoursesTypes";
-import { getFile } from "@/shared/utils/getFile";
-import { Divider } from "@heroui/divider";
+import { Link } from "react-router";
 import { Button } from "@heroui/button";
+import { Card } from "@heroui/card";
+import { Chip } from "@heroui/chip";
+import { Divider } from "@heroui/divider";
+import { Image } from "@heroui/image";
+import { Clock3, Globe2, MessageSquare, PlayCircle, User } from "lucide-react";
+import { Rating } from "@/shared/ui/Rating/Rating";
+import type { ICourse } from "../../VideoCoursesTypes";
 
-interface Props{
-  course: ICourse
+interface Props {
+  course: ICourse;
 }
 
-export const CourseCard = ({course} : Props) => {
+const languageLabel: Record<ICourse["language"], string> = {
+  en: "English",
+  ru: "Русский",
+  kz: "Қазақша",
+};
+
+export const CourseCard = ({ course }: Props) => {
   return (
-    <Card className="transition-all duration-300 overflow-hidden group">
-      <div className="relative overflow-hidden h-48">
-        <img
-          role="button"
-          onClick={() => {}}
-          src={getFile(course.poster)}
-          alt={course.name}
-          className="cursor-pointer w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-        <div className="absolute top-3 right-3">
-          {course.is_free ? (
-            <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
-              бесплатно
-            </span>
-          ) : (
-            <span className="bg-gray-900 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg flex items-center gap-1">
-              <DollarSign size={14} />
-              платно
-            </span>
-          )}
+    <Card className="h-full overflow-hidden border border-neutral-800 bg-neutral-900/80">
+      <div className="flex h-full flex-col">
+        <div className="relative aspect-video overflow-hidden">
+          <Image
+            removeWrapper
+            src={course.poster}
+            alt={course.name}
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+            <Chip color={course.is_free ? "success" : "warning"} variant="solid">
+              {course.is_free ? "Free" : `$${course.price}`}
+            </Chip>
+            <Chip variant="flat" className="border border-white/10 bg-black/35 text-white">
+              {course.lessons_count} lessons
+            </Chip>
+          </div>
         </div>
-        {/* <div className="absolute top-3 left-3">
-          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${difficultyColors[course.difficulty]}`}>
-            {course.difficulty}
-          </span>
-        </div> */}
-      </div>
 
-      <div className="p-5">
-        <h3 className="text-xl font-bold text-neutral-200">
-          {course.name}
-        </h3>
+        <div className="flex h-full flex-col p-5">
+          <div className="flex flex-wrap gap-2">
+            {course.categories.map((category) => (
+              <Chip key={category} variant="flat" color="primary">
+                {category}
+              </Chip>
+            ))}
+          </div>
 
-        <p className="text-neutral-300 dark:text-gray-300 text-sm mb-4 line-clamp-2">
-          {course.description}
-        </p>
+          <div className="mt-4 space-y-3">
+            <Link to={`/video-courses/${course.slug}`} className="inline-block">
+              <h2 className="text-2xl font-semibold text-white transition-colors hover:text-(--primary-color)">
+                {course.name}
+              </h2>
+            </Link>
+            <p className="line-clamp-2 text-sm leading-6 text-neutral-300">
+              {course.shortDescription}
+            </p>
+          </div>
 
-        {/* <div className="flex flex-wrap gap-2 mb-4">
-          {course.tags.map((tag) => (
-            <span
-              key={tag}
-              className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-md text-xs font-medium"
+          <div className="mt-5 grid grid-cols-1 gap-3 text-sm text-neutral-300 sm:grid-cols-2">
+            <div className="flex items-center gap-2">
+              <Rating rating={course.rating_avg} />
+              <span className="font-medium text-white">{course.rating_avg.toFixed(1)}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <MessageSquare className="h-4 w-4" />
+              <span>{course.reviews_count} reviews</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Globe2 className="h-4 w-4" />
+              <span>{languageLabel[course.language]}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Clock3 className="h-4 w-4" />
+              <span>{course.duration}h</span>
+            </div>
+          </div>
+
+          <Divider className="my-5 bg-neutral-800" />
+
+          <p className="line-clamp-3 min-h-[72px] text-sm leading-6 text-neutral-400">
+            {course.description}
+          </p>
+
+          <div className="mt-auto flex flex-col gap-4 pt-5">
+            <div className="flex items-start gap-2 text-sm text-neutral-300">
+              <User className="mt-0.5 h-4 w-4 shrink-0" />
+              <div className="min-w-0">
+                <p className="truncate font-medium text-white">{course.author}</p>
+                <p className="line-clamp-1 text-neutral-500">{course.authorRole}</p>
+              </div>
+            </div>
+
+            <Button
+              as={Link}
+              to={`/video-courses/${course.slug}`}
+              color="primary"
+              variant="shadow"
+              startContent={<PlayCircle className="h-4 w-4" />}
+              className="w-full"
             >
-              {tag}
-            </span>
-          ))}
-        </div> */}
-
-        <div className="flex items-center justify-between text-sm text-neutral-200 mb-3">
-          <div className="flex items-center gap-1">
-            <Clock size={16} />
-            <span>{course.duration}ч</span>
+              Open course
+            </Button>
           </div>
-          <div className="flex items-center gap-1">
-            <BookOpen size={16} />
-            <span>10 Уроков</span>
-          </div>
-        </div>
-        <div className="w-full mb-3">
-          <Button variant="shadow" color="primary" className="w-full">Посмотреть</Button>
-        </div>
-        
-        <Divider className="bg-neutral-600"/>
-
-        <div className="flex items-center gap-2 pt-3">
-          <User size={16} className="text-neutral-200" />
-          <span className="text-sm text-neutral-300 font-medium">
-            {course.author}
-          </span>
         </div>
       </div>
     </Card>
   );
-}
+};

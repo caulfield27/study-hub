@@ -9,12 +9,27 @@ export const GlobalSearch = () => {
   const [searchValue, setSearchValue] = useState("");
   const [showInput, setShowInput] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const btnRef = useRef<HTMLButtonElement | null>(null);
 
   const handleSearch = () => {
+    window.removeEventListener("click", handleOpenSearch);
     setShowInput(false);
     if (!searchValue) return;
     setSearchValue("");
     navigate(`/search?q=${searchValue}`);
+  };
+
+  const handleClickOutside = (e: MouseEvent) => {
+    const target = e.target as Node;
+    if (!inputRef.current?.contains(target) && !btnRef.current?.contains(target)) {
+      setShowInput(false);
+      window.removeEventListener("click", handleClickOutside);
+    }
+  };
+
+  const handleOpenSearch = () => {
+    setTimeout(() => window.addEventListener("click", handleClickOutside));
+    setShowInput(true);
   };
 
   useEffect(() => {
@@ -47,7 +62,8 @@ export const GlobalSearch = () => {
       </div>
       <div className="max-[930px]:flex hidden justify-center items-center">
         <button
-          onClick={() => setShowInput(true)}
+          ref={btnRef}
+          onClick={handleOpenSearch}
           className={cn(
             "cursor-pointer flex justify-center items-center border-0 outline-0 bg-[#1d1d1d] p-2 rounded-xl",
             showInput && "hidden",
@@ -61,7 +77,7 @@ export const GlobalSearch = () => {
           value={searchValue}
           color="secondary"
           placeholder="поиск..."
-          className={cn("w-[150px]", !showInput && "hidden")}
+          className={cn("w-[200px]", !showInput && "hidden")}
           classNames={{ input: "placeholder:text-neutral-500 max-[930px]:placeholder:none" }}
           endContent={
             <button onClick={handleSearch} className="border-0 outline-0 bg-none cursor-pointer">
