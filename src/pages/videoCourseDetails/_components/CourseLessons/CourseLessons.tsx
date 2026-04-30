@@ -1,6 +1,7 @@
 import { Button } from "@heroui/button";
 import { Card } from "@heroui/card";
-import type { ICourseLesson } from "../../VideoCoursesTypes";
+import type { ICourseLesson } from "../../../videoCourses/VideoCoursesTypes";
+import { cn } from "@/shared/utils/clx";
 
 interface Props {
   lessons: ICourseLesson[];
@@ -25,7 +26,7 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
         </div>
 
         <div className="mt-4 space-y-2">
-          <p className="text-sm text-neutral-400">Now playing</p>
+          <p className="text-sm text-neutral-400">Сейчас воспроизводится</p>
           <h3 className="text-xl font-semibold text-white">{activeLesson.title}</h3>
           <p className="text-neutral-300">{activeLesson.description}</p>
         </div>
@@ -46,13 +47,13 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
                 key={lesson.id}
                 variant={active ? "solid" : "flat"}
                 color={active ? "primary" : "default"}
-                className="h-auto w-full justify-start p-4 text-left"
+                className={cn("h-auto w-full justify-start p-4 text-left", active && 'pointer-events-none')}
                 onPress={() => onSelect(lesson.id)}
               >
-                <div className="flex w-full items-start justify-between gap-4">
+                <div className="flex w-full items-start justify-between gap-4 text-white">
                   <div>
                     <p className="text-xs uppercase tracking-wide opacity-70">
-                      Lesson {index + 1}
+                      Урок {index + 1}
                     </p>
                     <p className="text-sm font-medium">{lesson.title}</p>
                   </div>

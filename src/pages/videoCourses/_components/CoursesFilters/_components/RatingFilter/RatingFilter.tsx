@@ -10,7 +10,7 @@ export const RatingFilter = ({ value, onChange }: Props) => {
   return (
     <section className="space-y-3">
       <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        Rating
+        Рейтинг
       </h3>
       <RadioGroup
         value={value}

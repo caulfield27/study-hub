@@ -10,12 +10,10 @@ export const Quiz = lazy(() => import("../../pages/quiz/Quiz"));
 
 export const Home = lazy(() => import("../../pages/home/Home"));
 
-export const VideoCourses = lazy(
-  () => import("../../pages/videoCourses/VideoCourses")
-);
+export const VideoCourses = lazy(() => import("../../pages/videoCourses/VideoCourses"));
 
 export const VideoCourseDetails = lazy(
-  () => import("../../pages/videoCourses/VideoCourseDetails")
+  () => import("../../pages/videoCourseDetails/VideoCourseDetails"),
 );
 
 export const Search = lazy(() => import("../../pages/search/Search"));

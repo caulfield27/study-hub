@@ -4,16 +4,15 @@ import { apiRoutes } from "@/shared/api/api.routes";
 import type { IBook } from "@/shared/types/types";
 import { Book, PostBookModal } from "./_components";
 import { useState } from "react";
-// import useDebounce from "@/shared/hooks/useDebounce";
 import { Pagination } from "@heroui/pagination";
 import { Button } from "@heroui/button";
 import { BooksSkeleton } from "@/shared/skeletons/books/BooksSkeleton";
+import { PageHeader } from "@/shared/ui/PageHeader/PageHeader";
+import { LibraryIcon } from "lucide-react";
 
 function Library() {
   // locale states
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  // const [searchValue, setSearchValue] = useState("");
-  // const debouncedValue = useDebounce(searchValue, 1000);
   const [query, setQuery] = useState({
     page: 1,
     pageSize: 15,
@@ -32,11 +31,6 @@ function Library() {
     total: number;
   }>([swrParams, "public"], api.sendRequest, { revalidateOnFocus: false });
 
-  // effect handlers
-  // useEffect(() => {
-  //   setQuery((prev) => ({ ...prev, page: 1, search: debouncedValue }));
-  // }, [debouncedValue]);
-
   // event handlers
   function handlePageChange(page: number) {
     setQuery((prev) => ({ ...prev, page }));
@@ -49,6 +43,13 @@ function Library() {
   return (
     <>
       <div className="flex flex-col gap-6">
+        <PageHeader
+          Icon={LibraryIcon}
+          label="Библиотека"
+          title="Откройте библиотеку знаний и прокачайте навыки разработки"
+          description="Подборка лучших книг по программированию от базовых концепций до продвинутых практик.
+              Учитесь в своем ритме и углубляйте понимание технологий."
+        />
         <Button
           variant="ghost"
           className="w-fit max-sm:w-full"
@@ -57,41 +58,12 @@ function Library() {
         >
           Предложить книгу
         </Button>
-        {/* <div
-          className="
-        w-full max-h-fit 
-        px-[35px] py-2.5
-        bg-(--sidebar-bg)
-        rounded
-        flex flex-row justify-start items-center
-        gap-[50px]
-      "
-        >
-          <div className="w-full flex items-center gap-[15px] max-sm:flex-col-reverse">
-            <input
-              placeholder="название книги, автора..."
-              className="text-black bg-(--foreground) border-0 rounded px-2.5 py-2.5 outline-none
-            placeholder:text-[16px]
-            max-[785px]:border max-[785px]:border-gray-400 max-sm:w-full"
-              onChange={(e) => setSearchValue(e.target.value)}
-            />
-            <Button
-              variant="ghost"
-              className="max-sm:w-full"
-              onPress={() => setIsPostModalOpen(true)}
-              color="primary"
-            >
-              Предложить книгу
-            </Button>
-          </div>
-        </div> */}
-
         <div className="flex flex-col">
           {isLoading ? (
             <BooksSkeleton size={10} />
           ) : (
             <>
-              <div className="flex flex-row flex-wrap gap-8 mb-[50px] justify-center items-start">
+              <div className="flex flex-row flex-wrap gap-8 mb-12.5 justify-center items-start">
                 {error ? null : books?.data?.map((book) => <Book key={book.id} book={book} />)}
               </div>
               {books?.total && books.total > query.pageSize ? (

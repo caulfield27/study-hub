@@ -22,19 +22,19 @@ export const CourseCard = ({ course }: Props) => {
   return (
     <Card className="h-full overflow-hidden border border-neutral-800 bg-neutral-900/80">
       <div className="flex h-full flex-col">
-        <div className="relative aspect-video overflow-hidden">
+        <div className="relative overflow-hidden">
           <Image
             removeWrapper
             src={course.poster}
             alt={course.name}
             className="h-full w-full object-cover"
           />
-          <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+          <div className="absolute left-4 top-4 flex flex-wrap gap-2 z-10">
             <Chip color={course.is_free ? "success" : "warning"} variant="solid">
-              {course.is_free ? "Free" : `$${course.price}`}
+              {course.is_free ? "Бесплатно" : `$${course.price}`}
             </Chip>
             <Chip variant="flat" className="border border-white/10 bg-black/35 text-white">
-              {course.lessons_count} lessons
+              {course.lessons_count} уроков
             </Chip>
           </div>
         </div>
@@ -80,7 +80,7 @@ export const CourseCard = ({ course }: Props) => {
 
           <Divider className="my-5 bg-neutral-800" />
 
-          <p className="line-clamp-3 min-h-[72px] text-sm leading-6 text-neutral-400">
+          <p className="line-clamp-3 min-h-18 text-sm leading-6 text-neutral-400">
             {course.description}
           </p>
 
@@ -101,7 +101,7 @@ export const CourseCard = ({ course }: Props) => {
               startContent={<PlayCircle className="h-4 w-4" />}
               className="w-full"
             >
-              Open course
+              Открыть курс
             </Button>
           </div>
         </div>

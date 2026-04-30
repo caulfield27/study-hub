@@ -17,7 +17,7 @@ interface Props {
 
 export function CoursesFilters({ categories, filters, onChange, onReset }: Props) {
   return (
-    <aside className="lg:sticky lg:top-6">
+    <aside className="lg:sticky top-0 lg:top-6">
       <Card className="space-y-6 border border-neutral-800 bg-neutral-900/80 p-5">
         <div className="flex items-center justify-between gap-3">
           <div>
@@ -25,7 +25,7 @@ export function CoursesFilters({ categories, filters, onChange, onReset }: Props
             <p className="text-sm text-neutral-400">Сузьте подборку под свой запрос</p>
           </div>
           <Button variant="light" color="primary" onPress={onReset}>
-            Reset
+            Сбросить
           </Button>
         </div>
 

@@ -46,7 +46,7 @@ export const GlobalSearch = () => {
           value={searchValue}
           placeholder="Ищите курсы, книги, тесты..."
           color="secondary"
-          className={cn("w-full min-w-[170px] max-sm:min-w-[120px]")}
+          className={cn("w-full min-w-42.5 max-sm:min-w-30")}
           classNames={{ input: "placeholder:text-neutral-500" }}
           endContent={
             <button onClick={handleSearch} className="border-0 outline-0 bg-none cursor-pointer">
@@ -77,7 +77,7 @@ export const GlobalSearch = () => {
           value={searchValue}
           color="secondary"
           placeholder="поиск..."
-          className={cn("w-[200px]", !showInput && "hidden")}
+          className={cn("w-42.5", !showInput && "hidden")}
           classNames={{ input: "placeholder:text-neutral-500 max-[930px]:placeholder:none" }}
           endContent={
             <button onClick={handleSearch} className="border-0 outline-0 bg-none cursor-pointer">

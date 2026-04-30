@@ -24,10 +24,7 @@ function Quiz() {
     method: "get",
     url: apiRoutes.quizes.getById(id ?? ""),
   };
-  const { data: quiz, isLoading } = useSwr<IQuizResponse>(
-    [swrKey, "public"],
-    api.sendRequest
-  );
+  const { data: quiz, isLoading } = useSwr<IQuizResponse>([swrKey, "public"], api.sendRequest);
 
   // locale states
   const [questionIndex, setQuestionIndex] = useState<number>(0);
@@ -44,9 +41,7 @@ function Quiz() {
     setTimerTrigger((prev) => !prev);
   };
   const [result, setResult] = useState(0);
-  const [questionText, formattedCode] = splitQuestion(
-    quiz?.questions?.[questionIndex]?.question
-  );
+  const [questionText, formattedCode] = splitQuestion(quiz?.questions?.[questionIndex]?.question);
 
   // event handlers
   function handleSelectChange(value: string) {
@@ -56,8 +51,7 @@ function Quiz() {
   }
 
   function handleNextQuestion() {
-    const isCorrect =
-      quiz?.questions[questionIndex].correct === userSelects[questionIndex];
+    const isCorrect = quiz?.questions[questionIndex].correct === userSelects[questionIndex];
     setResult((prev) => (isCorrect ? prev + 10 : prev + 0));
     if (questionIndex + 1 === quiz?.questions?.length) {
       setIsFinished(true);
@@ -77,7 +71,7 @@ function Quiz() {
     <div className="flex flex-col gap-2">
       <Breadcrumbs color="secondary">
         <BreadcrumbItem>
-          <Link to={'/quizes'}>Тесты</Link>
+          <Link to={"/quizes"}>Тесты</Link>
         </BreadcrumbItem>
         <BreadcrumbItem isDisabled>{quiz.name}</BreadcrumbItem>
       </Breadcrumbs>
@@ -87,14 +81,14 @@ function Quiz() {
         flex justify-center items-center gap-2 mb-2
       "
         >
-          <img src={quiz.img} alt={quiz.name} className="w-[60px]" />
+          <img src={quiz.img} alt={quiz.name} className="w-15" />
           <span className="font-semibold">{quiz.name}</span>
           <Rating rating={quiz.complexity} />
         </div>
 
         <div
           className="
-        min-w-[700px] rounded 
+        min-w-175 rounded 
         max-[1100px]:min-w-full
         flex flex-col justify-center items-center gap-4
         max-[780px]:w-fit 
@@ -130,12 +124,7 @@ function Quiz() {
                 color="danger"
                 description="К сожалению вы не успели пройти тест во время"
                 endContent={
-                  <Button
-                    color="danger"
-                    size="md"
-                    variant="flat"
-                    onPress={reset}
-                  >
+                  <Button color="danger" size="md" variant="flat" onPress={reset}>
                     Повторить
                   </Button>
                 }
@@ -150,6 +139,7 @@ function Quiz() {
 
                 {formattedCode ? (
                   <SyntaxHighlighter
+                    customStyle={{ maxWidth: "91vw" }}
                     showLineNumbers
                     style={nord}
                   >
@@ -164,36 +154,32 @@ function Quiz() {
                   value={userSelects[questionIndex] || ""}
                   onValueChange={handleSelectChange}
                 >
-                  {quiz.questions[questionIndex].variants.map(
-                    (variant: string) => (
-                      <Radio
-                        key={variant}
-                        value={variant}
-                        classNames={{
-                          base: cn(
-                            "inline-flex m-0 bg-content1 items-center",
-                            "flex-row max-w-full cursor-pointer rounded-lg gap-4 p-4 border-2 border-transparent",
-                            "data-[selected=true]:border-[#404040]"
-                          ),
-                        }}
-                      >
-                        {variant}
-                      </Radio>
-                    )
-                  )}
+                  {quiz.questions[questionIndex].variants.map((variant: string) => (
+                    <Radio
+                      key={variant}
+                      value={variant}
+                      classNames={{
+                        base: cn(
+                          "inline-flex m-0 bg-content1 items-center",
+                          "flex-row max-w-full cursor-pointer rounded-lg gap-4 p-4 border-2 border-transparent",
+                          "data-[selected=true]:border-[#404040]",
+                        ),
+                      }}
+                    >
+                      {variant}
+                    </Radio>
+                  ))}
                 </RadioGroup>
               </div>
 
-              <div className="w-full flex justify-start items-start mt-[-5px]">
+              <div className="w-full flex justify-start items-start mt-1.25">
                 <Button
                   onPress={handleNextQuestion}
                   isDisabled={!userSelects[questionIndex]}
                   variant="shadow"
                   color="primary"
                 >
-                  {questionIndex === quiz.questions.length - 1
-                    ? "Завершить"
-                    : "Далее"}
+                  {questionIndex === quiz.questions.length - 1 ? "Завершить" : "Далее"}
                 </Button>
               </div>
             </>

@@ -10,7 +10,7 @@ export const PriceFilter = ({ value, onChange }: Props) => {
   return (
     <section className="space-y-3">
       <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        Price
+        Цена
       </h3>
       <RadioGroup
         value={value}

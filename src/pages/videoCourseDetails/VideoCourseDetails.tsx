@@ -6,17 +6,10 @@ import { Card } from "@heroui/card";
 import { Chip } from "@heroui/chip";
 import { Divider } from "@heroui/divider";
 import { Image } from "@heroui/image";
-import {
-  Clock3,
-  Globe2,
-  MessageSquare,
-  PlayCircle,
-  Star,
-  UserRound,
-} from "lucide-react";
+import { Clock3, Globe2, MessageSquare } from "lucide-react";
 import { Rating } from "@/shared/ui/Rating/Rating";
 import { CourseLessons, CourseReviews } from "./_components";
-import { videoCoursesMock } from "./videoCourses.data";
+import { videoCoursesMock } from "../videoCourses/videoCourses.data";
 
 const languageLabel = {
   en: "English",
@@ -26,10 +19,7 @@ const languageLabel = {
 
 function VideoCourseDetails() {
   const { slug } = useParams();
-  const course = useMemo(
-    () => videoCoursesMock.find((item) => item.slug === slug),
-    [slug]
-  );
+  const course = useMemo(() => videoCoursesMock.find((item) => item.slug === slug), [slug]);
   const [activeLessonId, setActiveLessonId] = useState(course?.lessons[0]?.id ?? 0);
 
   useEffect(() => {
@@ -50,14 +40,14 @@ function VideoCourseDetails() {
     <div className="space-y-8">
       <Breadcrumbs color="secondary">
         <BreadcrumbItem>
-          <Link to="/video-courses">Video courses</Link>
+          <Link to="/video-courses">Видеоуроки</Link>
         </BreadcrumbItem>
         <BreadcrumbItem isDisabled>{course.name}</BreadcrumbItem>
       </Breadcrumbs>
 
       <Card className="overflow-hidden border border-neutral-800 bg-neutral-900/80">
         <div className="grid gap-0 xl:grid-cols-[360px_minmax(0,1fr)]">
-          <div className="relative min-h-[280px]">
+          <div className="relative min-h-70">
             <Image
               removeWrapper
               src={course.poster}
@@ -75,15 +65,13 @@ function VideoCourseDetails() {
                 </Chip>
               ))}
               <Chip color={course.is_free ? "success" : "warning"} variant="solid">
-                {course.is_free ? "Free" : `$${course.price}`}
+                {course.is_free ? "Бесплатно" : `$${course.price}`}
               </Chip>
             </div>
 
             <div className="space-y-3">
               <h1 className="text-3xl font-bold text-white md:text-5xl">{course.name}</h1>
-              <p className="max-w-4xl text-lg leading-8 text-neutral-300">
-                {course.description}
-              </p>
+              <p className="max-w-4xl text-lg leading-8 text-neutral-300">{course.description}</p>
             </div>
 
             <div className="flex flex-wrap items-center gap-5 text-sm text-neutral-300">
@@ -93,7 +81,7 @@ function VideoCourseDetails() {
               </div>
               <div className="flex items-center gap-1">
                 <MessageSquare className="h-4 w-4" />
-                <span>{course.reviews_count} reviews</span>
+                <span>{course.reviews_count} отзывов</span>
               </div>
               <div className="flex items-center gap-1">
                 <Globe2 className="h-4 w-4" />
@@ -101,44 +89,35 @@ function VideoCourseDetails() {
               </div>
               <div className="flex items-center gap-1">
                 <Clock3 className="h-4 w-4" />
-                <span>{course.duration}h total</span>
+                <span>{course.duration}ч всего</span>
               </div>
             </div>
 
             <Divider className="bg-neutral-800" />
 
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               <Card className="border border-neutral-800 bg-neutral-950/50 p-4">
-                <div className="flex items-center gap-3">
-                  <PlayCircle className="h-5 w-5 text-(--primary-color)" />
+                <div className="flex justify-start items-center gap-3">
                   <div>
-                    <p className="text-sm text-neutral-400">Lessons</p>
+                    <p className="text-sm text-neutral-400">Уроков</p>
                     <p className="font-semibold text-white">{course.lessons_count}</p>
                   </div>
                 </div>
               </Card>
               <Card className="border border-neutral-800 bg-neutral-950/50 p-4">
-                <div className="flex items-center gap-3">
-                  <UserRound className="h-5 w-5 text-(--primary-color)" />
+                <div className="flex justify-start items-center gap-3">
                   <div>
-                    <p className="text-sm text-neutral-400">Author</p>
+                    <p className="text-sm text-neutral-400">Автор</p>
                     <p className="font-semibold text-white">{course.author}</p>
                   </div>
                 </div>
               </Card>
               <Card className="border border-neutral-800 bg-neutral-950/50 p-4">
-                <div className="flex items-center gap-3">
-                  <Star className="h-5 w-5 text-(--primary-color)" />
+                <div className="flex justify-start items-center gap-3">
                   <div>
-                    <p className="text-sm text-neutral-400">Track</p>
-                    <p className="font-semibold text-white">{course.authorRole}</p>
+                    <p className="text-sm text-neutral-400">Добавлено</p>
+                    <p className="font-semibold text-white">{course.dateAdded}</p>
                   </div>
-                </div>
-              </Card>
-              <Card className="border border-neutral-800 bg-neutral-950/50 p-4">
-                <div>
-                  <p className="text-sm text-neutral-400">Added</p>
-                  <p className="font-semibold text-white">{course.dateAdded}</p>
                 </div>
               </Card>
             </div>
@@ -152,7 +131,7 @@ function VideoCourseDetails() {
                 lessonsSection?.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
             >
-              Start watching
+              Начать смотреть
             </Button>
           </div>
         </div>
@@ -160,10 +139,7 @@ function VideoCourseDetails() {
 
       <section id="course-lessons" className="space-y-4">
         <div>
-          <h2 className="text-2xl font-semibold text-white">Lessons and player</h2>
-          <p className="text-neutral-400">
-            Смотрите уроки прямо на странице и переключайтесь между темами курса.
-          </p>
+          <h2 className="text-2xl font-semibold text-white">Уроки</h2>
         </div>
 
         <CourseLessons

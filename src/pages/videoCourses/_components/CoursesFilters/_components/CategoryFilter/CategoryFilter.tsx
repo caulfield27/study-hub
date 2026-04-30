@@ -21,7 +21,7 @@ export const CategoryFilter = ({ categories, selected, onChange }: Props) => {
   return (
     <section className="space-y-3">
       <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        Categories
+        Категория
       </h3>
       <div className="flex flex-wrap gap-2">
         {categories.map((category) => {
