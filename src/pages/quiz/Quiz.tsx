@@ -16,8 +16,10 @@ import { cn } from "@/shared/utils/clx";
 import { Button } from "@heroui/button";
 import { Alert } from "@heroui/alert";
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/breadcrumbs";
+import { useI18n } from "@/shared/i18n";
 
 function Quiz() {
+  const { t } = useI18n();
   // api
   const { id } = useParams();
   const swrKey = {
@@ -71,7 +73,7 @@ function Quiz() {
     <div className="flex flex-col gap-2">
       <Breadcrumbs color="secondary">
         <BreadcrumbItem>
-          <Link to={"/quizes"}>Тесты</Link>
+          <Link to={"/quizes"}>{t("quizzes.breadcrumb")}</Link>
         </BreadcrumbItem>
         <BreadcrumbItem isDisabled>{quiz.name}</BreadcrumbItem>
       </Breadcrumbs>
@@ -103,7 +105,7 @@ function Quiz() {
         "
           >
             <div className="flex flex-row justify-center items-center gap-1">
-              <span className="font-bold">Вопрос:</span>
+              <span className="font-bold">{t("quizzes.question")}:</span>
               <span className="text-(--primary-color) font-semibold">
                 {quiz.questions[questionIndex].id}
               </span>
@@ -122,13 +124,13 @@ function Quiz() {
             <div className="flex items-center justify-center w-full">
               <Alert
                 color="danger"
-                description="К сожалению вы не успели пройти тест во время"
+                description={t("quizzes.timeoutDescription")}
                 endContent={
                   <Button color="danger" size="md" variant="flat" onPress={reset}>
-                    Повторить
+                    {t("common.retry")}
                   </Button>
                 }
-                title="Время вышло"
+                title={t("quizzes.timeoutTitle")}
                 variant="faded"
               />
             </div>
@@ -179,7 +181,7 @@ function Quiz() {
                   variant="shadow"
                   color="primary"
                 >
-                  {questionIndex === quiz.questions.length - 1 ? "Завершить" : "Далее"}
+                  {questionIndex === quiz.questions.length - 1 ? t("quizzes.finish") : t("quizzes.next")}
                 </Button>
               </div>
             </>

@@ -12,12 +12,14 @@ import {
   type FormEvent,
   type SetStateAction,
 } from "react";
+import { useI18n } from "@/shared/i18n";
 
 export const Register = ({
   setAuthType,
 }: {
   setAuthType: Dispatch<SetStateAction<string>>;
 }) => {
+  const { t } = useI18n();
   const [isVisible, setIsVisible] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [requestError, setRequestError] = useState<string | null>(null);
@@ -37,10 +39,10 @@ export const Register = ({
         data: JSON.stringify(payload),
         headers: { "Content-Type": "application/json" },
       },'public']);
-      addToast({ color: "success", title: "Регистрация прошла успешно" });
+      addToast({ color: "success", title: t("auth.registerSuccess") });
       setAuthType("login");
     } catch (e: any) {
-      setRequestError(e?.response?.data?.message ?? "Неизвестная ошибка");
+      setRequestError(e?.response?.data?.message ?? t("auth.unknownError"));
     } finally {
       setSubmitting(false);
     }
@@ -57,11 +59,11 @@ export const Register = ({
     >
       <Input
         isRequired
-        errorMessage="Поле обязательно для заполнения"
-        label="Имя"
+        errorMessage={t("auth.required")}
+        label={t("auth.name")}
         labelPlacement="outside"
         name="username"
-        placeholder="Введите имя"
+        placeholder={t("auth.enterName")}
         type="text"
         color="secondary"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -70,11 +72,11 @@ export const Register = ({
       />
       <Input
         isRequired
-        errorMessage="Неверный адресс почты"
-        label="Почта"
+        errorMessage={t("auth.invalidEmail")}
+        label={t("auth.email")}
         labelPlacement="outside"
         name="email"
-        placeholder="Введите свою почту"
+        placeholder={t("auth.enterEmail")}
         type="email"
         color="secondary"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -83,7 +85,7 @@ export const Register = ({
       />
       <Input
         isRequired
-        errorMessage="Поле обязательно для заполнения"
+        errorMessage={t("auth.required")}
         endContent={
           <button
             className="focus:outline-solid outline-transparent cursor-pointer"
@@ -97,9 +99,9 @@ export const Register = ({
             )}
           </button>
         }
-        label="Пароль"
+        label={t("auth.password")}
         labelPlacement="outside"
-        placeholder="Введите пароль"
+        placeholder={t("auth.enterPassword")}
         type={isVisible ? "text" : "password"}
         name="password"
         color="secondary"
@@ -113,10 +115,10 @@ export const Register = ({
           description={requestError}
           endContent={
             <Button color="danger" size="md" variant="flat" type="reset">
-              Повторить
+              {t("common.retry")}
             </Button>
           }
-          title="Не удалось выполнить вход"
+          title={t("auth.loginFailed")}
           variant="faded"
         />
       ) : null}
@@ -127,7 +129,7 @@ export const Register = ({
         type="submit"
         color="primary"
       >
-        Регистрация
+        {t("auth.registerButton")}
       </Button>
     </Form>
   );

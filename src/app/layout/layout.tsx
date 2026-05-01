@@ -29,9 +29,9 @@ function Layout() {
           max-w-full
           overflow-x-hidden
           ml-[calc(var(--sidebar-width)+20px)] 
-          px-[50px] 
-          py-[30px]
-          max-[930px]:ml-[100px]
+          px-12.5 
+          py-7.5
+          max-[930px]:ml-25
           max-sm:mb-16
           max-sm:ml-0
           max-sm:p-4

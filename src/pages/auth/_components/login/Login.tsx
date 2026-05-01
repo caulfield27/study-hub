@@ -9,8 +9,10 @@ import { addToast } from "@heroui/toast";
 import { Eye, EyeOff } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
+import { useI18n } from "@/shared/i18n";
 
 export const Login = () => {
+  const { t } = useI18n();
   const setIsAuthed = useGlobalStore((state) => state.setIsAuthed);
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
@@ -32,11 +34,11 @@ export const Login = () => {
         headers: { "Content-Type": "application/json" },
       }, 'public']);
       localStorage.setItem("token", result.data);
-      addToast({ color: "success", title: "Вход выполнен успешно" });
+      addToast({ color: "success", title: t("auth.loginSuccess") });
       setIsAuthed(true);
       navigate(-1);
     } catch (e: any) {
-      setRequestError(e?.response?.data?.message ?? "Неизвестная ошибка");
+      setRequestError(e?.response?.data?.message ?? t("auth.unknownError"));
     } finally {
       setSubmitting(false);
     }
@@ -54,11 +56,11 @@ export const Login = () => {
       <Input
         color="secondary"
         isRequired
-        errorMessage="Поле обязательно для заполнения"
-        label="Имя"
+        errorMessage={t("auth.required")}
+        label={t("auth.name")}
         labelPlacement="outside"
         name="username"
-        placeholder="Введите имя"
+        placeholder={t("auth.enterName")}
         type="text"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, username: e.target.value }))
@@ -66,7 +68,7 @@ export const Login = () => {
       />
       <Input
         isRequired
-        errorMessage="Поле обязательно для заполнения"
+        errorMessage={t("auth.required")}
         endContent={
           <button
             className="focus:outline-solid outline-transparent cursor-pointer"
@@ -80,9 +82,9 @@ export const Login = () => {
             )}
           </button>
         }
-        label="Пароль"
+        label={t("auth.password")}
         labelPlacement="outside"
-        placeholder="Введите пароль"
+        placeholder={t("auth.enterPassword")}
         type={isVisible ? "text" : "password"}
         name="password"
         color="secondary"
@@ -96,10 +98,10 @@ export const Login = () => {
           description={requestError}
           endContent={
             <Button color="danger" size="md" variant="flat" type="reset">
-              Повторить
+              {t("common.retry")}
             </Button>
           }
-          title="Не удалось выполнить вход"
+          title={t("auth.loginFailed")}
           variant="faded"
         />
       ) : null}
@@ -110,7 +112,7 @@ export const Login = () => {
         type="submit"
         color="primary"
       >
-        Войти
+        {t("common.login")}
       </Button>
     </Form>
   );

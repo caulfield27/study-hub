@@ -10,12 +10,14 @@ import { Rating, ControlledRating } from "@/shared/ui/Rating/Rating";
 import { useGlobalStore } from "@/shared/store";
 import { formatDate } from "@/shared/utils/formateDate";
 import type { ICourseReview } from "../../../videoCourses/VideoCoursesTypes";
+import { useI18n } from "@/shared/i18n";
 
 interface Props {
   initialReviews: ICourseReview[];
 }
 
 export const CourseReviews = ({ initialReviews }: Props) => {
+  const { locale, t } = useI18n();
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const user = useGlobalStore((state) => state.user);
   const [reviews, setReviews] = useState(initialReviews);
@@ -49,17 +51,17 @@ export const CourseReviews = ({ initialReviews }: Props) => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold text-white">Отзывы</h2>
-        <p className="text-neutral-400">Оценки и впечатления от студентов курса</p>
+        <h2 className="theme-text text-2xl font-semibold">{t("courses.courseReviews")}</h2>
+        <p className="theme-text-muted">{t("courses.reviewsSubtitle")}</p>
       </div>
 
-      <Card className="border border-neutral-700 bg-neutral-800/80 p-5">
+      <Card className="theme-surface-soft border p-5">
         <form className="space-y-4" onSubmit={handleSubmit}>
           {!isAuthed && (
             <Alert
               color="warning"
-              description="Войдите в аккаунт, чтобы оставить отзыв от своего имени."
-              endContent={<Link to="/auth">Войти</Link>}
+              description={t("courses.loginToReview")}
+              endContent={<Link to="/auth">{t("common.login")}</Link>}
               variant="faded"
             />
           )}
@@ -67,53 +69,53 @@ export const CourseReviews = ({ initialReviews }: Props) => {
           {isSubmitted && (
             <Alert
               color="success"
-              description="Отзыв добавлен локально и отображается в списке ниже."
+              description={t("courses.reviewAdded")}
               variant="faded"
             />
-          )}
+          )} 
           <div className="space-y-2">
-            <label className="text-sm text-neutral-300">Ваша оценка</label>
+            <label className="theme-text-muted text-sm">{t("courses.yourRating")}</label>
             <ControlledRating value={rating} onChange={setRating} />
           </div>
 
           <Textarea
             color="secondary"
             disabled={!isAuthed}
-            label="Ваш отзыв"
-            placeholder="Что было полезно в курсе?"
+            label={t("courses.yourReview")}
+            placeholder={t("courses.courseReviewPlaceholder")}
             minRows={4}
             value={comment}
             onValueChange={setComment}
           />
 
           <Button color="primary" type="submit" startContent={<Send className="h-4 w-4" />}>
-            Отправить
+            {t("common.submit")}
           </Button>
         </form>
       </Card>
 
       <div className="space-y-4">
         {reviews.length === 0 ? (
-          <Card className="border border-dashed border-neutral-800 bg-neutral-900/60 p-8 text-center text-neutral-400">
-            Пока нет отзывов по этому курсу.
+          <Card className="theme-surface border-dashed theme-border p-8 text-center theme-text-muted">
+            {t("courses.noCourseReviews")}
           </Card>
         ) : (
           reviews.map((review) => (
-            <Card key={review.id} className="border border-neutral-800 bg-neutral-900/80 p-5">
+            <Card key={review.id} className="theme-surface border p-5">
               <div className="flex gap-4">
                 <Avatar color="primary" name={review.username} />
                 <div className="min-w-0 flex-1 space-y-2">
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                     <div>
-                      <p className="font-medium text-white">{review.username}</p>
-                      <p className="text-sm text-neutral-500">{formatDate(review.created_at)}</p>
+                      <p className="theme-text font-medium">{review.username}</p>
+                      <p className="theme-text-muted text-sm">{formatDate(review.created_at, locale, t)}</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <Rating rating={review.rating} />
-                      <span className="text-sm text-white">{review.rating.toFixed(1)}</span>
+                      <span className="theme-text text-sm">{review.rating.toFixed(1)}</span>
                     </div>
                   </div>
-                  <p className="text-sm leading-6 text-neutral-300">{review.comment}</p>
+                  <p className="theme-text-muted text-sm leading-6">{review.comment}</p>
                 </div>
               </div>
             </Card>

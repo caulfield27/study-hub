@@ -2,6 +2,7 @@ import { Button } from "@heroui/button";
 import { Card } from "@heroui/card";
 import type { ICourseLesson } from "../../../videoCourses/VideoCoursesTypes";
 import { cn } from "@/shared/utils/clx";
+import { useI18n } from "@/shared/i18n";
 
 interface Props {
   lessons: ICourseLesson[];
@@ -10,12 +11,13 @@ interface Props {
 }
 
 export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
+  const { t } = useI18n();
   const activeLesson = lessons.find((lesson) => lesson.id === activeLessonId) ?? lessons[0];
 
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1.3fr)_360px]">
-      <Card className="border border-neutral-800 bg-neutral-900/80 p-4">
-        <div className="overflow-hidden rounded-2xl border border-neutral-800">
+      <Card className="theme-surface border p-4">
+        <div className="overflow-hidden rounded-2xl border theme-border">
           <iframe
             title={activeLesson.title}
             src={activeLesson.preview}
@@ -26,16 +28,16 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
         </div>
 
         <div className="mt-4 space-y-2">
-          <p className="text-sm text-neutral-400">Сейчас воспроизводится</p>
-          <h3 className="text-xl font-semibold text-white">{activeLesson.title}</h3>
-          <p className="text-neutral-300">{activeLesson.description}</p>
+          <p className="theme-text-muted text-sm">{t("courses.nowPlaying")}</p>
+          <h3 className="theme-text text-xl font-semibold">{activeLesson.title}</h3>
+          <p className="theme-text-muted">{activeLesson.description}</p>
         </div>
       </Card>
 
-      <Card className="border border-neutral-800 bg-neutral-900/80 p-4">
+      <Card className="theme-surface border p-4">
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-white">Уроки курса</h3>
-          <p className="text-sm text-neutral-400">Выберите урок для просмотра</p>
+          <h3 className="theme-text text-lg font-semibold">{t("courses.courseLessons")}</h3>
+          <p className="theme-text-muted text-sm">{t("courses.chooseLesson")}</p>
         </div>
 
         <div className="space-y-3">
@@ -50,14 +52,14 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
                 className={cn("h-auto w-full justify-start p-4 text-left", active && 'pointer-events-none')}
                 onPress={() => onSelect(lesson.id)}
               >
-                <div className="flex w-full items-start justify-between gap-4 text-white">
+                <div className="theme-text flex w-full items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs uppercase tracking-wide opacity-70">
-                      Урок {index + 1}
+                    <p className="theme-text-muted text-xs uppercase tracking-wide">
+                      {t("courses.lesson", { index: index + 1 })}
                     </p>
                     <p className="text-sm font-medium">{lesson.title}</p>
                   </div>
-                  <span className="text-xs opacity-70">{lesson.duration}</span>
+                  <span className="theme-text-muted text-xs">{lesson.duration}</span>
                 </div>
               </Button>
             );

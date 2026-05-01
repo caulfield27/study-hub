@@ -3,14 +3,16 @@ import { CircularProgress } from "@heroui/progress";
 import type { Props } from "./Progress.types";
 import { Chip } from "@heroui/chip";
 import { Button } from "@heroui/button";
+import { useI18n } from "@/shared/i18n";
 
 export const Progress = ({ value, maxPoint, handleShowResult }: Props) => {
+  const { t } = useI18n();
   const gradient =
     value < 50
-      ? "linear-gradient(to bottom right, #ff4d4f, #d9363e)"
+      ? "linear-gradient(to bottom right, #7c3aed, #4c1d95)"
       : value < 80
-      ? "linear-gradient(to bottom right, #fbbf24, #f59e0b)"
-      : "linear-gradient(to bottom right, #4ade80, #22c55e)";
+      ? "linear-gradient(to bottom right, #8b5cf6, #7c3aed)"
+      : "linear-gradient(to bottom right, #c4b5fd, #8b5cf6)";
   return (
     <Card className="w-70 h-70 border-none" style={{ background: gradient }}>
       <CardBody className="justify-center items-center pb-0">
@@ -34,10 +36,10 @@ export const Progress = ({ value, maxPoint, handleShowResult }: Props) => {
           }}
           variant="bordered"
         >
-          {`${value} из ${maxPoint} баллов`}
+          {t("quizzes.points", { value, maxPoint })}
         </Chip>
         <Button variant="light" color="secondary" onPress={handleShowResult}>
-          Показать ответы
+          {t("quizzes.showAnswers")}
         </Button>
       </CardFooter>
     </Card>

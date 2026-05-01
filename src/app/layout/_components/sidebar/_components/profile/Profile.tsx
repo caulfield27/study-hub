@@ -18,7 +18,7 @@ export const Profile = () => {
           <div className="flex flex-col max-[940px]:hidden">
             <div className="flex flex-col">
               <span className="font-semibold">{user?.username ?? ""}</span>
-              <span className="font-light text-neutral-400">{user?.email ?? ""}</span>
+              <span className="font-light theme-text-muted">{user?.email ?? ""}</span>
             </div>
           </div>
         )}

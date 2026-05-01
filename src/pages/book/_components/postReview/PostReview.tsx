@@ -10,8 +10,10 @@ import { api } from "@/shared/api/api.handlers";
 import { apiRoutes } from "@/shared/api/api.routes";
 import { Avatar } from "@heroui/avatar";
 import { formatDate } from "@/shared/utils/formateDate";
+import { useI18n } from "@/shared/i18n";
 
 export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
+  const { locale, t } = useI18n();
   // zustand store states
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const user = useGlobalStore((state) => state.user);
@@ -44,7 +46,7 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
       onSuccess();
       setIsSuccess(true);
     } catch (e: any) {
-      setError(e?.response?.data?.message ?? "Неизвестная ошибка");
+      setError(e?.response?.data?.message ?? t("auth.unknownError"));
     } finally {
       setIsSubmitting(false);
     }
@@ -52,8 +54,8 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6 max-sm:text-xl">
-        Отзывы пользователей ({reviews.length})
+      <h2 className="theme-text text-2xl font-bold mb-6 max-sm:text-xl">
+        {t("library.userReviews", { count: reviews.length })}
       </h2>
 
       <form
@@ -63,14 +65,14 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
           setNewRating(5);
           setNewReview("");
         }}
-        className="mb-8 bg-neutral-700 rounded-xl p-6 max-sm:p-4"
+        className="theme-surface-soft mb-8 rounded-xl p-6 max-sm:p-4 border theme-border"
       >
         {!isAuthed && (
           <div className="flex items-center justify-center w-full">
             <Alert
               color="warning"
-              endContent={<Link to={"/auth"}>Войти</Link>}
-              description="Войдите в аккаунт чтобы оставить отзыв"
+              endContent={<Link to={"/auth"}>{t("common.login")}</Link>}
+              description={t("library.loginToReview")}
               variant="faded"
             />
           </div>
@@ -81,10 +83,10 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
               color="danger"
               endContent={
                 <Button color="danger" size="md" variant="flat" type="reset">
-                  Повторить
+                  {t("common.retry")}
                 </Button>
               }
-              title="Не удалось опубликовать отзыв"
+              title={t("library.reviewPublishError")}
               description={error}
               variant="faded"
             />
@@ -94,18 +96,18 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
           <div className="flex items-center justify-center w-full">
             <Alert
               color="success"
-              title="Ваш отзыв успешно опубликован"
+              title={t("library.reviewPublishSuccess")}
               description={""}
               variant="faded"
             />
           </div>
         ) : (
           <>
-            <h3 className="text-lg font-semibold mb-4">Поделитесь своими мыслями</h3>
+            <h3 className="theme-text text-lg font-semibold mb-4">{t("library.shareThoughts")}</h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Ваш рейтинг</label>
+                <label className="theme-text-muted block text-sm font-medium mb-2">{t("library.yourRating")}</label>
                 <ControlledRating
                   value={newRating}
                   onChange={(rating) => setNewRating(rating)}
@@ -114,13 +116,13 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Ваш отзыв</label>
+                <label className="theme-text-muted block text-sm font-medium mb-2">{t("library.yourReview")}</label>
                 <textarea
                   value={newReview}
                   onChange={(e) => setNewReview(e.target.value)}
-                  placeholder="Что вы думаете об этой книге?"
+                  placeholder={t("library.reviewPlaceholder")}
                   rows={4}
-                  className="w-full bg-neutral-600 px-4 py-3 border border-neutral-500 rounded-lg focus:ring-2 focus:ring-neutral-800 focus:border-transparent transition-all outline-none resize-none"
+                  className="theme-surface w-full px-4 py-3 border theme-border rounded-lg focus:ring-2 focus:ring-(--primary-color)/35 focus:border-transparent transition-all outline-none resize-none"
                   required
                   disabled={!isAuthed}
                 />
@@ -133,7 +135,7 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
                 isLoading={isSubmitting}
               >
                 <Send className="w-4 h-4" />
-                {isSubmitting ? "Публикуется..." : "Опубликовать"}
+                {isSubmitting ? t("library.publishing") : t("library.publish")}
               </Button>
             </div>
           </>
@@ -143,27 +145,27 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
       <div className="space-y-4">
         {reviews.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-lg">
-              Пока нет отзывов. Станьте первым, кто поделится своим мнением!
+            <p className="theme-text-muted text-lg">
+              {t("library.noReviews")}
             </p>
           </div>
         ) : (
           reviews.map((review) => (
             <div
               key={review.id}
-              className="bg-neutral-700 border border-neutral-600 rounded-xl p-6 hover:shadow-md transition-shadow duration-300"
+              className="theme-surface-soft border theme-border rounded-xl p-6 hover:shadow-md transition-shadow duration-300"
             >
               <div className="flex items-start gap-4">
                 <Avatar color="primary" name={review.username} />
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h4 className="font-semibold">{review.username}</h4>
-                      <p className="text-sm text-neutral-400">{formatDate(review.created_at)}</p>
+                      <h4 className="theme-text font-semibold">{review.username}</h4>
+                      <p className="theme-text-muted text-sm">{formatDate(review.created_at, locale, t)}</p>
                     </div>
                     <Rating rating={review.rating} />
                   </div>
-                  <p className="leading-relaxed">{review.comment}</p>
+                  <p className="theme-text-muted leading-relaxed">{review.comment}</p>
                 </div>
               </div>
             </div>

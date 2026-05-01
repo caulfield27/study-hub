@@ -9,12 +9,7 @@ import type { CourseFiltersState, CourseSortKey } from "./VideoCoursesTypes";
 import { videoCoursesMock } from "./videoCourses.data";
 import { cn } from "@/shared/utils/clx";
 import { PageHeader } from "@/shared/ui/PageHeader/PageHeader";
-
-const sortOptions: { key: CourseSortKey; label: string }[] = [
-  { key: "popularity", label: "Популярность" },
-  { key: "rating", label: "Рейтинг" },
-  { key: "dateAdded", label: "Дата добавления" },
-];
+import { useI18n } from "@/shared/i18n";
 
 const initialFilters: CourseFiltersState = {
   categories: [],
@@ -24,6 +19,7 @@ const initialFilters: CourseFiltersState = {
 };
 
 function VideoCourses() {
+  const { t } = useI18n();
   const [sortBy, setSortBy] = useState<CourseSortKey>("popularity");
   const [filters, setFilters] = useState<CourseFiltersState>(initialFilters);
   const [showFilters, setShowFilters] = useState(true);
@@ -33,6 +29,11 @@ function VideoCourses() {
     () => [...new Set(videoCoursesMock.flatMap((course) => course.categories))],
     [],
   );
+  const sortOptions: { key: CourseSortKey; label: string }[] = [
+    { key: "popularity", label: t("courses.sortPopularity") },
+    { key: "rating", label: t("courses.sortRating") },
+    { key: "dateAdded", label: t("courses.sortDateAdded") },
+  ];
 
   const filteredCourses = useMemo(() => {
     const result = videoCoursesMock.filter((course) => {
@@ -64,21 +65,22 @@ function VideoCourses() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <PageHeader
             Icon={FilePlay}
-            label="Видеокурсы"
-            title="Выберите курс и начните обучение в удобном темпе"
-            description="Подборка практических видеокурсов по frontend, backend, DevOps, mobile и
-                data-направлениям."
+            label={t("courses.label")}
+            title={t("courses.title")}
+            description={t("courses.description")}
           />
-          <Card className="border border-neutral-800 bg-neutral-900/80 px-5 py-4 max-sm:w-full">
-            <p className="text-sm text-neutral-400">Доступно сейчас</p>
-            <p className="text-2xl font-semibold text-white">{filteredCourses.length} курсов</p>
+          <Card className="theme-surface border px-5 py-4 max-sm:w-full">
+            <p className="theme-text-muted text-sm">{t("courses.availableNow")}</p>
+            <p className="theme-text text-2xl font-semibold">
+              {t("common.coursesCount", { count: filteredCourses.length })}
+            </p>
           </Card>
         </div>
       </section>
 
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-neutral-800 bg-neutral-900/80 p-4">
+      <div className="theme-surface flex flex-wrap items-center justify-between gap-4 rounded-2xl border p-4">
         <div className="flex w-full flex-col gap-2 sm:w-auto">
-          <span className="text-sm text-neutral-400">Сортировка по:</span>
+          <span className="theme-text-muted text-sm">{t("courses.sortBy")}</span>
           <Select
             aria-label="Sort courses"
             selectedKeys={[sortBy]}
@@ -103,7 +105,7 @@ function VideoCourses() {
           className="hidden lg:inline-flex"
           onPress={() => setShowFilters((prev) => !prev)}
         >
-          {showFilters ? "Убрать фильтры" : "Показать фильтры"}
+          {showFilters ? t("courses.hideFilters") : t("courses.showFilters")}
         </Button>
 
         <Button
@@ -113,7 +115,7 @@ function VideoCourses() {
           className="lg:hidden"
           onPress={() => setMobileFiltersOpen(true)}
         >
-          Показать фильтры
+          {t("courses.showFilters")}
         </Button>
       </div>
 
@@ -135,7 +137,9 @@ function VideoCourses() {
         )}
 
         <section className="space-y-4">
-          <p className="text-sm text-neutral-400">Найдено {filteredCourses.length} курсов</p>
+          <p className="theme-text-muted text-sm">
+            {t("common.foundCourses", { count: filteredCourses.length })}
+          </p>
 
           <div
             className={cn(
@@ -160,8 +164,8 @@ function VideoCourses() {
           wrapper: "z-[9999]",
         }}
       >
-        <ModalContent className="bg-neutral-950">
-          <ModalHeader className="border-b border-neutral-800">Фильтры курсов</ModalHeader>
+        <ModalContent className="theme-surface">
+          <ModalHeader className="theme-border border-b">{t("courses.filtersModal")}</ModalHeader>
           <ModalBody className="py-4">
             <CoursesFilters
               categories={categories}

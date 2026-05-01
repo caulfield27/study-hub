@@ -3,8 +3,10 @@ import { Input } from "@heroui/input";
 import { Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import { useI18n } from "@/shared/i18n";
 
 export const GlobalSearch = () => {
+  const { t } = useI18n();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
   const [showInput, setShowInput] = useState(false);
@@ -44,13 +46,13 @@ export const GlobalSearch = () => {
         <Input
           onChange={(event) => setSearchValue(event.target.value)}
           value={searchValue}
-          placeholder="Ищите курсы, книги, тесты..."
+          placeholder={t("search.placeholder")}
           color="secondary"
           className={cn("w-full min-w-42.5 max-sm:min-w-30")}
           classNames={{ input: "placeholder:text-neutral-500" }}
           endContent={
             <button onClick={handleSearch} className="border-0 outline-0 bg-none cursor-pointer">
-              <Search />
+              <Search className="text-neutral-500"/>
             </button>
           }
           onKeyDown={(event) => {
@@ -65,31 +67,35 @@ export const GlobalSearch = () => {
           ref={btnRef}
           onClick={handleOpenSearch}
           className={cn(
-            "cursor-pointer flex justify-center items-center border-0 outline-0 bg-[#1d1d1d] p-2 rounded-xl",
+            "cursor-pointer flex justify-center items-center border outline-0 p-2 rounded-xl theme-surface theme-text",
             showInput && "hidden",
           )}
         >
           <Search />
         </button>
-        <Input
-          ref={inputRef}
-          onChange={(event) => setSearchValue(event.target.value)}
-          value={searchValue}
-          color="secondary"
-          placeholder="поиск..."
-          className={cn("w-42.5", !showInput && "hidden")}
-          classNames={{ input: "placeholder:text-neutral-500 max-[930px]:placeholder:none" }}
-          endContent={
-            <button onClick={handleSearch} className="border-0 outline-0 bg-none cursor-pointer">
-              <Search />
-            </button>
-          }
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              handleSearch();
-            }
-          }}
-        />
+        {showInput && (
+          <div className="fixed inset-x-4 top-4 z-130 max-w-[calc(100vw-2rem)]">
+            <Input
+              ref={inputRef}
+              onChange={(event) => setSearchValue(event.target.value)}
+              value={searchValue}
+              color="secondary"
+              placeholder={t("search.shortPlaceholder")}
+              className="w-full"
+              classNames={{ input: "placeholder:text-neutral-500 max-[930px]:placeholder:none" }}
+              endContent={
+                <button onClick={handleSearch} className="border-0 outline-0 bg-none cursor-pointer">
+                  <Search />
+                </button>
+              }
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  handleSearch();
+                }
+              }}
+            />
+          </div>
+        )}
       </div>
     </>
   );

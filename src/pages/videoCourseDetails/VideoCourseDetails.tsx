@@ -10,14 +10,14 @@ import { Clock3, Globe2, MessageSquare } from "lucide-react";
 import { Rating } from "@/shared/ui/Rating/Rating";
 import { CourseLessons, CourseReviews } from "./_components";
 import { videoCoursesMock } from "../videoCourses/videoCourses.data";
-
-const languageLabel = {
-  en: "English",
-  ru: "Русский",
-  kz: "Қазақша",
-};
+import {
+  getLocalizedCategoryLabel,
+  getLocalizedCourseLanguageLabel,
+  useI18n,
+} from "@/shared/i18n";
 
 function VideoCourseDetails() {
+  const { t } = useI18n();
   const { slug } = useParams();
   const course = useMemo(() => videoCoursesMock.find((item) => item.slug === slug), [slug]);
   const [activeLessonId, setActiveLessonId] = useState(course?.lessons[0]?.id ?? 0);
@@ -40,12 +40,12 @@ function VideoCourseDetails() {
     <div className="space-y-8">
       <Breadcrumbs color="secondary">
         <BreadcrumbItem>
-          <Link to="/video-courses">Видеоуроки</Link>
+          <Link to="/video-courses">{t("nav.videos")}</Link>
         </BreadcrumbItem>
         <BreadcrumbItem isDisabled>{course.name}</BreadcrumbItem>
       </Breadcrumbs>
 
-      <Card className="overflow-hidden border border-neutral-800 bg-neutral-900/80">
+      <Card className="theme-surface overflow-hidden border">
         <div className="grid gap-0 xl:grid-cols-[360px_minmax(0,1fr)]">
           <div className="relative min-h-70">
             <Image
@@ -54,69 +54,72 @@ function VideoCourseDetails() {
               alt={course.name}
               className="h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-linear-to-t from-neutral-950 via-neutral-950/10 to-transparent" />
+            <div
+              className="absolute inset-0"
+              style={{ background: "linear-gradient(to top, var(--hero-overlay), transparent 65%)" }}
+            />
           </div>
 
           <div className="space-y-6 p-6 md:p-8">
             <div className="flex flex-wrap gap-2">
               {course.categories.map((category) => (
                 <Chip key={category} color="primary" variant="flat">
-                  {category}
+                  {getLocalizedCategoryLabel(category, t)}
                 </Chip>
               ))}
               <Chip color={course.is_free ? "success" : "warning"} variant="solid">
-                {course.is_free ? "Бесплатно" : `$${course.price}`}
+                {course.is_free ? t("common.free") : `$${course.price}`}
               </Chip>
             </div>
 
             <div className="space-y-3">
-              <h1 className="text-3xl font-bold text-white md:text-5xl">{course.name}</h1>
-              <p className="max-w-4xl text-lg leading-8 text-neutral-300">{course.description}</p>
+              <h1 className="theme-text text-3xl font-bold md:text-5xl">{course.name}</h1>
+              <p className="theme-text-muted max-w-4xl text-lg leading-8">{course.description}</p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-5 text-sm text-neutral-300">
+            <div className="theme-text-muted flex flex-wrap items-center gap-5 text-sm">
               <div className="flex items-center gap-2">
                 <Rating rating={course.rating_avg} />
-                <span className="font-medium text-white">{course.rating_avg.toFixed(1)}</span>
+                <span className="theme-text font-medium">{course.rating_avg.toFixed(1)}</span>
               </div>
               <div className="flex items-center gap-1">
                 <MessageSquare className="h-4 w-4" />
-                <span>{course.reviews_count} отзывов</span>
+                <span>{t("courses.reviews", { count: course.reviews_count })}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Globe2 className="h-4 w-4" />
-                <span>{languageLabel[course.language]}</span>
+                <span>{getLocalizedCourseLanguageLabel(course.language, t)}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Clock3 className="h-4 w-4" />
-                <span>{course.duration}ч всего</span>
+                <span>{t("courses.totalHours", { count: course.duration })}</span>
               </div>
             </div>
 
-            <Divider className="bg-neutral-800" />
+            <Divider className="theme-border" />
 
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              <Card className="border border-neutral-800 bg-neutral-950/50 p-4">
+              <Card className="theme-surface-soft border p-4">
                 <div className="flex justify-start items-center gap-3">
                   <div>
-                    <p className="text-sm text-neutral-400">Уроков</p>
-                    <p className="font-semibold text-white">{course.lessons_count}</p>
+                    <p className="theme-text-muted text-sm">{t("common.lessons")}</p>
+                    <p className="theme-text font-semibold">{course.lessons_count}</p>
                   </div>
                 </div>
               </Card>
-              <Card className="border border-neutral-800 bg-neutral-950/50 p-4">
+              <Card className="theme-surface-soft border p-4">
                 <div className="flex justify-start items-center gap-3">
                   <div>
-                    <p className="text-sm text-neutral-400">Автор</p>
-                    <p className="font-semibold text-white">{course.author}</p>
+                    <p className="theme-text-muted text-sm">{t("common.author")}</p>
+                    <p className="theme-text font-semibold">{course.author}</p>
                   </div>
                 </div>
               </Card>
-              <Card className="border border-neutral-800 bg-neutral-950/50 p-4">
+              <Card className="theme-surface-soft border p-4">
                 <div className="flex justify-start items-center gap-3">
                   <div>
-                    <p className="text-sm text-neutral-400">Добавлено</p>
-                    <p className="font-semibold text-white">{course.dateAdded}</p>
+                    <p className="theme-text-muted text-sm">{t("common.added")}</p>
+                    <p className="theme-text font-semibold">{course.dateAdded}</p>
                   </div>
                 </div>
               </Card>
@@ -131,7 +134,7 @@ function VideoCourseDetails() {
                 lessonsSection?.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
             >
-              Начать смотреть
+              {t("courses.startWatching")}
             </Button>
           </div>
         </div>
@@ -139,7 +142,7 @@ function VideoCourseDetails() {
 
       <section id="course-lessons" className="space-y-4">
         <div>
-          <h2 className="text-2xl font-semibold text-white">Уроки</h2>
+          <h2 className="theme-text text-2xl font-semibold">{t("courses.lessonsTitle")}</h2>
         </div>
 
         <CourseLessons

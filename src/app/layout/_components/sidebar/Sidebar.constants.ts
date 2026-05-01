@@ -2,29 +2,29 @@ import {House, BookOpenText, CircleQuestionMark, GraduationCap, type LucideIcon,
 
 interface ILinks {
   path: string;
-  name: string;
+  labelKey: string;
   icon: LucideIcon;
 }
 
 export const authedNavLinks: ILinks[] = [
   {
     path: "/",
-    name: "Главная",
+    labelKey: "nav.home",
     icon: House,
   },
   {
     path: "/library",
-    name: "Библиотека",
+    labelKey: "nav.library",
     icon: BookOpenText,
   },
   {
     path: "/quizes",
-    name: "Тесты",
+    labelKey: "nav.quizzes",
     icon: CircleQuestionMark,
   },
   {
     path: "/video-courses",
-    name: "Видеоуроки",
+    labelKey: "nav.videos",
     icon: GraduationCap,
   }
 ];
@@ -32,27 +32,27 @@ export const authedNavLinks: ILinks[] = [
 export const publicNavLinks: ILinks[] = [
   {
     path: "/",
-    name: "Главная",
+    labelKey: "nav.home",
     icon: House,
   },
   {
     path: "/library",
-    name: "Библиотека",
+    labelKey: "nav.library",
     icon: BookOpenText,
   },
   {
     path: "/quizes",
-    name: "Тесты",
+    labelKey: "nav.quizzes",
     icon: CircleQuestionMark,
   },
   {
     path: "/video-courses",
-    name: "Видеоуроки",
+    labelKey: "nav.videos",
     icon: GraduationCap,
   },
   {
     path: "/auth",
-    name: "Войти",
+    labelKey: "nav.auth",
     icon: LogIn
   }
 ];

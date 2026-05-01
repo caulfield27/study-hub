@@ -9,8 +9,10 @@ import { Button } from "@heroui/button";
 import { BooksSkeleton } from "@/shared/skeletons/books/BooksSkeleton";
 import { PageHeader } from "@/shared/ui/PageHeader/PageHeader";
 import { LibraryIcon } from "lucide-react";
+import { useI18n } from "@/shared/i18n";
 
 function Library() {
+  const { t } = useI18n();
   // locale states
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [query, setQuery] = useState({
@@ -45,10 +47,9 @@ function Library() {
       <div className="flex flex-col gap-6">
         <PageHeader
           Icon={LibraryIcon}
-          label="Библиотека"
-          title="Откройте библиотеку знаний и прокачайте навыки разработки"
-          description="Подборка лучших книг по программированию от базовых концепций до продвинутых практик.
-              Учитесь в своем ритме и углубляйте понимание технологий."
+          label={t("library.label")}
+          title={t("library.title")}
+          description={t("library.description")}
         />
         <Button
           variant="ghost"
@@ -56,7 +57,7 @@ function Library() {
           onPress={() => setIsPostModalOpen(true)}
           color="primary"
         >
-          Предложить книгу
+          {t("library.suggestBook")}
         </Button>
         <div className="flex flex-col">
           {isLoading ? (

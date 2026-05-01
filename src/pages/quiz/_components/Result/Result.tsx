@@ -10,8 +10,10 @@ const success = "/success.png";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 import type { Props } from "./Result.types";
+import { useI18n } from "@/shared/i18n";
 
 export function Result({ result, quiz, userSelects }: Props) {
+  const { t } = useI18n();
   const maxPoint = quiz.questions.length * 10;
   const navigate = useNavigate();
 
@@ -32,9 +34,7 @@ export function Result({ result, quiz, userSelects }: Props) {
                 );
                 return (
                   <div className="flex flex-col gap-3" key={question.id}>
-                    <div className="text-[18px] font-bold">
-                      Вопрос {question.id}
-                    </div>
+                    <div className="text-[18px] font-bold">{t("quizzes.questionWithNumber", { id: question.id })}</div>
                     <div className="w-full flex flex-col justify-center text-white font-semibold">
                       <p className="m-0">{questionText}</p>
                       {questionCode ? (
@@ -79,7 +79,7 @@ export function Result({ result, quiz, userSelects }: Props) {
                                     : "hidden"
                                 }`}
                               >
-                                ваш ответ
+                                {t("quizzes.yourAnswer")}
                               </span>
                             </div>
                           </div>
@@ -101,12 +101,12 @@ export function Result({ result, quiz, userSelects }: Props) {
 
             <div className="flex flex-col gap-2">
               <span className="text-white flex items-center gap-1">
-                Название:
+                {t("quizzes.resultTitle")}
                 <span className="font-semibold">{quiz.name}</span>
               </span>
 
               <div className="flex items-center justify-center gap-1">
-                <span className="text-white">Сложность:</span>
+                <span className="text-white">{t("quizzes.complexity")}</span>
                 <Rating rating={quiz.complexity} />
               </div>
             </div>
@@ -127,7 +127,7 @@ export function Result({ result, quiz, userSelects }: Props) {
           size="lg"
           startContent={<ArrowLeft />}
         >
-          Вернуться к тестам
+          {t("quizzes.backToQuizzes")}
         </Button>
       </div>
     </>

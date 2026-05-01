@@ -9,8 +9,10 @@ import { Input, Textarea } from "@heroui/input";
 import { Button } from "@heroui//button";
 import { DateInput } from "@heroui/date-input";
 import { addToast } from "@heroui/toast";
+import { useI18n } from "@/shared/i18n";
 
 export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
+  const { t } = useI18n();
   const [postData, setPostData] = useState<PostData>({
     name: "",
     author: "",
@@ -87,7 +89,7 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
         ...prev,
         [name]: {
           isValid: false,
-          message: "Поле обязательно для заполнения",
+          message: t("auth.required"),
         },
       }));
     } else if (name === "pdf") {
@@ -96,7 +98,7 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
           ...prev,
           [name]: {
             isValid: false,
-            message: "Поле должно содержать ссылку",
+            message: t("library.invalidLink"),
           },
         }));
       }
@@ -106,7 +108,7 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
           ...prev,
           [name]: {
             isValid: false,
-            message: "Максимальное значение: 5",
+            message: t("library.maxRating"),
           },
         }));
       }
@@ -139,7 +141,7 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
 
       addToast({
         color: "success",
-        title: result?.message ?? "Завяка отправлена!",
+        title: result?.message ?? t("library.requestSent"),
       });
       onSuccess();
     } catch (err: any) {
@@ -154,7 +156,7 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
     <Modal onClose={onClose} isOpen={isOpen} size={window.innerWidth <= 768 ? 'full' : 'xl'}>
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1">
-          Добавить книгу в библиотеку
+          {t("library.addBookTitle")}
         </ModalHeader>
         <ModalBody className="max-md:overflow-scroll max-md:pb-8">
           <form
@@ -165,10 +167,10 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
           >
             <Input
               color="secondary"
-              label="Название"
+              label={t("library.bookName")}
               value={postData.name}
               name="name"
-              placeholder="Например-Чистый код"
+              placeholder={t("library.sampleBookName")}
               isInvalid={!validation.name.isValid && !!validation.name.message}
               errorMessage={validation.name.message}
               onChange={handleDataChange}
@@ -185,10 +187,10 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
             />
             <Input
               color="secondary"
-              label="Автор"
+              label={t("library.authorName")}
               value={postData.author}
               name="author"
-              placeholder="Введите имя автора"
+              placeholder={t("library.enterAuthorName")}
               isInvalid={
                 !validation.author.isValid && !!validation.author.message
               }
@@ -207,7 +209,7 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
             />
             <Input
               name="image"
-              label="Постер"
+              label={t("library.poster")}
               color="secondary"
               type="file"
               isInvalid={!validation.image.isValid}
@@ -217,7 +219,7 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
             <Input
               value={postData.pdf}
               name="pdf"
-              label="Ссылка на pdf"
+              label={t("library.pdfLink")}
               color="secondary"
               isInvalid={!validation.pdf.isValid}
               errorMessage={validation.pdf.message}
@@ -245,14 +247,14 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
                 }))
               }
               color="secondary"
-              label="Дата релиза"
+              label={t("library.releaseDate")}
             />
             <Textarea
               value={postData.description}
               name="description"
               color="secondary"
-              label="Описание"
-              placeholder="Краткое описание содержания книги"
+              label={t("library.descriptionLabel")}
+              placeholder={t("library.descriptionPlaceholder")}
               isInvalid={!validation.description.isValid}
               errorMessage={validation.description.message}
               onChange={handleDataChange}
@@ -273,7 +275,7 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
               color="primary"
               variant="ghost"
             >
-              {loading ? "Выполняется..." : "Отправить"}
+              {loading ? t("library.inProgress") : t("common.submit")}
             </Button>
           </form>
         </ModalBody>

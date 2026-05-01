@@ -1,4 +1,4 @@
-export type CourseLanguage = "en" | "ru" | "kz";
+export type CourseLanguage = "en" | "ru" | "tg";
 
 export type CourseCategory =
   | "Frontend"

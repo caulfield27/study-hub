@@ -1,6 +1,7 @@
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import type { CourseCategory } from "../../../../VideoCoursesTypes";
+import { getLocalizedCategoryLabel, useI18n } from "@/shared/i18n";
 
 interface Props {
   categories: CourseCategory[];
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export const CategoryFilter = ({ categories, selected, onChange }: Props) => {
+  const { t } = useI18n();
   const toggleCategory = (category: CourseCategory) => {
     if (selected.includes(category)) {
       onChange(selected.filter((item) => item !== category));
@@ -20,8 +22,8 @@ export const CategoryFilter = ({ categories, selected, onChange }: Props) => {
 
   return (
     <section className="space-y-3">
-      <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        Категория
+      <h3 className="theme-text-muted text-sm font-semibold uppercase tracking-wide">
+        {t("courses.category")}
       </h3>
       <div className="flex flex-wrap gap-2">
         {categories.map((category) => {
@@ -41,7 +43,7 @@ export const CategoryFilter = ({ categories, selected, onChange }: Props) => {
                 variant="light"
                 color={active ? "warning" : "default"}
               >
-                {category}
+                {getLocalizedCategoryLabel(category, t)}
               </Chip>
             </Button>
           );

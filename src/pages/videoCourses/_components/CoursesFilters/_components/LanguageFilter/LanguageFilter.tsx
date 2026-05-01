@@ -1,27 +1,35 @@
 import { Select, SelectItem } from "@heroui/select";
 import type { CourseFiltersState } from "../../../../VideoCoursesTypes";
+import { useI18n } from "@/shared/i18n";
 
 interface Props {
   value: CourseFiltersState["language"];
   onChange: (value: CourseFiltersState["language"]) => void;
 }
 
-const languageOptions = [
-  { key: "all", label: "Any language" },
-  { key: "en", label: "English" },
-  { key: "ru", label: "Русский" },
-  { key: "kz", label: "Қазақша" },
-] as const;
-
 export const LanguageFilter = ({ value, onChange }: Props) => {
+  const { t } = useI18n();
+  const languageOptions = [
+    { key: "all", label: t("courses.anyLanguage") },
+    { key: "en", label: t("locales.en") },
+    { key: "ru", label: t("locales.ru") },
+    { key: "tg", label: t("locales.tg") },
+  ] as const;
+
   return (
     <section className="space-y-3">
-      <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-400">
-        Язык
+      <h3 className="theme-text-muted text-sm font-semibold uppercase tracking-wide">
+        {t("common.language")}
       </h3>
       <Select
         aria-label="Course language"
         selectedKeys={[value]}
+        classNames={{
+          trigger: "theme-surface-soft",
+          label: "theme-text-muted",
+          value: "theme-text",
+          popoverContent: "theme-surface",
+        }}
         onSelectionChange={(keys) => {
           const nextKey = Array.from(keys)[0];
           if (typeof nextKey === "string") {

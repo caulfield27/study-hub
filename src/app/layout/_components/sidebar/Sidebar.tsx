@@ -6,8 +6,12 @@ import { useEffect } from "react";
 import { useGlobalStore } from "@/shared/store";
 import { GlobalSearch, Profile } from "./_components";
 import { cn } from "@/shared/utils/clx";
+import { useI18n } from "@/shared/i18n";
+import { LanguageSelect } from "@/shared/ui/LanguageSelect/LanguageSelect";
+import { ThemeToggle } from "@/shared/ui/ThemeToggle/ThemeToggle";
 
 export function Sidebar() {
+  const { t } = useI18n();
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const user = useGlobalStore((state) => state.user);
   const isSidebarHidden = useGlobalStore((state) => state.isSidebarHidden);
@@ -45,16 +49,18 @@ export function Sidebar() {
         min-h-[95vh] 
         w-(--sidebar-width) 
         bg-(--sidebar-bg) 
+        border
         rounded-xl
+        theme-border
       "
     >
       <div className="relative p-5">
-        <div className="flex flex-col gap-3 mb-2 text-white w-full">
-          <img src={logo} className="w-[60px]" />
+        <div className="flex flex-col gap-3 mb-2 theme-text w-full">
+          <img src={logo} className="w-15 theme-logo" />
           <GlobalSearch />
         </div>
 
-        <Divider className={cn("bg-[#404040]")}/>
+        <Divider className={cn("theme-border")}/>
 
         <div className="h-full mt-5">
           <nav className="flex flex-col gap-5">
@@ -64,7 +70,7 @@ export function Sidebar() {
                 to={link.path}
                 className={({ isActive }) =>
                   `
-                    flex items-center gap-2 px-2 py-2 rounded-xl text-white transition 
+                    flex items-center gap-2 px-2 py-2 rounded-xl theme-text transition 
                     hover:bg-(--primary-color)
                     ${isActive ? "bg-(--primary-color) text-yellow-400 pointer-events-none" : ""}
                     ${isSidebarHidden ? 'justify-center' : ''}
@@ -72,13 +78,19 @@ export function Sidebar() {
                 }
               >
                 <link.icon />
-                {!isSidebarHidden && <span>{link.name}</span>}
+                {!isSidebarHidden && <span>{t(link.labelKey)}</span>}
               </NavLink>
             ))}
           </nav>
+          {!isSidebarHidden && (
+            <div className="mt-6 flex flex-col gap-3">
+              <LanguageSelect className="w-full" />
+              <ThemeToggle className="w-full" />
+            </div>
+          )}
           {isAuthed && user && (
             <div className="fixed bottom-8 left-0 w-full">
-              <Divider className="bg-[#404040] mb-5" />
+              <Divider className="theme-border mb-5" />
               <Profile />
             </div>
           )}

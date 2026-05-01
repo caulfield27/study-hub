@@ -14,8 +14,10 @@ import { Rating } from "@/shared/ui/Rating/Rating";
 import { Divider } from "@heroui/divider";
 import { useEffect, useState } from "react";
 import { PdfReader, PostReview } from "./_components";
+import { useI18n } from "@/shared/i18n";
 
 const Book = () => {
+  const { t } = useI18n();
   // api
   const { id } = useParams();
   const swrKey = {
@@ -63,7 +65,7 @@ const Book = () => {
     <div>
       <Breadcrumbs color="secondary">
         <BreadcrumbItem>
-          <Link to={"/library"}>Библиотека</Link>
+          <Link to={"/library"}>{t("library.breadcrumb")}</Link>
         </BreadcrumbItem>
         <BreadcrumbItem isDisabled>{book.name}</BreadcrumbItem>
       </Breadcrumbs>
@@ -76,7 +78,7 @@ const Book = () => {
       )}
 
       <div className="w-full mx-auto py-12">
-        <Card className="overflow-hidden">
+        <Card className="theme-surface overflow-hidden border">
           <div className="flex flex-row gap-8 p-8 max-sm:p-4 max-[1200px]:flex-col">
             <div className="flex justify-center items-start shrink-0">
               <div className="w-full">
@@ -91,7 +93,7 @@ const Book = () => {
                     color="primary"
                     startContent={<BookOpen className="shrink-0" />}
                   >
-                    Читать онлайн
+                    {t("library.readOnline")}
                   </Button>
                   <Button
                     size="lg"
@@ -99,18 +101,18 @@ const Book = () => {
                     startContent={<Download className="shrink-0" />}
                     onPress={handleDownload}
                   >
-                    Скачать PDF
+                    {t("library.downloadPdf")}
                   </Button>
                 </div>
 
-                <div className="mt-6 p-4 bg-neutral-700 rounded-xl space-y-3 text-neutral-200">
+                <div className="theme-surface-soft mt-6 p-4 rounded-xl space-y-3 border theme-border">
                   <div className="flex items-center gap-2">
-                    <Calendar className="w-5 h-5 shrink-0" />
-                    <span className="text-sm">Опубликовано: {book.released}</span>
+                    <Calendar className="w-5 h-5 shrink-0 theme-text-muted" />
+                    <span className="theme-text-muted text-sm">{t("library.published", { date: book.released })}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <MessageSquare className="w-5 h-5 shrink-0" />
-                    <span className="text-sm">{book.reviews_count} отзывов</span>
+                    <MessageSquare className="w-5 h-5 shrink-0 theme-text-muted" />
+                    <span className="theme-text-muted text-sm">{t("common.reviewsCount", { count: book.reviews_count })}</span>
                   </div>
                 </div>
               </div>
@@ -118,28 +120,28 @@ const Book = () => {
 
             <div className="space-y-8 w-full">
               <div>
-                <h1 className="text-4xl min-[1100px]:text-5xl font-bold leading-tight mb-6 max-sm:text-2xl">
+                <h1 className="theme-text text-4xl min-[1100px]:text-5xl font-bold leading-tight mb-6 max-sm:text-2xl">
                   {book.name}
                 </h1>
-                <p className="text-xl text-neutral-300 mb-6 max-sm:text-xl-[16px]">
+                <p className="theme-text-muted text-xl mb-6 max-sm:text-[16px]">
                   by {book.author}
                 </p>
                 <div className="flex items-center gap-6 mb-8">
                   <div className="flex items-center gap-2">
                     <Rating rating={book.rating_avg ?? 0} />
-                    <span className="text-2xl font-bold ml-2">{book.rating_avg ?? 0}</span>
+                    <span className="theme-text text-2xl font-bold ml-2">{book.rating_avg ?? 0}</span>
                   </div>
-                  <span>({book.reviews_count} оценок)</span>
+                  <span className="theme-text-muted">({t("common.ratingsCount", { count: book.reviews_count })})</span>
                 </div>
               </div>
-              <Divider className="bg-neutral-700 mb-0" />
+              <Divider className="theme-border mb-0" />
               <div className="pt-6">
-                <h2 className="text-2xl font-bold mb-4 max-sm:text-xl">Про книгу</h2>
-                <p className="leading-relaxed text-lg text-neutral-300 max-sm:text-medium">
+                <h2 className="theme-text text-2xl font-bold mb-4 max-sm:text-xl">{t("library.aboutBook")}</h2>
+                <p className="theme-text-muted leading-relaxed text-lg max-sm:text-medium">
                   {book.description}
                 </p>
               </div>
-              <Divider className="bg-neutral-700 mb-0" />
+              <Divider className="theme-border mb-0" />
 
               <div className="pt-8">
                 <PostReview bookId={book.id} reviews={book.reviews} onSuccess={() => mutate()} />

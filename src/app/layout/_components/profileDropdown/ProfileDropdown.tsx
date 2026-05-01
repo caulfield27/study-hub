@@ -3,8 +3,10 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/d
 import { Avatar } from "@heroui/avatar";
 import { LogOut } from "lucide-react";
 import { logout } from "@/shared/utils/auth";
+import { useI18n } from "@/shared/i18n";
 
 export const ProfileDropdown = () => {
+  const { t } = useI18n();
   const user = useGlobalStore((state) => state.user);
   return (
     <div className="flex items-center gap-4">
@@ -19,7 +21,7 @@ export const ProfileDropdown = () => {
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions" variant="flat">
           <DropdownItem role="button" onPress={logout} key="logout" color="danger" endContent={<LogOut />}>
-            Выйти
+            {t("common.logout")}
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>

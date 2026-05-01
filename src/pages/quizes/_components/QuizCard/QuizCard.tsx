@@ -7,19 +7,27 @@ import { Button } from "@heroui/button";
 import { useNavigate } from "react-router";
 import { Select, SelectItem } from "@heroui/select";
 import { cn } from "@/shared/utils/clx";
+import { useI18n } from "@/shared/i18n";
 
 export const QuizCard = ({ quizes, isScrollable }: Props) => {
+  const { t } = useI18n();
   const navigate = useNavigate();
   const [selectedQuiz, setSelectedQuiz] = useState(quizes[0]);
   return (
-    <Card className={cn("w-[250px] shrink-0", !isScrollable && "max-sm:w-full")}>
+    <Card className={cn("theme-surface w-[250px] shrink-0 border", !isScrollable && "max-sm:w-full")}>
       <CardBody className="flex flex-col gap-6 max-sm:gap-2 justify-center items-center">
         <Select
           color="secondary"
           value={selectedQuiz.complexity}
           className="max-w-xs"
           labelPlacement="outside"
-          label="Выберите сложность"
+          label={t("quizzes.chooseDifficulty")}
+          classNames={{
+            label: "theme-text-muted",
+            trigger: "bg-(--surface-soft)",
+            value: "theme-text",
+            popoverContent: "theme-surface",
+          }}
           onSelectionChange={(key) =>
             setSelectedQuiz(
               quizes.find(
@@ -42,7 +50,7 @@ export const QuizCard = ({ quizes, isScrollable }: Props) => {
         </Select>
         <span
           className="
-                  font-bold text-center text-[20px] max-sm:text-[14px]
+                  theme-text font-bold text-center text-[20px] max-sm:text-[14px]
                   h-6 overflow-hidden text-ellipsis
                   line-clamp-1
                 "
@@ -56,9 +64,9 @@ export const QuizCard = ({ quizes, isScrollable }: Props) => {
           className="w-[100px] h-[100px]"
         />
         <Rating rating={selectedQuiz.complexity} />
-        <div className="flex flex-row justify-center items-center gap-1">
+        <div className="theme-text-muted flex flex-row justify-center items-center gap-1">
           <Timer className="max-sm:w-4" />
-          <span className="max-sm:text-[12px]">3 мин</span>
+          <span className="max-sm:text-[12px]">{t("quizzes.threeMinutes")}</span>
         </div>
         <Button
           onPress={() => navigate(`/quizes/${selectedQuiz.quiz.id}`)}
@@ -66,7 +74,7 @@ export const QuizCard = ({ quizes, isScrollable }: Props) => {
           variant="shadow"
           className="w-full"
         >
-          Начать
+          {t("quizzes.start")}
         </Button>
       </CardBody>
     </Card>

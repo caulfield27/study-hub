@@ -7,6 +7,7 @@ import {
   PriceFilter,
   RatingFilter,
 } from "./_components";
+import { useI18n } from "@/shared/i18n";
 
 interface Props {
   categories: CourseCategory[];
@@ -16,16 +17,17 @@ interface Props {
 }
 
 export function CoursesFilters({ categories, filters, onChange, onReset }: Props) {
+  const { t } = useI18n();
   return (
     <aside className="lg:sticky top-0 lg:top-6">
-      <Card className="space-y-6 border border-neutral-800 bg-neutral-900/80 p-5">
+      <Card className="theme-surface space-y-6 border p-5">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <h2 className="text-lg font-semibold text-white">Фильтры</h2>
-            <p className="text-sm text-neutral-400">Сузьте подборку под свой запрос</p>
+            <h2 className="theme-text text-lg font-semibold">{t("courses.filtersTitle")}</h2>
+            <p className="theme-text-muted text-sm">{t("courses.filtersDescription")}</p>
           </div>
           <Button variant="light" color="primary" onPress={onReset}>
-            Сбросить
+            {t("common.reset")}
           </Button>
         </div>
 

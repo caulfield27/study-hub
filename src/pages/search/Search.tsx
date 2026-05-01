@@ -5,8 +5,10 @@ import useSwr from 'swr';
 import { SearchError, SearchLoader, SearchNotFound, SearchResult } from "./_components";
 import { isDataEmpty } from "./SearchUtils";
 import type { ISearchDataResponse } from "./SearchTypes";
+import { useI18n } from "@/shared/i18n";
 
 function Search(){
+    const { t } = useI18n();
     const [searchParams ,_] = useSearchParams();
     const q = searchParams.get('q') ?? "";
     const config = {
@@ -15,7 +17,7 @@ function Search(){
     };
     const {isLoading, data, error, mutate} = useSwr<ISearchDataResponse>([config, 'public'], api.sendRequest);
     
-    if(isLoading) return <SearchLoader query={`Поиск по ${q}`}/>
+    if(isLoading) return <SearchLoader query={t("common.searchBy", { query: q })}/>
     
     if(error) return <SearchError refetch={() => mutate()}/>
 

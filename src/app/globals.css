@@ -4,11 +4,35 @@
 
 :root {
     --bgColor: #171717;
-    --primary-color: #db4422;
-    --primary-color-dark: #b62100b9;
-    --sidebar-bg: #262626; 
+    --primary-color: #7c3aed;
+    --primary-color-dark: #5b21b6;
+    --sidebar-bg: #262626;
     --foreground: #f3f0f0;
+    --muted-foreground: #a3a3a3;
+    --surface: #1f1f1f;
+    --surface-soft: #262626;
+    --surface-strong: #111111;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --input-bg: #1d1d1d;
+    --hero-overlay: rgba(10, 10, 10, 0.75);
+    --logo-filter: none;
     --sidebar-width: 270px;
+}
+
+[data-theme="light"] {
+    --bgColor: #ffffff;
+    --primary-color: #7c3aed;
+    --primary-color-dark: #5b21b6;
+    --sidebar-bg: #f8f5ff;
+    --foreground: #18181b;
+    --muted-foreground: #71717a;
+    --surface: #ffffff;
+    --surface-soft: #f5f3ff;
+    --surface-strong: #ede9fe;
+    --border-color: rgba(91, 33, 182, 0.14);
+    --input-bg: #ffffff;
+    --hero-overlay: rgba(255, 255, 255, 0.08);
+    --logo-filter: brightness(0) saturate(100%);
 }
 
 
@@ -30,12 +54,47 @@ body,html {
     min-height: 100vh;
 }
 
+body {
+    transition: background-color 160ms ease, color 160ms ease;
+}
+
+.theme-surface {
+    background-color: var(--surface);
+    border-color: var(--border-color);
+}
+
+.theme-surface-soft {
+    background-color: var(--surface-soft);
+    border-color: var(--border-color);
+}
+
+.theme-surface-strong {
+    background-color: var(--surface-strong);
+    border-color: var(--border-color);
+}
+
+.theme-border {
+    border-color: var(--border-color);
+}
+
+.theme-text {
+    color: var(--foreground);
+}
+
+.theme-text-muted {
+    color: var(--muted-foreground);
+}
+
+.theme-logo {
+    filter: var(--logo-filter);
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
-  -webkit-text-fill-color: #e05435 !important;
+  -webkit-text-fill-color: var(--primary-color) !important;
   transition: background-color 9999s ease-in-out 0s;
-  caret-color: #e05435 !important;
+  caret-color: var(--primary-color) !important;
 }
 
 .no-scrollbar{
