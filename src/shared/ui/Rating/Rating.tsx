@@ -2,33 +2,47 @@ import { cn } from "@/shared/utils/clx";
 import { useState } from "react";
 
 const Full = () => (
-  <svg width="16" height="16" fill="yellow">
-    <path d="M8 .25l2.47 5.01 5.53.8-4 3.9.94 5.49L8 12.77l-4.94 2.68.94-5.49-4-3.9 5.53-.8z" />
+  <svg width="16" height="16" viewBox="0 0 16 16">
+    <path
+      d="M8 .25l2.47 5.01 5.53.8-4 3.9.94 5.49L8 12.77l-4.94 2.68.94-5.49-4-3.9 5.53-.8z"
+      fill="#facc15"
+      stroke="#a16207"
+      strokeWidth="0.8"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
 const Empty = () => (
-  <svg width="16" height="16" fill="none" stroke="white">
-    <path d="M8 .25l2.47 5.01 5.53.8-4 3.9.94 5.49L8 12.77l-4.94 2.68.94-5.49-4-3.9 5.53-.8z" />
+  <svg width="16" height="16" viewBox="0 0 16 16">
+    <path
+      d="M8 .25l2.47 5.01 5.53.8-4 3.9.94 5.49L8 12.77l-4.94 2.68.94-5.49-4-3.9 5.53-.8z"
+      fill="none"
+      stroke="#a1a1aa"
+      strokeWidth="1"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
 const Half = () => (
   <svg width="16" height="16" viewBox="0 0 16 16">
     <defs>
-      <linearGradient id="half">
-        <stop offset="50%" stopColor="yellow" />
+      <linearGradient id="halfFill">
+        <stop offset="50%" stopColor="#facc15" />
         <stop offset="50%" stopColor="transparent" />
       </linearGradient>
     </defs>
+
     <path
-      fill="url(#half)"
-      stroke="yellow"
       d="M8 .25l2.47 5.01 5.53.8-4 3.9.94 5.49L8 12.77l-4.94 2.68.94-5.49-4-3.9 5.53-.8z"
+      fill="url(#halfFill)"
+      stroke="#a16207"
+      strokeWidth="0.8"
+      strokeLinejoin="round"
     />
   </svg>
 );
-
 export const Rating = ({ rating }: { rating: number }) => {
   const renderStar = (index: number) => {
     const starValue = index + 1;
@@ -75,7 +89,7 @@ export const ControlledRating = ({
           onClick={() => onChange(i + 1)}
           className={cn(
             "cursor-pointer p-0 border-0 outline-0 bg-none",
-            isDisabled && "cursor-default pointer-events-none opacity-60"
+            isDisabled && "cursor-default pointer-events-none opacity-60",
           )}
         >
           {renderStar(i + 1)}

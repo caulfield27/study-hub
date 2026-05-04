@@ -14,10 +14,21 @@ export const Book = ({ book, isScrollable }: Props) => {
   const navigate = useNavigate();
 
   return (
-    <Card className={cn("theme-surface w-[270px] shrink-0 border", !isScrollable && "max-sm:w-full")}>
+    <Card
+      className={cn(
+        "theme-surface w-[270px] shrink-0 border",
+        !isScrollable && "max-sm:w-full",
+        isScrollable && "shadow-none!",
+      )}
+    >
       <CardBody className="p-0">
         <div className="flex flex-col gap-3.5">
-          <div className={cn("w-full flex", !isScrollable && "max-sm:justify-center max-sm:mt-2")}>
+          <div
+            className={cn(
+              "w-full flex",
+              !isScrollable && "max-sm:justify-center max-sm:mt-2",
+            )}
+          >
             <Image
               alt={book.name}
               src={getFile(book.image)}
@@ -39,13 +50,18 @@ export const Book = ({ book, isScrollable }: Props) => {
                   </span>
                 </div>
                 <div className="theme-text-muted flex flex-row justify-start items-center gap-2">
-                  <span className="theme-text font-medium">{book.rating_avg ?? 0}</span>
+                  <span className="theme-text font-medium">
+                    {book.rating_avg ?? 0}
+                  </span>
                   <Rating rating={book.rating_avg ?? 0} />
                 </div>
               </div>
             </div>
             <div className="flex flex-col gap-2.5">
-              <Button  color="primary" onPress={() => navigate(`/library/${book.id}`)}>
+              <Button
+                color="primary"
+                onPress={() => navigate(`/library/${book.id}`)}
+              >
                 {t("library.openBook")}
               </Button>
             </div>

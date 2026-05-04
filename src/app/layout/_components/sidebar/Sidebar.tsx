@@ -1,6 +1,7 @@
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import { authedNavLinks, publicNavLinks } from "./Sidebar.constants";
 import logo from "/sh_logo_white.png";
+import logo_black from "/sh_logo.png";
 import { Divider } from "@heroui/divider";
 import { useEffect } from "react";
 import { useGlobalStore } from "@/shared/store";
@@ -9,13 +10,18 @@ import { cn } from "@/shared/utils/clx";
 import { useI18n } from "@/shared/i18n";
 import { LanguageSelect } from "@/shared/ui/LanguageSelect/LanguageSelect";
 import { ThemeToggle } from "@/shared/ui/ThemeToggle/ThemeToggle";
+import { useTheme } from "@/shared/theme";
 
 export function Sidebar() {
   const { t } = useI18n();
+  const { theme } = useTheme();
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const user = useGlobalStore((state) => state.user);
+  const { pathname } = useLocation();
   const isSidebarHidden = useGlobalStore((state) => state.isSidebarHidden);
-  const setIsSidebarHidden = useGlobalStore((state) => state.setIsSidebarHidden);
+  const setIsSidebarHidden = useGlobalStore(
+    (state) => state.setIsSidebarHidden,
+  );
   const links = isAuthed ? authedNavLinks : publicNavLinks;
 
   useEffect(() => {
@@ -48,39 +54,38 @@ export function Sidebar() {
         z-100
         min-h-[95vh] 
         w-(--sidebar-width) 
-        bg-(--sidebar-bg) 
         border
+        theme-surface-soft
         rounded-xl
-        theme-border
       "
     >
       <div className="relative p-5">
         <div className="flex flex-col gap-3 mb-2 theme-text w-full">
-          <img src={logo} className="w-15 theme-logo" />
+          <img src={theme === "light" ? logo_black : logo} className="w-15" />
           <GlobalSearch />
         </div>
 
-        <Divider className={cn("theme-border")}/>
+        <Divider className={cn("theme-border")} />
 
         <div className="h-full mt-5">
           <nav className="flex flex-col gap-5">
-            {links.map((link) => (
-              <NavLink
-                key={link.path}
-                to={link.path}
-                className={({ isActive }) =>
-                  `
-                    flex items-center gap-2 px-2 py-2 rounded-xl theme-text transition 
-                    hover:bg-(--primary-color)
-                    ${isActive ? "bg-(--primary-color) text-yellow-400 pointer-events-none" : ""}
-                    ${isSidebarHidden ? 'justify-center' : ''}
-                  `
-                }
-              >
-                <link.icon />
-                {!isSidebarHidden && <span>{t(link.labelKey)}</span>}
-              </NavLink>
-            ))}
+            {links.map((link) => {
+              const isActive = link.path === pathname;
+              return (
+                <NavLink
+                  key={link.path}
+                  to={link.path}
+                  className={cn(
+                    "flex items-center gap-2 px-2 py-2 rounded-xl theme-text transition hover:bg-(--primary-color) hover:text-white!",
+                    isActive && "bg-(--primary-color) pointer-events-none text-white!",
+                    isSidebarHidden && "justify-center",
+                  )}
+                >
+                  <link.icon />
+                  {!isSidebarHidden && <span>{t(link.labelKey)}</span>}
+                </NavLink>
+              );
+            })}
           </nav>
           {!isSidebarHidden && (
             <div className="mt-6 flex flex-col gap-3">

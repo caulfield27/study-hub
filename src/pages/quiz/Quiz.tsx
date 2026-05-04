@@ -26,7 +26,10 @@ function Quiz() {
     method: "get",
     url: apiRoutes.quizes.getById(id ?? ""),
   };
-  const { data: quiz, isLoading } = useSwr<IQuizResponse>([swrKey, "public"], api.sendRequest);
+  const { data: quiz, isLoading } = useSwr<IQuizResponse>(
+    [swrKey, "public"],
+    api.sendRequest,
+  );
 
   // locale states
   const [questionIndex, setQuestionIndex] = useState<number>(0);
@@ -43,7 +46,9 @@ function Quiz() {
     setTimerTrigger((prev) => !prev);
   };
   const [result, setResult] = useState(0);
-  const [questionText, formattedCode] = splitQuestion(quiz?.questions?.[questionIndex]?.question);
+  const [questionText, formattedCode] = splitQuestion(
+    quiz?.questions?.[questionIndex]?.question,
+  );
 
   // event handlers
   function handleSelectChange(value: string) {
@@ -53,7 +58,8 @@ function Quiz() {
   }
 
   function handleNextQuestion() {
-    const isCorrect = quiz?.questions[questionIndex].correct === userSelects[questionIndex];
+    const isCorrect =
+      quiz?.questions[questionIndex].correct === userSelects[questionIndex];
     setResult((prev) => (isCorrect ? prev + 10 : prev + 0));
     if (questionIndex + 1 === quiz?.questions?.length) {
       setIsFinished(true);
@@ -71,7 +77,7 @@ function Quiz() {
     <PageLoader />
   ) : quiz ? (
     <div className="flex flex-col gap-2">
-      <Breadcrumbs color="secondary">
+      <Breadcrumbs>
         <BreadcrumbItem>
           <Link to={"/quizes"}>{t("quizzes.breadcrumb")}</Link>
         </BreadcrumbItem>
@@ -98,8 +104,8 @@ function Quiz() {
       "
         >
           <div
-            className="
-          w-full bg-[#262626] rounded 
+            className="theme-surface-strong border
+          w-full rounded 
           flex justify-between items-center gap-4 
           pl-5 p-3
         "
@@ -126,7 +132,12 @@ function Quiz() {
                 color="danger"
                 description={t("quizzes.timeoutDescription")}
                 endContent={
-                  <Button color="danger" size="md" variant="flat" onPress={reset}>
+                  <Button
+                    color="danger"
+                    size="md"
+                    variant="flat"
+                    onPress={reset}
+                  >
                     {t("common.retry")}
                   </Button>
                 }
@@ -156,21 +167,23 @@ function Quiz() {
                   value={userSelects[questionIndex] || ""}
                   onValueChange={handleSelectChange}
                 >
-                  {quiz.questions[questionIndex].variants.map((variant: string) => (
-                    <Radio
-                      key={variant}
-                      value={variant}
-                      classNames={{
-                        base: cn(
-                          "inline-flex m-0 bg-content1 items-center",
-                          "flex-row max-w-full cursor-pointer rounded-lg gap-4 p-4 border-2 border-transparent",
-                          "data-[selected=true]:border-[#404040]",
-                        ),
-                      }}
-                    >
-                      {variant}
-                    </Radio>
-                  ))}
+                  {quiz.questions[questionIndex].variants.map(
+                    (variant: string) => (
+                      <Radio
+                        key={variant}
+                        value={variant}
+                        classNames={{
+                          base: cn(
+                            "inline-flex m-0 border theme-surface-soft items-center",
+                            "flex-row max-w-full cursor-pointer rounded-lg gap-4 p-4 border-2 border-transparent",
+                            "data-[selected=true]:border-[#404040]",
+                          ),
+                        }}
+                      >
+                        {variant}
+                      </Radio>
+                    ),
+                  )}
                 </RadioGroup>
               </div>
 
@@ -181,7 +194,9 @@ function Quiz() {
                   variant="shadow"
                   color="primary"
                 >
-                  {questionIndex === quiz.questions.length - 1 ? t("quizzes.finish") : t("quizzes.next")}
+                  {questionIndex === quiz.questions.length - 1
+                    ? t("quizzes.finish")
+                    : t("quizzes.next")}
                 </Button>
               </div>
             </>

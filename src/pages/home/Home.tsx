@@ -49,7 +49,7 @@ function Home() {
                   <Button
                     onPress={() => navigate("quizes")}
                     className="max-sm:w-full"
-                    variant="shadow"
+                    variant="flat"
                     size={"lg"}
                     endContent={<GraduationCap />}
                   >
@@ -89,7 +89,7 @@ function Home() {
               </div>
 
               <div className="w-full relative lg:block min-[1600px]:mt-24">
-                <div className="absolute inset-0 bg-linear-to-tr from-(--primary-color)/20 to-(--primary-color-dark)/20 rounded-3xl blur-3xl" />
+                <div className="absolute inset-0 rounded-3xl" />
                 <div className="relative">
                   <div className="relative rounded-2xl overflow-hidden border theme-border shadow-2xl shadow-black/20">
                     <img
@@ -97,7 +97,6 @@ function Home() {
                       alt="Developer coding on laptop with multiple screens"
                       className="w-full h-auto object-cover min-[1600px]:max-w-3xl"
                     />
-                    <div className="absolute inset-0" style={{ background: "linear-gradient(to top, var(--hero-overlay), transparent 55%)" }} />
                   </div>
 
                   <div className="theme-surface absolute -bottom-6 -left-6 max-sm:-bottom-2 max-sm:left-3 border rounded-xl p-4 max-sm:p-2.5 shadow-xl backdrop-blur-sm">

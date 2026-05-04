@@ -78,7 +78,7 @@ function VideoCourses() {
         </div>
       </section>
 
-      <div className="theme-surface flex flex-wrap items-center justify-between gap-4 rounded-2xl border p-4">
+      <div className="theme-surface-soft flex flex-wrap items-center justify-between gap-4 rounded-2xl border p-4">
         <div className="flex w-full flex-col gap-2 sm:w-auto">
           <span className="theme-text-muted text-sm">{t("courses.sortBy")}</span>
           <Select
@@ -121,12 +121,12 @@ function VideoCourses() {
 
       <div
         className={cn(
-          "grid gap-6",
+          "grid gap-6 items-start",
           showFilters ? "lg:grid-cols-[300px_minmax(0,1fr)]" : "grid-cols-1",
         )}
       >
         {showFilters && (
-          <div className="hidden lg:block h-fit">
+          <div className="hidden lg:block">
             <CoursesFilters
               categories={categories}
               filters={filters}

@@ -23,7 +23,10 @@ export const GlobalSearch = () => {
 
   const handleClickOutside = (e: MouseEvent) => {
     const target = e.target as Node;
-    if (!inputRef.current?.contains(target) && !btnRef.current?.contains(target)) {
+    if (
+      !inputRef.current?.contains(target) &&
+      !btnRef.current?.contains(target)
+    ) {
       setShowInput(false);
       window.removeEventListener("click", handleClickOutside);
     }
@@ -48,11 +51,23 @@ export const GlobalSearch = () => {
           value={searchValue}
           placeholder={t("search.placeholder")}
           color="secondary"
-          className={cn("w-full min-w-42.5 max-sm:min-w-30")}
-          classNames={{ input: "placeholder:text-neutral-500" }}
+          className="w-full min-w-42.5 max-sm:min-w-30"
+          classNames={{
+            input:
+              "placeholder:text-(--muted-foreground) text-(--muted-foreground)",
+            inputWrapper: [
+              "bg-[var(--surface)]",
+              "border border-[var(--border-color)]",
+              "hover:bg-[var(--surface-soft)]",
+              "focus-within:ring-2 focus-within:ring-[var(--primary-color)]",
+            ],
+          }}
           endContent={
-            <button onClick={handleSearch} className="border-0 outline-0 bg-none cursor-pointer">
-              <Search className="text-neutral-500"/>
+            <button
+              onClick={handleSearch}
+              className="border-0 outline-none bg-transparent cursor-pointer"
+            >
+              <Search className="text-(--muted-foreground)" />
             </button>
           }
           onKeyDown={(event) => {
@@ -74,26 +89,40 @@ export const GlobalSearch = () => {
           <Search />
         </button>
         {showInput && (
-          <div className="fixed inset-x-4 top-4 z-130 max-w-[calc(100vw-2rem)]">
-            <Input
-              ref={inputRef}
-              onChange={(event) => setSearchValue(event.target.value)}
-              value={searchValue}
-              color="secondary"
-              placeholder={t("search.shortPlaceholder")}
-              className="w-full"
-              classNames={{ input: "placeholder:text-neutral-500 max-[930px]:placeholder:none" }}
-              endContent={
-                <button onClick={handleSearch} className="border-0 outline-0 bg-none cursor-pointer">
-                  <Search />
-                </button>
-              }
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  handleSearch();
+          <div className="fixed left-0 top-4 z-130 w-screen flex justify-center">
+            <div className="w-[90vw]">
+              <Input
+                ref={inputRef}
+                onChange={(event) => setSearchValue(event.target.value)}
+                value={searchValue}
+                placeholder={t("search.shortPlaceholder")}
+                color="secondary"
+                className="w-full"
+                classNames={{
+                  input:
+                    "placeholder:text-(--muted-foreground) text-(--muted-foreground)",
+                  inputWrapper: [
+                    "bg-(--surface)",
+                    "border border-(--border-color)",
+                    "hover:bg-(--surface-soft)!",
+                    "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                  ],
+                }}
+                endContent={
+                  <button
+                    onClick={handleSearch}
+                    className="border-0 outline-none bg-transparent cursor-pointer"
+                  >
+                    <Search className="text-(--muted-foreground)" />
+                  </button>
                 }
-              }}
-            />
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    handleSearch();
+                  }
+                }}
+              />
+            </div>
           </div>
         )}
       </div>

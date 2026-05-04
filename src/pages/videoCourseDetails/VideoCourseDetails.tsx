@@ -38,7 +38,7 @@ function VideoCourseDetails() {
 
   return (
     <div className="space-y-8">
-      <Breadcrumbs color="secondary">
+      <Breadcrumbs>
         <BreadcrumbItem>
           <Link to="/video-courses">{t("nav.videos")}</Link>
         </BreadcrumbItem>
@@ -53,10 +53,6 @@ function VideoCourseDetails() {
               src={course.poster}
               alt={course.name}
               className="h-full w-full object-cover"
-            />
-            <div
-              className="absolute inset-0"
-              style={{ background: "linear-gradient(to top, var(--hero-overlay), transparent 65%)" }}
             />
           </div>
 

@@ -25,7 +25,8 @@
     "daysAgoOne": "{{count}} рӯз пеш",
     "daysAgoFew": "{{count}} рӯз пеш",
     "daysAgoMany": "{{count}} рӯз пеш",
-    "weeksAgo": "{{count}} ҳафта пеш"
+    "weeksAgo": "{{count}} ҳафта пеш",
+    "interfaceTitle": "Интерфейсро танзим кунед"
   },
   "locales": {
     "ru": "Русӣ",

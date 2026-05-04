@@ -127,8 +127,8 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
       formData.append("released", postData.released);
       formData.append("description", postData.description);
 
-      const result = await api.sendRequest(
-        [{
+      const result = await api.sendRequest([
+        {
           method: "post",
           url: apiRoutes.books.post,
           data: formData,
@@ -136,8 +136,8 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
             "Content-Type": "multipart/form-data",
           },
         },
-        "public"]
-      );
+        "public",
+      ]);
 
       addToast({
         color: "success",
@@ -153,7 +153,15 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
   }
 
   return (
-    <Modal onClose={onClose} isOpen={isOpen} size={window.innerWidth <= 768 ? 'full' : 'xl'}>
+    <Modal
+      classNames={{
+        backdrop: "z-[100]",
+        wrapper: "z-[101]",
+      }}
+      onClose={onClose}
+      isOpen={isOpen}
+      size={window.innerWidth <= 768 ? "full" : "xl"}
+    >
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1">
           {t("library.addBookTitle")}
@@ -184,6 +192,16 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
                 })
               }
               onBlur={handleBlur}
+              classNames={{
+                input:
+                  "placeholder:text-(--muted-foreground) text-(--foreground)",
+                inputWrapper: [
+                  "bg-(--surface)",
+                  "border border-(--border-color)",
+                  "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                ],
+                label: "text-(--foreground)",
+              }}
             />
             <Input
               color="secondary"
@@ -206,6 +224,16 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
                 })
               }
               onBlur={handleBlur}
+              classNames={{
+                input:
+                  "placeholder:text-(--muted-foreground) text-(--foreground)",
+                inputWrapper: [
+                  "bg-(--surface)",
+                  "border border-(--border-color)",
+                  "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                ],
+                label: "text-(--foreground)",
+              }}
             />
             <Input
               name="image"
@@ -215,6 +243,16 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
               isInvalid={!validation.image.isValid}
               errorMessage={validation.image.message}
               onChange={handleDataChange}
+              classNames={{
+                input:
+                  "placeholder:text-(--muted-foreground) text-(--foreground)",
+                inputWrapper: [
+                  "bg-(--surface)",
+                  "border border-(--border-color)",
+                  "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                ],
+                label: "text-(--foreground)",
+              }}
             />
             <Input
               value={postData.pdf}
@@ -235,6 +273,16 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
                 })
               }
               onBlur={handleBlur}
+              classNames={{
+                input:
+                  "placeholder:text-(--muted-foreground) text-(--foreground)",
+                inputWrapper: [
+                  "bg-(--surface)",
+                  "border border-(--border-color)",
+                  "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                ],
+                label: "text-(--foreground)",
+              }}
             />
             <DateInput
               onChange={(value) =>
@@ -242,12 +290,22 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
                   ...prev,
                   released: `${value?.year}-${String(value?.day).padStart(
                     2,
-                    "0"
+                    "0",
                   )}-${String(value?.month).padStart(2, "0")}`,
                 }))
               }
               color="secondary"
               label={t("library.releaseDate")}
+              classNames={{
+                input:
+                  "placeholder:text-(--muted-foreground) text-(--foreground)",
+                inputWrapper: [
+                  "bg-(--surface)",
+                  "border border-(--border-color)",
+                  "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                ],
+                label: "text-(--foreground)",
+              }}
             />
             <Textarea
               value={postData.description}
@@ -268,6 +326,16 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
                 })
               }
               onBlur={handleBlur}
+              classNames={{
+                input:
+                  "placeholder:text-(--muted-foreground) text-(--foreground)",
+                inputWrapper: [
+                  "bg-(--surface)",
+                  "border border-(--border-color)",
+                  "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                ],
+                label: "text-(--foreground)",
+              }}
             />
             <Button
               isDisabled={!readyToSend() || loading}

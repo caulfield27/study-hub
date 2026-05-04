@@ -27,12 +27,15 @@ export const Login = () => {
     e.preventDefault();
     try {
       setSubmitting(true);
-      const result = await api.sendRequest([{
-        method: "post",
-        url: apiRoutes.login,
-        data: JSON.stringify(payload),
-        headers: { "Content-Type": "application/json" },
-      }, 'public']);
+      const result = await api.sendRequest([
+        {
+          method: "post",
+          url: apiRoutes.login,
+          data: JSON.stringify(payload),
+          headers: { "Content-Type": "application/json" },
+        },
+        "public",
+      ]);
       localStorage.setItem("token", result.data);
       addToast({ color: "success", title: t("auth.loginSuccess") });
       setIsAuthed(true);
@@ -65,6 +68,15 @@ export const Login = () => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, username: e.target.value }))
         }
+        classNames={{
+          input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+          inputWrapper: [
+            "bg-(--surface)",
+            "border border-(--border-color)",
+            "focus-within:ring-2 focus-within:ring-(--primary-color)",
+          ],
+          label: "text-(--foreground)",
+        }}
       />
       <Input
         isRequired
@@ -91,6 +103,15 @@ export const Login = () => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, password: e.target.value }))
         }
+        classNames={{
+          input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+          inputWrapper: [
+            "bg-(--surface)",
+            "border border-(--border-color)",
+            "focus-within:ring-2 focus-within:ring-(--primary-color)",
+          ],
+          label: "text-(--foreground)",
+        }}
       />
       {requestError ? (
         <Alert

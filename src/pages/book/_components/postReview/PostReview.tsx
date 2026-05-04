@@ -65,7 +65,7 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
           setNewRating(5);
           setNewReview("");
         }}
-        className="theme-surface-soft mb-8 rounded-xl p-6 max-sm:p-4 border theme-border"
+        className="mb-8 rounded-xl p-6 max-sm:p-4 border theme-border"
       >
         {!isAuthed && (
           <div className="flex items-center justify-center w-full">
@@ -73,7 +73,7 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
               color="warning"
               endContent={<Link to={"/auth"}>{t("common.login")}</Link>}
               description={t("library.loginToReview")}
-              variant="faded"
+              variant="flat"
             />
           </div>
         )}
@@ -88,7 +88,7 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
               }
               title={t("library.reviewPublishError")}
               description={error}
-              variant="faded"
+              variant="flat"
             />
           </div>
         )}
@@ -98,7 +98,7 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
               color="success"
               title={t("library.reviewPublishSuccess")}
               description={""}
-              variant="faded"
+              variant="flat"
             />
           </div>
         ) : (

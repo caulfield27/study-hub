@@ -63,7 +63,7 @@ const Book = () => {
     <PageLoader />
   ) : (
     <div>
-      <Breadcrumbs color="secondary">
+      <Breadcrumbs>
         <BreadcrumbItem>
           <Link to={"/library"}>{t("library.breadcrumb")}</Link>
         </BreadcrumbItem>
@@ -105,7 +105,7 @@ const Book = () => {
                   </Button>
                 </div>
 
-                <div className="theme-surface-soft mt-6 p-4 rounded-xl space-y-3 border theme-border">
+                <div className="mt-6 p-4 rounded-xl space-y-3 border theme-border">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-5 h-5 shrink-0 theme-text-muted" />
                     <span className="theme-text-muted text-sm">{t("library.published", { date: book.released })}</span>

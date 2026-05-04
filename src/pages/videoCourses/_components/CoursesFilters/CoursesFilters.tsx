@@ -19,7 +19,7 @@ interface Props {
 export function CoursesFilters({ categories, filters, onChange, onReset }: Props) {
   const { t } = useI18n();
   return (
-    <aside className="lg:sticky top-0 lg:top-6">
+    <aside className="lg:sticky lg:top-6">
       <Card className="theme-surface space-y-6 border p-5">
         <div className="flex items-center justify-between gap-3">
           <div>

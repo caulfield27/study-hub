@@ -4,34 +4,46 @@
 
 :root {
     --bgColor: #171717;
-    --primary-color: #7c3aed;
-    --primary-color-dark: #5b21b6;
+
+    --primary-color: #f97316;
+    --primary-color-dark: #ea580c;
+
     --sidebar-bg: #262626;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+
     --foreground: #f3f0f0;
     --muted-foreground: #a3a3a3;
+
     --surface: #1f1f1f;
     --surface-soft: #262626;
     --surface-strong: #111111;
+
     --border-color: rgba(255, 255, 255, 0.1);
     --input-bg: #1d1d1d;
+
     --hero-overlay: rgba(10, 10, 10, 0.75);
+
     --logo-filter: none;
     --sidebar-width: 270px;
 }
 
 [data-theme="light"] {
     --bgColor: #ffffff;
-    --primary-color: #7c3aed;
-    --primary-color-dark: #5b21b6;
-    --sidebar-bg: #f8f5ff;
+    --primary-color: #f97316;
+    --primary-color-dark: #ea580c;
+    --sidebar-bg: #fff7ed;
+    --sidebar-border: #ffedd5;
     --foreground: #18181b;
     --muted-foreground: #71717a;
     --surface: #ffffff;
-    --surface-soft: #f5f3ff;
-    --surface-strong: #ede9fe;
-    --border-color: rgba(91, 33, 182, 0.14);
+    --surface-soft: #fafafa; 
+    --surface-strong: #f5f5f5;
+    --border-color: #e5e5e5;
+
     --input-bg: #ffffff;
+
     --hero-overlay: rgba(255, 255, 255, 0.08);
+
     --logo-filter: brightness(0) saturate(100%);
 }
 
@@ -85,9 +97,6 @@ body {
     color: var(--muted-foreground);
 }
 
-.theme-logo {
-    filter: var(--logo-filter);
-}
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

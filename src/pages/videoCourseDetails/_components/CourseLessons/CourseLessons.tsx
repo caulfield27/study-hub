@@ -54,12 +54,12 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
               >
                 <div className="theme-text flex w-full items-start justify-between gap-4">
                   <div>
-                    <p className="theme-text-muted text-xs uppercase tracking-wide">
+                    <p className={cn("theme-text-muted text-xs uppercase tracking-wide", active && 'text-white!')}>
                       {t("courses.lesson", { index: index + 1 })}
                     </p>
-                    <p className="text-sm font-medium">{lesson.title}</p>
+                    <p className={cn("text-sm font-medium", active && 'text-white!')}>{lesson.title}</p>
                   </div>
-                  <span className="theme-text-muted text-xs">{lesson.duration}</span>
+                  <span className={cn("theme-text-muted text-xs", active && 'text-white!')}>{lesson.duration}</span>
                 </div>
               </Button>
             );

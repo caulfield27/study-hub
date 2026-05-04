@@ -14,7 +14,13 @@ export const QuizCard = ({ quizes, isScrollable }: Props) => {
   const navigate = useNavigate();
   const [selectedQuiz, setSelectedQuiz] = useState(quizes[0]);
   return (
-    <Card className={cn("theme-surface w-[250px] shrink-0 border", !isScrollable && "max-sm:w-full")}>
+    <Card
+      className={cn(
+        "theme-surface w-[250px] shrink-0 border",
+        !isScrollable && "max-sm:w-full",
+        isScrollable && "shadow-none!",
+      )}
+    >
       <CardBody className="flex flex-col gap-6 max-sm:gap-2 justify-center items-center">
         <Select
           color="secondary"
@@ -24,15 +30,15 @@ export const QuizCard = ({ quizes, isScrollable }: Props) => {
           label={t("quizzes.chooseDifficulty")}
           classNames={{
             label: "theme-text-muted",
-            trigger: "bg-(--surface-soft)",
             value: "theme-text",
             popoverContent: "theme-surface",
+            selectorIcon: "text-(--muted-foreground)",
           }}
           onSelectionChange={(key) =>
             setSelectedQuiz(
               quizes.find(
-                (quiz) => String(quiz.complexity) === key.currentKey
-              ) ?? selectedQuiz
+                (quiz) => String(quiz.complexity) === key.currentKey,
+              ) ?? selectedQuiz,
             )
           }
         >
@@ -66,7 +72,9 @@ export const QuizCard = ({ quizes, isScrollable }: Props) => {
         <Rating rating={selectedQuiz.complexity} />
         <div className="theme-text-muted flex flex-row justify-center items-center gap-1">
           <Timer className="max-sm:w-4" />
-          <span className="max-sm:text-[12px]">{t("quizzes.threeMinutes")}</span>
+          <span className="max-sm:text-[12px]">
+            {t("quizzes.threeMinutes")}
+          </span>
         </div>
         <Button
           onPress={() => navigate(`/quizes/${selectedQuiz.quiz.id}`)}

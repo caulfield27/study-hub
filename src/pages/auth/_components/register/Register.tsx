@@ -33,12 +33,15 @@ export const Register = ({
     e.preventDefault();
     try {
       setSubmitting(true);
-      await api.sendRequest([{
-        method: "post",
-        url: apiRoutes.register,
-        data: JSON.stringify(payload),
-        headers: { "Content-Type": "application/json" },
-      },'public']);
+      await api.sendRequest([
+        {
+          method: "post",
+          url: apiRoutes.register,
+          data: JSON.stringify(payload),
+          headers: { "Content-Type": "application/json" },
+        },
+        "public",
+      ]);
       addToast({ color: "success", title: t("auth.registerSuccess") });
       setAuthType("login");
     } catch (e: any) {
@@ -69,6 +72,15 @@ export const Register = ({
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, username: e.target.value }))
         }
+        classNames={{
+          input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+          inputWrapper: [
+            "bg-(--surface)",
+            "border border-(--border-color)",
+            "focus-within:ring-2 focus-within:ring-(--primary-color)",
+          ],
+          label: "text-(--foreground)",
+        }}
       />
       <Input
         isRequired
@@ -82,6 +94,15 @@ export const Register = ({
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, email: e.target.value }))
         }
+        classNames={{
+          input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+          inputWrapper: [
+            "bg-(--surface)",
+            "border border-(--border-color)",
+            "focus-within:ring-2 focus-within:ring-(--primary-color)",
+          ],
+          label: "text-(--foreground)",
+        }}
       />
       <Input
         isRequired
@@ -108,6 +129,15 @@ export const Register = ({
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, password: e.target.value }))
         }
+        classNames={{
+          input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+          inputWrapper: [
+            "bg-(--surface)",
+            "border border-(--border-color)",
+            "focus-within:ring-2 focus-within:ring-(--primary-color)",
+          ],
+          label: "text-(--foreground)",
+        }}
       />
       {requestError ? (
         <Alert

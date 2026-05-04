@@ -25,7 +25,8 @@
     "daysAgoOne": "{{count}} день назад",
     "daysAgoFew": "{{count}} дня назад",
     "daysAgoMany": "{{count}} дней назад",
-    "weeksAgo": "{{count}} нед. назад"
+    "weeksAgo": "{{count}} нед. назад",
+    "interfaceTitle": "Настройте интерфейс"
   },
   "locales": {
     "ru": "Русский",

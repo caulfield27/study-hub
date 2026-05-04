@@ -25,7 +25,8 @@
     "daysAgoOne": "{{count}} day ago",
     "daysAgoFew": "{{count}} days ago",
     "daysAgoMany": "{{count}} days ago",
-    "weeksAgo": "{{count}} weeks ago"
+    "weeksAgo": "{{count}} weeks ago",
+    "interfaceTitle": "Customize the interface"
   },
   "locales": {
     "ru": "Russian",
