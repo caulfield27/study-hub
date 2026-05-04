@@ -5,8 +5,8 @@
 :root {
     --bgColor: #171717;
 
-    --primary-color: #f97316;
-    --primary-color-dark: #ea580c;
+    --primary-color: #ea580c;
+    --primary-color-dark: #c2410c;
 
     --sidebar-bg: #262626;
     --sidebar-border: rgba(255, 255, 255, 0.1);
@@ -29,8 +29,8 @@
 
 [data-theme="light"] {
     --bgColor: #ffffff;
-    --primary-color: #f97316;
-    --primary-color-dark: #ea580c;
+    --primary-color: #ea580c;
+    --primary-color-dark: #c2410c;
     --sidebar-bg: #fff7ed;
     --sidebar-border: #ffedd5;
     --foreground: #18181b;
@@ -46,6 +46,7 @@
 
     --logo-filter: brightness(0) saturate(100%);
 }
+
 
 
 *{

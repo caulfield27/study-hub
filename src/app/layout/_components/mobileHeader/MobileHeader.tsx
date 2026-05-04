@@ -18,11 +18,17 @@ export const MobileHeader = () => {
 
   return (
     <header className="w-full p-4 flex flex-row justify-between items-center gap-3">
-      <img
-        src={theme === "light" ? logo_black : logo}
-        alt="logo"
-        className="w-13"
-      />
+      <div
+        role="button"
+        className="cursor-pointer"
+        onClick={() => navigate("/")}
+      >
+        <img
+          src={theme === "light" ? logo_black : logo}
+          alt="logo"
+          className="w-13"
+        />
+      </div>
       <div className="flex flex-row gap-2 justify-center items-center">
         {pathname === "/" && <UiSettings />}
         <GlobalSearch />

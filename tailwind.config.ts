@@ -34,7 +34,7 @@ export default {
               "800": "#9a3412",
               "900": "#7c2d12",
               foreground: "#fff",
-              DEFAULT: "#f97316",
+              DEFAULT: "#ea580c",
             },
 
             warning: {
@@ -49,7 +49,7 @@ export default {
               "800": "#9a3412",
               "900": "#7c2d12",
               foreground: "#fff",
-              DEFAULT: "#f97316",
+              DEFAULT: "#ea580c",
             },
 
             secondary: {
@@ -85,7 +85,7 @@ export default {
               "800": "#9a3412",
               "900": "#7c2d12",
               foreground: "#ffffff",
-              DEFAULT: "#f97316",
+              DEFAULT: "#ea580c",
             },
             secondary: {
               "50": "#18181b",
