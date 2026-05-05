@@ -20,7 +20,7 @@ export function CoursesFilters({ categories, filters, onChange, onReset }: Props
   const { t } = useI18n();
   return (
     <aside className="lg:sticky lg:top-6">
-      <Card className="theme-surface space-y-6 border p-5">
+      <Card className="theme-surface space-y-6 border p-5 max-sm:p-0 max-sm:border-0 max-sm:bg-transparent! max-sm:shadow-none!">
         <div className="flex items-center justify-between gap-3">
           <div>
             <h2 className="theme-text text-lg font-semibold">{t("courses.filtersTitle")}</h2>

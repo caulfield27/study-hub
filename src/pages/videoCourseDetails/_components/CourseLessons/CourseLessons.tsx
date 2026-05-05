@@ -16,7 +16,7 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
 
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1.3fr)_360px]">
-      <Card className="theme-surface border p-4">
+      <Card className="theme-surface border p-4 max-sm:p-0 max-sm:bg-transparent! max-sm:border-0">
         <div className="overflow-hidden rounded-2xl border theme-border">
           <iframe
             title={activeLesson.title}

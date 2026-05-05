@@ -45,7 +45,7 @@ function VideoCourseDetails() {
         <BreadcrumbItem isDisabled>{course.name}</BreadcrumbItem>
       </Breadcrumbs>
 
-      <Card className="theme-surface overflow-hidden border">
+      <Card className="theme-surface overflow-hidden border max-sm:border-0 max-sm:bg-transparent! max-sm:shadow-none!">
         <div className="grid gap-0 xl:grid-cols-[360px_minmax(0,1fr)]">
           <div className="relative min-h-70">
             <Image
@@ -56,7 +56,7 @@ function VideoCourseDetails() {
             />
           </div>
 
-          <div className="space-y-6 p-6 md:p-8">
+          <div className="space-y-6 p-6 md:p-8 max-sm:px-0">
             <div className="flex flex-wrap gap-2">
               {course.categories.map((category) => (
                 <Chip key={category} color="primary" variant="flat">

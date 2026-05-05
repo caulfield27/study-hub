@@ -65,7 +65,7 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
           setNewRating(5);
           setNewReview("");
         }}
-        className="mb-8 rounded-xl p-6 max-sm:p-4 border theme-border"
+        className="mb-8 rounded-xl p-6 max-sm:p-0 border theme-border max-sm:border-0"
       >
         {!isAuthed && (
           <div className="flex items-center justify-center w-full">

@@ -27,7 +27,7 @@ export const CourseCard = ({ course }: Props) => {
             removeWrapper
             src={course.poster}
             alt={course.name}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover rounded-none"
           />
           <div className="absolute left-4 top-4 flex flex-wrap gap-2 z-10">
             <Chip color={course.is_free ? "success" : "warning"} variant="solid">
@@ -39,7 +39,7 @@ export const CourseCard = ({ course }: Props) => {
           </div>
         </div>
 
-        <div className="flex h-full flex-col p-5">
+        <div className="flex h-full flex-col p-5 max-sm:p-4">
           <div className="flex flex-wrap gap-2">
             {course.categories.map((category) => (
               <Chip key={category} variant="flat" color="primary">

@@ -56,7 +56,7 @@ export const CourseReviews = ({ initialReviews }: Props) => {
         <p className="theme-text-muted">{t("courses.reviewsSubtitle")}</p>
       </div>
 
-      <Card className="theme-surface-soft border p-5">
+      <Card className="theme-surface-soft border p-5 max-sm:border-0 max-sm: bg-transparent! max-sm:p-0 max-sm:shadow-none!">
         <form className="space-y-4" onSubmit={handleSubmit}>
           {!isAuthed && (
             <Alert

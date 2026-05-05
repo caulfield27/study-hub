@@ -78,8 +78,8 @@ const Book = () => {
       )}
 
       <div className="w-full mx-auto py-12">
-        <Card className="theme-surface overflow-hidden border">
-          <div className="flex flex-row gap-8 p-8 max-sm:p-4 max-[1200px]:flex-col">
+        <Card className="theme-surface overflow-hidden border max-sm:border-0 max-sm:bg-transparent! max-sm:shadow-none!">
+          <div className="flex flex-row gap-8 p-8 max-sm:p-0 max-[1200px]:flex-col">
             <div className="flex justify-center items-start shrink-0">
               <div className="w-full">
                 <div className="w-full flex justify-center items-center">
