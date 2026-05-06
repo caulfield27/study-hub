@@ -127,28 +127,8 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="flex flex-col gap-6">
-        <div className="w-full flex flex-row items-center justify-between">
-          <h2 className="theme-text text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight">
-            {t("home.popularBooks")}
-          </h2>
-          <Button size="lg" color="primary" onClick={() => navigate("/library")} variant="light">
-            {t("home.allBooks")}
-          </Button>
-        </div>
-        <PopularBooks />
-      </section>
-      <section className="flex flex-col gap-6">
-        <div className="w-full flex flex-row items-center justify-between">
-          <h2 className="theme-text text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight">
-            {t("home.recommendedQuizzes")}
-          </h2>
-          <Button size="lg" color="primary" onClick={() => navigate("/quizes")} variant="light">
-            {t("home.allQuizzes")}
-          </Button>
-        </div>
-        <RecomendedQuizes />
-      </section>
+      <PopularBooks/>
+      <RecomendedQuizes/>
     </div>
   );
 }

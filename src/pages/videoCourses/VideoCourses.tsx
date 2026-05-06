@@ -131,10 +131,7 @@ function VideoCourses() {
       </div>
 
       <div
-        className={cn(
-          "grid gap-6 items-start",
-          showFilters ? "lg:grid-cols-[300px_minmax(0,1fr)]" : "grid-cols-1",
-        )}
+        className={"flex flex-row gap-5"}
       >
         {showFilters && (
           <div className="hidden lg:block">

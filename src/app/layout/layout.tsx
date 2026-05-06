@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router";
 import { MobileHeader, MobileNavbar, Sidebar } from "./_components";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { PageLoader } from "@/shared/ui/Loader/PageLoader";
 import { useGlobalStore } from "@/shared/store";
 import { api } from "@/shared/api/api.handlers";
@@ -8,6 +8,7 @@ import { api } from "@/shared/api/api.handlers";
 function Layout() {
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const location = useLocation();
+  const mainRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (isAuthed) {
@@ -17,6 +18,13 @@ function Layout() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+    const main = mainRef.current;
+    if (!main) return;
+    if (location.pathname === "/") {
+      main.style.overflowX = "hidden";
+    } else {
+      main.style.overflowX = "";
+    }
   }, [location]);
 
   return (
@@ -28,11 +36,11 @@ function Layout() {
         <MobileHeader />
       </div>
       <main
+        ref={mainRef}
         className="
           w-full 
           grow 
           max-w-full
-          overflow-x-hidden
           ml-[calc(var(--sidebar-width)+20px)] 
           px-12.5 
           py-7.5

@@ -10,7 +10,7 @@ export const AuthContainer = ({
 }) => {
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <Card className="min-w-xl max-sm:min-w-full">
+      <Card className="theme-surface-soft min-w-xl max-sm:min-w-full">
         <CardHeader className="text-2xl font-semibold">{title}</CardHeader>
         <CardBody>{children}</CardBody>
       </Card>

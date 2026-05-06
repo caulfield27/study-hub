@@ -7,18 +7,18 @@ const Auth = () => {
   const { t } = useI18n();
   const [authType, setAuthType] = useState("login");
   return (
-    <div>
+    <div className="h-full">
       <Tabs
         selectedKey={authType}
         onSelectionChange={(key: Key) => setAuthType(key as string)}
         aria-label="Auth-options"
       >
-        <Tab key={"login"} title={t("auth.loginTab")}>
+        <Tab key={"login"} title={t("auth.loginTab")} className="h-full">
           <AuthContainer title={t("auth.loginTab")}>
             <Login />
           </AuthContainer>
         </Tab>
-        <Tab key={"register"} title={t("auth.registerTab")}>
+        <Tab key={"register"} title={t("auth.registerTab")} className="h-full">
           <AuthContainer title={t("auth.registerTitle")}>
             <Register setAuthType={setAuthType}/>
           </AuthContainer>
