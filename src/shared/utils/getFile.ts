@@ -1,5 +1,3 @@
-import { base_url } from "../api/api.config";
-
 export const getFile = (src: string) => {
-  return base_url + src;
+  return (import.meta.env?.VITE_BASE_CLAUDFLARE_MEDIA_PATH ?? "")+src;
 };

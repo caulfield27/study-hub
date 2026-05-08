@@ -1,5 +1,6 @@
 [context.production.environment]
     VITE_BASE_API_URL="https://study-hub-back-production.up.railway.app"
+    VITE_BASE_CLAUDFLARE_MEDIA_PATH="https://pub-26cecd0188b64506ac269f3e3dd5a862.r2.dev"
 
 [[redirects]]
   from = "/*"
