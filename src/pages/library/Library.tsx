@@ -61,7 +61,7 @@ function Library() {
         </Button>
         <div className="flex flex-col">
           {isLoading ? (
-            <BooksSkeleton size={10} />
+            <BooksSkeleton size={6} />
           ) : (
             <>
               <div className="flex flex-row flex-wrap gap-8 mb-12.5 justify-center items-start">

@@ -3,6 +3,7 @@ import type { ISearchData } from "../../SearchTypes";
 import { getQuizes } from "@/pages/quizes/Quizes.utils";
 import { Book } from "@/pages/library/_components";
 import { useI18n } from "@/shared/i18n";
+import { CourseCard } from "@/pages/videoCourses/_components";
 
 interface Props {
   data: ISearchData;
@@ -34,8 +35,8 @@ export const SearchResult = ({ data, total, query }: Props) => {
                 </span>
               </div>
               <div className="flex flex-row flex-nowrap gap-6 overflow-auto no-scrollbar">
-                {courses.map(() => (
-                  <div></div>
+                {courses.map((course) => (
+                  <CourseCard isRow key={course.id} course={course}/>
                 ))}
               </div>
             </section>

@@ -1,71 +1,52 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Button } from "@heroui/button";
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
 import { Select, SelectItem } from "@heroui/select";
 import { FilePlay, Filter } from "lucide-react";
 import { CourseCard, CoursesFilters } from "./_components";
-import type { CourseFiltersState, CourseSortKey } from "./VideoCoursesTypes";
-import { videoCoursesMock } from "./videoCourses.data";
+import type {
+  CourseCategory,
+  CourseSortKey,
+  ICoursesResponse,
+} from "./VideoCoursesTypes";
 import { cn } from "@/shared/utils/clx";
 import { PageHeader } from "@/shared/ui/PageHeader/PageHeader";
 import { useI18n } from "@/shared/i18n";
-
-const initialFilters: CourseFiltersState = {
-  categories: [],
-  price: "all",
-  rating: "all",
-  language: "all",
-};
+import { CoursesPageSkeleton } from "@/shared/skeletons/courses/CoursesSkeleton";
+import useSWR from "swr";
+import { apiRoutes } from "@/shared/api/api.routes";
+import { api } from "@/shared/api/api.handlers";
+import { getApiQuery, useFilters } from "./VideoCoursesStore";
 
 function VideoCourses() {
   const { t } = useI18n();
-  const [sortBy, setSortBy] = useState<CourseSortKey>("popularity");
-  const [filters, setFilters] = useState<CourseFiltersState>(initialFilters);
+  const { filters, updateFilters, mobileFiltersOpen, setMobileFiltersOpen } = useFilters();
   const [showFilters, setShowFilters] = useState(true);
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const query = getApiQuery(filters);
 
-  const categories = useMemo(
-    () => [...new Set(videoCoursesMock.flatMap((course) => course.categories))],
-    [],
+  // api
+  const coursesSwrKey = {
+    method: "get",
+    url: apiRoutes.courses.get(query),
+  };
+  const categoriesSwrKey = {
+    method: "get",
+    url: apiRoutes.courses.getCategories,
+  };
+  const { data: courses, isLoading: coursesPending } = useSWR<ICoursesResponse>(
+    [coursesSwrKey, "public"],
+    api.sendRequest,
   );
+  const { data: categories, isLoading: categoriesPending } = useSWR<
+    CourseCategory[]
+  >([categoriesSwrKey, "public"], api.sendRequest);
+
   const sortOptions: { key: CourseSortKey; label: string }[] = [
     { key: "popularity", label: t("courses.sortPopularity") },
     { key: "rating", label: t("courses.sortRating") },
-    { key: "dateAdded", label: t("courses.sortDateAdded") },
+    { key: "created_at", label: t("courses.sortDateAdded") },
   ];
 
-  const filteredCourses = useMemo(() => {
-    const result = videoCoursesMock.filter((course) => {
-      const matchesCategory =
-        filters.categories.length === 0 ||
-        filters.categories.some((category) =>
-          course.categories.includes(category),
-        );
-      const matchesPrice =
-        filters.price === "all" ||
-        (filters.price === "free" ? course.is_free : !course.is_free);
-      const matchesRating =
-        filters.rating === "all" || course.rating_avg >= Number(filters.rating);
-      const matchesLanguage =
-        filters.language === "all" || course.language === filters.language;
-
-      return (
-        matchesCategory && matchesPrice && matchesRating && matchesLanguage
-      );
-    });
-
-    return result.sort((a, b) => {
-      if (sortBy === "rating") {
-        return b.rating_avg - a.rating_avg;
-      }
-      if (sortBy === "dateAdded") {
-        return (
-          new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
-        );
-      }
-      return b.popularity - a.popularity;
-    });
-  }, [filters, sortBy]);
 
   return (
     <div className="space-y-8">
@@ -88,12 +69,12 @@ function VideoCourses() {
           <Select
             color="secondary"
             aria-label="Sort courses"
-            selectedKeys={[sortBy]}
+            selectedKeys={[filters.sort]}
             className="w-full min-w-55 sm:w-55"
             onSelectionChange={(keys) => {
               const nextKey = Array.from(keys)[0];
               if (typeof nextKey === "string") {
-                setSortBy(nextKey as CourseSortKey);
+                updateFilters("sort", nextKey);
               }
             }}
             classNames={{
@@ -129,63 +110,64 @@ function VideoCourses() {
           {t("courses.showFilters")}
         </Button>
       </div>
-
-      <div
-        className={"flex flex-row gap-5"}
-      >
-        {showFilters && (
-          <div className="hidden lg:block">
-            <CoursesFilters
-              categories={categories}
-              filters={filters}
-              onChange={setFilters}
-              onReset={() => setFilters(initialFilters)}
-            />
-          </div>
-        )}
-
-        <section className="space-y-4">
-          <p className="theme-text-muted text-sm">
-            {t("common.foundCourses", { count: filteredCourses.length })}
-          </p>
-
-          <div
-            className={cn(
-              "grid grid-cols-1 items-stretch gap-5",
-              showFilters ? "xl:grid-cols-2" : "lg:grid-cols-2 xl:grid-cols-3",
+      {coursesPending || !courses?.data ? (
+        <CoursesPageSkeleton />
+      ) : (
+        <>
+          <div className={"flex flex-row gap-5"}>
+            {showFilters && (
+              <div className="hidden lg:block">
+                <CoursesFilters
+                  categories={categories}
+                  isCategoriesPending={categoriesPending}
+                />
+              </div>
             )}
-          >
-            {filteredCourses.map((course) => (
-              <CourseCard key={course.id} course={course} />
-            ))}
-          </div>
-        </section>
-      </div>
 
-      <Modal
-        isOpen={mobileFiltersOpen}
-        onOpenChange={setMobileFiltersOpen}
-        placement="bottom"
-        scrollBehavior="inside"
-        size="full"
-        classNames={{
-          wrapper: "z-[9999]",
-        }}
-      >
-        <ModalContent className="theme-surface">
-          <ModalHeader className="theme-border border-b">
-            {t("courses.filtersModal")}
-          </ModalHeader>
-          <ModalBody className="py-4">
-            <CoursesFilters
-              categories={categories}
-              filters={filters}
-              onChange={setFilters}
-              onReset={() => setFilters(initialFilters)}
-            />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+            <section className="space-y-4">
+              <p className="theme-text-muted text-sm">
+                {t("common.foundCourses", { count: courses.data.length })}
+              </p>
+
+              <div
+                className={cn(
+                  "grid grid-cols-1 items-stretch gap-5",
+                  showFilters
+                    ? "xl:grid-cols-2"
+                    : "lg:grid-cols-2 xl:grid-cols-3",
+                )}
+              >
+                {courses.data.map((course) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
+              </div>
+            </section>
+          </div>
+
+          <Modal
+            isOpen={mobileFiltersOpen}
+            onOpenChange={setMobileFiltersOpen}
+            placement="bottom"
+            scrollBehavior="inside"
+            size="full"
+            classNames={{
+              wrapper: "z-[9999]",
+            }}
+          >
+            <ModalContent className="theme-surface">
+              <ModalHeader className="theme-border border-b">
+                {t("courses.filtersModal")}
+              </ModalHeader>
+              <ModalBody className="py-4">
+                <CoursesFilters
+                  categories={categories}
+                  isCategoriesPending={categoriesPending}
+                />
+              </ModalBody>
+            </ModalContent>
+          </Modal>
+        </>
+      )}
     </div>
   );
 }

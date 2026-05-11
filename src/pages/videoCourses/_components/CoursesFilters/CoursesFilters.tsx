@@ -1,6 +1,6 @@
 import { Button } from "@heroui/button";
 import { Card } from "@heroui/card";
-import type { CourseCategory, CourseFiltersState } from "../../VideoCoursesTypes";
+import type { CourseCategory } from "../../VideoCoursesTypes";
 import {
   CategoryFilter,
   LanguageFilter,
@@ -8,69 +8,37 @@ import {
   RatingFilter,
 } from "./_components";
 import { useI18n } from "@/shared/i18n";
+import { useFilters } from "../../VideoCoursesStore";
 
 interface Props {
-  categories: CourseCategory[];
-  filters: CourseFiltersState;
-  onChange: (next: CourseFiltersState) => void;
-  onReset: () => void;
+  categories: CourseCategory[] | undefined;
+  isCategoriesPending: boolean;
 }
 
-export function CoursesFilters({ categories, filters, onChange, onReset }: Props) {
+export function CoursesFilters({ categories, isCategoriesPending }: Props) {
   const { t } = useI18n();
+  const reset = useFilters((state) => state.reset);
   return (
     <aside className="lg:sticky lg:top-6 min-w-3xs h-[90svh] overflow-y-auto custom-scrollbar">
       <Card className="theme-surface space-y-6 border p-5 max-sm:p-0 max-sm:border-0 max-sm:bg-transparent! shadow-none!">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <h2 className="theme-text text-lg font-semibold">{t("courses.filtersTitle")}</h2>
-            <p className="theme-text-muted text-sm">{t("courses.filtersDescription")}</p>
+            <h2 className="theme-text text-lg font-semibold">
+              {t("courses.filtersTitle")}
+            </h2>
           </div>
-          <Button variant="light" color="primary" onPress={onReset}>
+          <Button variant="light" color="primary" onPress={reset}>
             {t("common.reset")}
           </Button>
         </div>
 
         <CategoryFilter
-          selected={filters.categories}
+          isLoading={isCategoriesPending}
           categories={categories}
-          onChange={(nextCategories) =>
-            onChange({
-              ...filters,
-              categories: nextCategories,
-            })
-          }
         />
-
-        <PriceFilter
-          value={filters.price}
-          onChange={(value) =>
-            onChange({
-              ...filters,
-              price: value,
-            })
-          }
-        />
-
-        <RatingFilter
-          value={filters.rating}
-          onChange={(value) =>
-            onChange({
-              ...filters,
-              rating: value,
-            })
-          }
-        />
-
-        <LanguageFilter
-          value={filters.language}
-          onChange={(value) =>
-            onChange({
-              ...filters,
-              language: value,
-            })
-          }
-        />
+        <PriceFilter />
+        <RatingFilter />
+        <LanguageFilter />
       </Card>
     </aside>
   );

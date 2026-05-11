@@ -10,41 +10,57 @@ import { useGlobalStore } from "@/shared/store";
 import { formatDate } from "@/shared/utils/formateDate";
 import type { ICourseReview } from "../../../videoCourses/VideoCoursesTypes";
 import { useI18n } from "@/shared/i18n";
+import { api } from "@/shared/api/api.handlers";
+import { apiRoutes } from "@/shared/api/api.routes";
 
 interface Props {
-  initialReviews: ICourseReview[];
+  course_id: number;
+  reviews: ICourseReview[];
+  onSuccess: () => void;
 }
 
-export const CourseReviews = ({ initialReviews }: Props) => {
+export const CourseReviews = ({ course_id, reviews, onSuccess }: Props) => {
   const { locale, t } = useI18n();
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const user = useGlobalStore((state) => state.user);
-  const [reviews, setReviews] = useState(initialReviews);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const displayedName = user?.username ?? "";
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!displayedName || !comment.trim()) {
       return;
     }
-
-    setReviews((prev) => [
-      {
-        id: Date.now(),
-        username: displayedName,
-        rating,
-        comment: comment.trim(),
-        created_at: new Date().toISOString(),
-      },
-      ...prev,
-    ]);
-    setComment("");
-    setRating(5);
-    setIsSubmitted(true);
+    try {
+      setIsSubmitting(true);
+      const payload = {
+        course_id,
+        user_id: user?.id,
+        rating: rating,
+        comment,
+      };
+      await api.sendRequest([
+        {
+          method: "post",
+          url: apiRoutes.courses.postReview(course_id),
+          data: payload,
+        },
+        "private",
+      ]);
+      setIsSubmitted(true);
+      setComment("");
+      setRating(5);
+      onSuccess();
+    } catch (e: any) {
+      setError(e?.response?.data?.message ?? t("auth.unknownError"));
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -67,10 +83,26 @@ export const CourseReviews = ({ initialReviews }: Props) => {
             />
           )}
 
+          {error && (
+            <div className="flex items-center justify-center w-full">
+              <Alert
+                color="danger"
+                endContent={
+                  <Button color="danger" size="md" variant="flat" type="reset">
+                    {t("common.retry")}
+                  </Button>
+                }
+                title={t("library.reviewPublishError")}
+                description={error}
+                variant="flat"
+              />
+            </div>
+          )}
+
           {isSubmitted && (
             <Alert
               color="success"
-              description={t("courses.reviewAdded")}
+              description={t("library.reviewPublishSuccess")}
               variant="flat"
             />
           )}
@@ -78,7 +110,11 @@ export const CourseReviews = ({ initialReviews }: Props) => {
             <label className="theme-text-muted text-sm">
               {t("courses.yourRating")}
             </label>
-            <ControlledRating value={rating} onChange={setRating} />
+            <ControlledRating
+              isDisabled={!isAuthed}
+              value={rating}
+              onChange={setRating}
+            />
           </div>
           <div>
             <label className="theme-text-muted block text-sm font-medium mb-2">
@@ -96,11 +132,14 @@ export const CourseReviews = ({ initialReviews }: Props) => {
           </div>
 
           <Button
+            disabled={!isAuthed || isSubmitting}
+            className="disabled:opacity-50 disabled:pointer-events-none"
+            isLoading={isSubmitting}
             color="primary"
             type="submit"
             startContent={<Send className="h-4 w-4" />}
           >
-            {t("common.submit")}
+            {isSubmitting ? t("library.publishing") : t("library.publish")}
           </Button>
         </form>
       </Card>
@@ -127,9 +166,6 @@ export const CourseReviews = ({ initialReviews }: Props) => {
                     </div>
                     <div className="flex items-center gap-2">
                       <Rating rating={review.rating} />
-                      <span className="theme-text text-sm">
-                        {review.rating.toFixed(1)}
-                      </span>
                     </div>
                   </div>
                   <p className="theme-text-muted text-sm leading-6">

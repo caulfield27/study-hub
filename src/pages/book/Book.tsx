@@ -12,7 +12,7 @@ import { Button } from "@heroui/button";
 import { BookOpen, Calendar, Download, MessageSquare } from "lucide-react";
 import { Rating } from "@/shared/ui/Rating/Rating";
 import { Divider } from "@heroui/divider";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PdfReader, PostReview } from "./_components";
 import { useI18n } from "@/shared/i18n";
 
@@ -50,14 +50,6 @@ const Book = () => {
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
   }
-
-  // effect handlers
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, []);
 
   return isLoading || !book ? (
     <PageLoader />

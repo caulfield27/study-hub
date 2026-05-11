@@ -34,8 +34,6 @@ export const RecomendedQuizes = () => {
     const handleResize = () => {
       const container = containerRef.current;
       if (!container) return;
-      console.log(container.clientWidth, container.scrollWidth);
-
       if (container.clientWidth >= container.scrollWidth) {
         setShowControls(false);
       } else {

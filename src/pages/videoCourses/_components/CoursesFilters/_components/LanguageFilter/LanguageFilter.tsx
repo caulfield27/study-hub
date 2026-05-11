@@ -1,19 +1,15 @@
 import { Select, SelectItem } from "@heroui/select";
-import type { CourseFiltersState } from "../../../../VideoCoursesTypes";
 import { useI18n } from "@/shared/i18n";
+import { useFilters } from "@/pages/videoCourses/VideoCoursesStore";
 
-interface Props {
-  value: CourseFiltersState["language"];
-  onChange: (value: CourseFiltersState["language"]) => void;
-}
-
-export const LanguageFilter = ({ value, onChange }: Props) => {
+export const LanguageFilter = () => {
   const { t } = useI18n();
+  const lang = useFilters((state) => state.filters.lang);
+  const updateFilters = useFilters((state) => state.updateFilters);
   const languageOptions = [
-    { key: "all", label: t("courses.anyLanguage") },
+    { key: "all", label: t("courses.any") },
     { key: "en", label: t("locales.en") },
     { key: "ru", label: t("locales.ru") },
-    { key: "tg", label: t("locales.tg") },
   ] as const;
 
   return (
@@ -23,7 +19,7 @@ export const LanguageFilter = ({ value, onChange }: Props) => {
       </h3>
       <Select
         aria-label="Course language"
-        selectedKeys={[value]}
+        selectedKeys={[lang]}
         classNames={{
           trigger: "theme-surface-soft",
           label: "theme-text-muted",
@@ -33,7 +29,7 @@ export const LanguageFilter = ({ value, onChange }: Props) => {
         onSelectionChange={(keys) => {
           const nextKey = Array.from(keys)[0];
           if (typeof nextKey === "string") {
-            onChange(nextKey as CourseFiltersState["language"]);
+            updateFilters("lang", nextKey);
           }
         }}
       >

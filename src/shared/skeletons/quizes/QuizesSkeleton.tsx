@@ -6,8 +6,8 @@ export const QuizesSkeleton = ({ size, isScrollable }: { size: number; isScrolla
   return (
     <div
       className={cn(
-        "w-full flex flex-wrap justify-start items-start gap-8 max-sm:gap-5",
-        isScrollable && "flex-nowrap"
+        "w-full flex flex-wrap justify-center items-center gap-8 max-sm:gap-5",
+        isScrollable && "flex-nowrap justify-start items-start"
       )}
     >
       {Array.from({ length: size }).map((_, idx) => {
@@ -15,7 +15,7 @@ export const QuizesSkeleton = ({ size, isScrollable }: { size: number; isScrolla
           <Card
             key={idx}
             className={cn(
-              "w-[250px] h-[412px] space-y-5 p-4 shrink-0",
+              "w-62.5 h-103 space-y-5 p-4 shrink-0",
               !isScrollable && "max-sm:w-full"
             )}
             radius="lg"
