@@ -26,7 +26,7 @@ export const PdfReader = ({ name, href, onClose }: Props) => {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-neutral-900 bg-opacity-90 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-neutral-900 bg-opacity-90 z-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-xl w-full max-w-6xl h-[90vh] flex flex-col">
         <div className="p-4 border-b border-slate-200 flex items-center justify-between max-md:flex-col-reverse max-md:items-start max-md:gap-4">
           <h3 className="text-lg font-semibold text-neutral-900">{t("library.readingNow", { name })}</h3>

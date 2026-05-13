@@ -45,7 +45,7 @@ export const GlobalSearch = () => {
 
   return (
     <>
-      <div className="max-[930px]:hidden block">
+      <div className="max-sm:hidden block">
         <Input
           onChange={(event) => setSearchValue(event.target.value)}
           value={searchValue}
@@ -77,7 +77,7 @@ export const GlobalSearch = () => {
           }}
         />
       </div>
-      <div className="max-[930px]:flex hidden justify-center items-center">
+      <div className="max-sm:flex hidden justify-center items-center">
         <button
           ref={btnRef}
           onClick={handleOpenSearch}

@@ -170,7 +170,6 @@
     "totalHours": "{{count}}ч всего",
     "startWatching": "Начать смотреть",
     "lessonsTitle": "Уроки",
-    "nowPlaying": "Сейчас воспроизводится",
     "courseLessons": "Уроки курса",
     "chooseLesson": "Выберите урок для просмотра",
     "lesson": "Урок {{index}}",

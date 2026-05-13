@@ -1,14 +1,22 @@
 import { Outlet, useLocation } from "react-router";
 import { MobileHeader, MobileNavbar, Sidebar } from "./_components";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { PageLoader } from "@/shared/ui/Loader/PageLoader";
 import { useGlobalStore } from "@/shared/store";
 import { api } from "@/shared/api/api.handlers";
 
 function Layout() {
   const isAuthed = useGlobalStore((state) => state.isAuthed);
+  const isSidebarHidden = useGlobalStore((state) => state.isSidebarHidden);
   const location = useLocation();
   const mainRef = useRef<HTMLElement | null>(null);
+  const [isCompact, setIsCompact] = useState(window.innerWidth <= 930);
+
+  useEffect(() => {
+    const handleResize = () => setIsCompact(window.innerWidth <= 930);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (isAuthed) {
@@ -37,16 +45,21 @@ function Layout() {
       </div>
       <main
         ref={mainRef}
+        style={{
+          marginLeft: isCompact
+            ? "40px"
+            : isSidebarHidden
+              ? "calc(68px + 40px)"
+              : "calc(270px + 40px)",
+          transition: "margin-left 300ms ease-in-out",
+        }}
         className="
-          w-full 
-          grow 
+          w-full
+          grow
           max-w-full
-          ml-[calc(var(--sidebar-width)+20px)] 
-          px-12.5 
-          py-7.5
-          max-[930px]:ml-25
+          p-7.5
           max-sm:mb-16
-          max-sm:ml-0
+          max-sm:ml-0!
           max-sm:p-4
         "
       >

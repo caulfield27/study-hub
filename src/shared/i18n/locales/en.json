@@ -170,7 +170,6 @@
     "totalHours": "{{count}}h total",
     "startWatching": "Start watching",
     "lessonsTitle": "Lessons",
-    "nowPlaying": "Now playing",
     "courseLessons": "Course lessons",
     "chooseLesson": "Choose a lesson to watch",
     "lesson": "Lesson {{index}}",

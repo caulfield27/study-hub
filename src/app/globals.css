@@ -23,6 +23,8 @@
 
     --hero-overlay: rgba(10, 10, 10, 0.75);
 
+    --video-slider-bg: #262626;
+
     --logo-filter: none;
     --sidebar-width: 270px;
 }
@@ -43,6 +45,8 @@
     --input-bg: #ffffff;
 
     --hero-overlay: rgba(255, 255, 255, 0.08);
+
+    --video-slider-bg: #d4d4d4;
 
     --logo-filter: brightness(0) saturate(100%);
 }

@@ -5,7 +5,13 @@ import { Card } from "@heroui/card";
 import { Chip } from "@heroui/chip";
 import { Divider } from "@heroui/divider";
 import { Image } from "@heroui/image";
-import { CirclePlay, Clock3, Globe2, MessageSquare } from "lucide-react";
+import {
+  ChevronDown,
+  CirclePlay,
+  Clock3,
+  Globe2,
+  MessageSquare,
+} from "lucide-react";
 import { Rating } from "@/shared/ui/Rating/Rating";
 import { CourseLessons, CourseReviews } from "./_components";
 import { getLocalizedCourseLanguageLabel, useI18n } from "@/shared/i18n";
@@ -17,6 +23,7 @@ import CoursePageSkeleton from "@/shared/skeletons/courses/CoursePageSkeleton";
 import { useEffect, useState } from "react";
 import { getFile } from "@/shared/utils/getFile";
 import { formatDate } from "@/shared/utils/formateDate";
+import { cn } from "@/shared/utils/clx";
 
 function VideoCourseDetails() {
   const { locale, t } = useI18n();
@@ -25,14 +32,16 @@ function VideoCourseDetails() {
     method: "get",
     url: apiRoutes.courses.getBySlug(slug ?? ""),
   };
-  const { data: course, isLoading, mutate } = useSwr<ICourse>(
-    [swrKey, "public"],
-    api.sendRequest,
-  );
+  const {
+    data: course,
+    isLoading,
+    mutate,
+  } = useSwr<ICourse>([swrKey, "public"], api.sendRequest);
 
   const [activeLessonId, setActiveLessonId] = useState(
     course?.lessons[0]?.path ?? "",
   );
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     if (course?.lessons) {
@@ -53,7 +62,7 @@ function VideoCourseDetails() {
 
       <Card className="theme-surface overflow-hidden border max-sm:border-0 max-sm:bg-transparent! max-sm:shadow-none!">
         <div className="grid gap-0 xl:grid-cols-[360px_minmax(0,1fr)]">
-          <div className="flex flex-col gap-5 p-2 xl:sticky xl:top-4 self-start">
+          <div className="flex flex-col gap-5 p-2 max-sm:p-0 xl:sticky xl:top-4 self-start">
             <div className="overflow-hidden rounded-xl">
               <Image
                 removeWrapper
@@ -81,7 +90,6 @@ function VideoCourseDetails() {
               {t("courses.startWatching")}
             </Button>
           </div>
-          
 
           <div className="space-y-6 p-6 md:p-8 max-sm:px-0">
             <div className="flex flex-wrap gap-2">
@@ -103,9 +111,39 @@ function VideoCourseDetails() {
               <h1 className="theme-text text-3xl font-bold md:text-5xl">
                 {course.name}
               </h1>
-              <p className="theme-text-muted text-lg leading-8 h-56 overflow-y-auto custom-scrollbar">
-                {course.description}
-              </p>
+
+              <div className="relative">
+                <p
+                  className={cn(
+                    "theme-text-muted text-lg leading-8 transition-all duration-300",
+                    expanded ? "" : "line-clamp-5",
+                  )}
+                >
+                  {course.description}
+                </p>
+
+                {!expanded && (
+                  <div
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-background to-transparent"
+                  />
+                )}
+              </div>
+
+              {course.description.length > 250 && (
+                <button
+                  onClick={() => setExpanded((prev) => !prev)}
+                  className="cursor-pointer theme-text-muted hover:theme-text inline-flex items-center gap-2 text-sm font-medium transition-colors"
+                >
+                  {expanded ? "Скрыть" : "Показать всё"}
+
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 transition-transform duration-300",
+                      expanded && "rotate-180",
+                    )}
+                  />
+                </button>
+              )}
             </div>
 
             <div className="theme-text-muted flex flex-wrap items-center gap-5 text-sm">
@@ -138,7 +176,7 @@ function VideoCourseDetails() {
             <Divider className="theme-border" />
 
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              <Card className="theme-surface-soft border p-4">
+              <Card className="theme-surface-soft border p-4 max-sm:border-0 max-sm:shadow-none">
                 <div className="flex justify-start items-center gap-3">
                   <div>
                     <p className="theme-text-muted text-sm">
@@ -150,7 +188,7 @@ function VideoCourseDetails() {
                   </div>
                 </div>
               </Card>
-              <Card className="theme-surface-soft border p-4">
+              <Card className="theme-surface-soft border p-4 max-sm:border-0 max-sm:shadow-none">
                 <div className="flex justify-start items-center gap-3">
                   <div>
                     <p className="theme-text-muted text-sm">
@@ -160,7 +198,7 @@ function VideoCourseDetails() {
                   </div>
                 </div>
               </Card>
-              <Card className="theme-surface-soft border p-4">
+              <Card className="theme-surface-soft border p-4 max-sm:border-0 max-sm:shadow-none">
                 <div className="flex justify-start items-center gap-3">
                   <div>
                     <p className="theme-text-muted text-sm">
@@ -191,7 +229,11 @@ function VideoCourseDetails() {
         />
       </section>
 
-      <CourseReviews course_id={course.id} onSuccess={() => mutate()} reviews={course.reviews} />
+      <CourseReviews
+        course_id={course.id}
+        onSuccess={() => mutate()}
+        reviews={course.reviews}
+      />
     </div>
   );
 }

@@ -22,7 +22,7 @@ interface Props {
 export const CourseCard = ({ course, isRow }: Props) => {
   const { t } = useI18n();
   return (
-    <Card className={cn("theme-surface overflow-hidden border", isRow && 'max-w-125 shrink-0 shadow-none!')}>
+    <Card className={cn("theme-surface overflow-hidden border", isRow && 'max-w-125 max-sm:max-w-full shrink-0 shadow-none!')}>
       <div className="flex flex-col">
         <div className="relative h-75 overflow-hidden">
           <Image

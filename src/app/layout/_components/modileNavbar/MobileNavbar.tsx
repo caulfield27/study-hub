@@ -9,7 +9,7 @@ export const MobileNavbar = () => {
   const { pathname } = useLocation();
   return (
     <nav
-      className="fixed bottom-0 left-0 h-[55px] w-full flex flex-row shadow-[0px_3px_12px_0px_#00000014]
+      className="fixed bottom-0 left-0 h-13.75 w-full flex flex-row shadow-[0px_3px_12px_0px_#00000014]
         theme-surface-soft border-t theme-border z-20"
     >
       {authedNavLinks.map((item) => {

@@ -151,7 +151,7 @@ export const CourseReviews = ({ course_id, reviews, onSuccess }: Props) => {
           </Card>
         ) : (
           reviews.map((review) => (
-            <Card key={review.id} className="theme-surface border p-5">
+            <Card key={review.id} className="theme-surface border p-5 max-sm:py-4 max-sm:px-3">
               <div className="flex gap-4">
                 <Avatar color="primary" name={review.username} />
                 <div className="min-w-0 flex-1 space-y-2">
