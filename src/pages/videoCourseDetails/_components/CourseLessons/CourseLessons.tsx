@@ -3,7 +3,7 @@ import type { ICourseLesson } from "../../../videoCourses/VideoCoursesTypes";
 import { useI18n } from "@/shared/i18n";
 import { getVideo } from "@/shared/utils/getFile";
 import { LessonItem, VideoControls } from "./components";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 interface Props {
   lessons: ICourseLesson[];
@@ -17,8 +17,11 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
   const playerRef = useRef<HTMLDivElement>(null);
   const [showControls, setShowControls] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const activeLesson =
-    lessons.find((lesson) => lesson.path === activeLessonId) ?? lessons[0];
+  const activeLesson = useMemo(
+    () =>
+      lessons.find((lesson) => lesson.path === activeLessonId) ?? lessons[0],
+    [activeLessonId],
+  );
 
   const handleFullscreen = useCallback(() => {
     const player = playerRef.current;
@@ -27,7 +30,7 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
     else player.requestFullscreen?.();
   }, [playerRef]);
 
-  const onMouseMove = () => {
+  const onMouseMove = useCallback(() => {
     setShowControls(true);
 
     if (timeoutRef.current !== null) {
@@ -37,7 +40,7 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
     timeoutRef.current = setTimeout(() => {
       setShowControls(false);
     }, 2000);
-  };
+  }, []);
 
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1.3fr)_360px]">
@@ -61,6 +64,7 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
             showControls={showControls}
             onFullScreen={handleFullscreen}
             videoRef={videoRef}
+            activeLessonPath={activeLessonId}
           />
         </div>
 

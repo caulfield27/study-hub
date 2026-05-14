@@ -15,18 +15,20 @@ import {
   VolumeIcon,
   VolumeOffIcon,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   onFullScreen: () => void;
   videoRef: React.RefObject<HTMLVideoElement | null>;
   showControls: boolean;
+  activeLessonPath: string;
 }
 
 export const VideoControls = ({
   videoRef,
   onFullScreen,
   showControls,
+  activeLessonPath,
 }: Props) => {
   const {
     playing,
@@ -45,10 +47,15 @@ export const VideoControls = ({
     speed,
     cycleSpeed,
     fmt,
-  } = useVideoPlayer(videoRef);
+    reset,
+  } = useVideoPlayer(videoRef, activeLessonPath);
   const [qualityOpen, setQualityOpen] = useState(false);
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const volIconSize = 18;
+
+  useEffect(() => {
+    reset();
+  }, [activeLessonPath]);
 
   return (
     <>
@@ -214,7 +221,7 @@ export const VideoControls = ({
           )}
           aria-label="Назад 10 секунд"
         >
-          <span className="mb-1">-10</span>
+          <span className="sm:mb-1">-10</span>
           <SkipBackIcon size={18} />
         </button>
         <button
@@ -236,7 +243,7 @@ export const VideoControls = ({
           aria-label="Вперёд 10 секунд"
         >
           <SkipForwardIcon size={18} />
-          <span className="mb-1">+10</span>
+          <span className="sm:mb-1">+10</span>
         </button>
       </div>
     </>

@@ -10,6 +10,7 @@ export const QUALITY_BADGES: Record<string, string> = {
 
 export const useVideoPlayer = (
   videoRef: RefObject<HTMLVideoElement | null>,
+  activeLessonPath: string,
 ) => {
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const [playing, setPlaying] = useState(false);
@@ -67,7 +68,26 @@ export const useVideoPlayer = (
       v.removeEventListener("pause", onPause);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [videoRef, isAuthed]);
+  }, [isAuthed, activeLessonPath]);
+
+  const reset = () => {
+    setPlaying(false);
+    setProgress(0);
+    setCurrentTime(0);
+    setDuration(0);
+    setVolume(0.8);
+    setMuted(false);
+    setQuality("1080p");
+    setSpeedIdx(2);
+
+    const v = videoRef.current;
+    if (!v) return;
+    v.currentTime = 0;
+    v.pause();
+    v.volume = 0.8;
+    v.muted = false;
+    v.playbackRate = 1;
+  };
 
   const togglePlay = () => {
     const v = videoRef.current;
@@ -136,5 +156,6 @@ export const useVideoPlayer = (
     speed,
     cycleSpeed,
     fmt,
+    reset,
   };
 };
