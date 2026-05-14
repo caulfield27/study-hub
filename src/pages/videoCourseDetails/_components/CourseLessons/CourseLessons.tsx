@@ -16,7 +16,7 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
   const [showControls, setShowControls] = useState(false);
-  const timeoutRef = useRef<number | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activeLesson =
     lessons.find((lesson) => lesson.path === activeLessonId) ?? lessons[0];
 
