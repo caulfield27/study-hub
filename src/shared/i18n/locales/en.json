@@ -26,7 +26,8 @@
     "daysAgoFew": "{{count}} days ago",
     "daysAgoMany": "{{count}} days ago",
     "weeksAgo": "{{count}} weeks ago",
-    "interfaceTitle": "Customize the interface"
+    "interfaceTitle": "Customize the interface",
+    "courseUnavailable": "Course is available only for authorized users."
   },
   "locales": {
     "ru": "Russian",

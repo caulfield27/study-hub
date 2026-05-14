@@ -26,7 +26,8 @@
     "daysAgoFew": "{{count}} дня назад",
     "daysAgoMany": "{{count}} дней назад",
     "weeksAgo": "{{count}} нед. назад",
-    "interfaceTitle": "Настройте интерфейс"
+    "interfaceTitle": "Настройте интерфейс",
+    "courseUnavailable": "Курс доступен только для авторизованных пользователей"
   },
   "locales": {
     "ru": "Русский",

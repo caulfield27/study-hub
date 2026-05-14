@@ -3,7 +3,7 @@ import type { ICourseLesson } from "../../../videoCourses/VideoCoursesTypes";
 import { useI18n } from "@/shared/i18n";
 import { getVideo } from "@/shared/utils/getFile";
 import { LessonItem, VideoControls } from "./components";
-import { useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 
 interface Props {
   lessons: ICourseLesson[];
@@ -14,13 +14,41 @@ interface Props {
 export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
   const { t } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
+  const [showControls, setShowControls] = useState(false);
+  const timeoutRef = useRef<number | null>(null);
   const activeLesson =
     lessons.find((lesson) => lesson.path === activeLessonId) ?? lessons[0];
+
+  const handleFullscreen = useCallback(() => {
+    const player = playerRef.current;
+    if (!player) return;
+    if (document.fullscreenElement) document.exitFullscreen();
+    else player.requestFullscreen?.();
+  }, [playerRef]);
+
+  const onMouseMove = () => {
+    setShowControls(true);
+
+    if (timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setShowControls(false);
+    }, 2000);
+  };
 
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1.3fr)_360px]">
       <Card className="theme-surface border max-sm:bg-transparent! max-sm:border-0">
-        <div className="overflow-hiddenr">
+        <div
+          ref={playerRef}
+          onClick={() => setShowControls(true)}
+          onMouseMove={onMouseMove}
+          onMouseLeave={() => setShowControls(false)}
+          className="overflow-hidden relative"
+        >
           <video
             ref={videoRef}
             key={activeLesson.path}
@@ -29,7 +57,11 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
             preload="metadata"
             title={activeLesson.name}
           />
-          <VideoControls videoRef={videoRef} />
+          <VideoControls
+            showControls={showControls}
+            onFullScreen={handleFullscreen}
+            videoRef={videoRef}
+          />
         </div>
 
         <div className="p-4 max-sm:p-3">

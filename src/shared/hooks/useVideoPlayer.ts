@@ -1,4 +1,5 @@
 import { useState, useEffect, type RefObject } from "react";
+import { useGlobalStore } from "../store";
 
 const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
 export const QUALITIES = ["4K", "1080p", "720p", "480p", "360p"];
@@ -10,6 +11,7 @@ export const QUALITY_BADGES: Record<string, string> = {
 export const useVideoPlayer = (
   videoRef: RefObject<HTMLVideoElement | null>,
 ) => {
+  const isAuthed = useGlobalStore((state) => state.isAuthed);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -23,7 +25,7 @@ export const useVideoPlayer = (
 
   useEffect(() => {
     const v = videoRef.current;
-    if (!v) return;
+    if (!v || !isAuthed) return;
 
     const onTime = () => {
       setCurrentTime(v.currentTime);
@@ -33,12 +35,29 @@ export const useVideoPlayer = (
     const onEnded = () => setPlaying(false);
     const onPlay = () => setPlaying(true);
     const onPause = () => setPlaying(false);
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === " ") {
+        e.preventDefault();
+        togglePlay();
+        return;
+      }
+
+      if (e.key === "ArrowLeft") {
+        skip(-10);
+        return;
+      }
+
+      if (e.key === "ArrowRight") {
+        skip(10);
+      }
+    };
 
     v.addEventListener("timeupdate", onTime);
     v.addEventListener("loadedmetadata", onMeta);
     v.addEventListener("ended", onEnded);
     v.addEventListener("play", onPlay);
     v.addEventListener("pause", onPause);
+    window.addEventListener("keydown", onKeyDown);
 
     return () => {
       v.removeEventListener("timeupdate", onTime);
@@ -46,13 +65,14 @@ export const useVideoPlayer = (
       v.removeEventListener("ended", onEnded);
       v.removeEventListener("play", onPlay);
       v.removeEventListener("pause", onPause);
+      window.removeEventListener("keydown", onKeyDown);
     };
-  }, [videoRef]);
+  }, [videoRef, isAuthed]);
 
   const togglePlay = () => {
     const v = videoRef.current;
     if (!v) return;
-    playing ? v.pause() : v.play();
+    v.paused ? v.play() : v.pause();
   };
 
   const seek = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -61,12 +81,14 @@ export const useVideoPlayer = (
     const rect = e.currentTarget.getBoundingClientRect();
     v.currentTime =
       Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)) * duration;
+    v.play();
   };
 
   const skip = (seconds: number) => {
     const v = videoRef.current;
     if (!v) return;
     v.currentTime = Math.max(0, Math.min(duration, v.currentTime + seconds));
+    v.play();
   };
 
   const setVolume = (val: number) => {

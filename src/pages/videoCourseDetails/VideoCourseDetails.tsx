@@ -24,6 +24,8 @@ import { useEffect, useState } from "react";
 import { getFile } from "@/shared/utils/getFile";
 import { formatDate } from "@/shared/utils/formateDate";
 import { cn } from "@/shared/utils/clx";
+import { useGlobalStore } from "@/shared/store";
+import { Alert } from "@heroui/alert";
 
 function VideoCourseDetails() {
   const { locale, t } = useI18n();
@@ -42,6 +44,7 @@ function VideoCourseDetails() {
     course?.lessons[0]?.path ?? "",
   );
   const [expanded, setExpanded] = useState(false);
+  const isAuthed = useGlobalStore((state) => state.isAuthed);
 
   useEffect(() => {
     if (course?.lessons) {
@@ -123,9 +126,7 @@ function VideoCourseDetails() {
                 </p>
 
                 {!expanded && (
-                  <div
-                    className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-background to-transparent"
-                  />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-background to-transparent" />
                 )}
               </div>
 
@@ -216,10 +217,19 @@ function VideoCourseDetails() {
       </Card>
 
       <section id="course-lessons" className="space-y-4">
-        <div>
+        <div className="flex flex-col gap-2">
           <h2 className="theme-text text-2xl font-semibold">
             {t("courses.lessonsTitle")}
           </h2>
+          {!isAuthed && (
+            <Alert
+              className="max-w-162.5 max-sm:max-w-full"
+              color="warning"
+              endContent={<Link to={"/auth"}>{t("common.login")}</Link>}
+              description={t("common.courseUnavailable")}
+              variant="flat"
+            />
+          )}
         </div>
 
         <CourseLessons

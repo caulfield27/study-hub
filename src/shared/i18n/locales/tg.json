@@ -26,7 +26,8 @@
     "daysAgoFew": "{{count}} рӯз пеш",
     "daysAgoMany": "{{count}} рӯз пеш",
     "weeksAgo": "{{count}} ҳафта пеш",
-    "interfaceTitle": "Интерфейсро танзим кунед"
+    "interfaceTitle": "Интерфейсро танзим кунед",
+    "courseUnavailable": "Курс танҳо барои корбарони авторизатсияшуда дастрас аст."
   },
   "locales": {
     "ru": "Русӣ",

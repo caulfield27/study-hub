@@ -133,3 +133,8 @@ input:-webkit-autofill:focus {
   background-color: var(--muted-foreground);
   border-radius: 9999px;
 }
+
+.disabled{
+    opacity: 0.5;
+    pointer-events: none;
+}
