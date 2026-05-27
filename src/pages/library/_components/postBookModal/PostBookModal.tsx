@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { isLink } from "@/shared/utils/utils";
 import type { IPostBookValidation } from "../../Library.types";
 import { api } from "@/shared/api/api.handlers";
 import { apiRoutes } from "@/shared/api/api.routes";
@@ -11,13 +10,15 @@ import { DateInput } from "@heroui/date-input";
 import { addToast } from "@heroui/toast";
 import { useI18n } from "@/shared/i18n";
 
+
+
 export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
   const { t } = useI18n();
   const [postData, setPostData] = useState<PostData>({
     name: "",
     author: "",
-    image: "",
-    pdf: "",
+    image: null,
+    pdf: null,
     released: "",
     description: "",
   });
@@ -63,19 +64,13 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
   // event handlers
   function handleDataChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    if (name === "image") {
+    if (name === "image" || name === "pdf") {
       const file = e.target.files?.[0];
       if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          if (reader.result) {
-            setPostData((prev) => ({
-              ...prev,
-              image: typeof reader.result === "string" ? reader.result : "",
-            }));
-          }
-        };
+        setPostData((prev) => ({
+          ...prev,
+          [name]: file,
+        }));
       }
     } else {
       setPostData({ ...postData, [name]: value });
@@ -92,16 +87,6 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
           message: t("auth.required"),
         },
       }));
-    } else if (name === "pdf") {
-      if (!isLink(value)) {
-        setValidation((prev) => ({
-          ...prev,
-          [name]: {
-            isValid: false,
-            message: t("library.invalidLink"),
-          },
-        }));
-      }
     } else if (name === "rating") {
       if (Number(value) > 5) {
         setValidation((prev) => ({
@@ -122,15 +107,15 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
       const formData = new FormData();
       formData.append("name", postData.name);
       formData.append("author", postData.author);
-      formData.append("image", postData.image);
-      formData.append("pdf", postData.pdf);
+      formData.append("image", postData.image!);
+      formData.append("pdf", postData.pdf!);
       formData.append("released", postData.released);
       formData.append("description", postData.description);
 
       const result = await api.sendRequest([
         {
           method: "post",
-          url: apiRoutes.books.post,
+          url: apiRoutes.suggestions,
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
@@ -255,24 +240,13 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
               }}
             />
             <Input
-              value={postData.pdf}
               name="pdf"
               label={t("library.pdfLink")}
               color="secondary"
               isInvalid={!validation.pdf.isValid}
               errorMessage={validation.pdf.message}
-              type="url"
+              type="file"
               onChange={handleDataChange}
-              onFocus={() =>
-                setValidation({
-                  ...validation,
-                  pdf: {
-                    isValid: true,
-                    message: "",
-                  },
-                })
-              }
-              onBlur={handleBlur}
               classNames={{
                 input:
                   "placeholder:text-(--muted-foreground) text-(--foreground)",

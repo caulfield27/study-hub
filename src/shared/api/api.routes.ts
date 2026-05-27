@@ -1,4 +1,5 @@
 export const apiRoutes = {
+  suggestions: '/books/suggestions',
   books: {
     post: "/books",
     get: (
