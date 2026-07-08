@@ -3,7 +3,12 @@ import type { ICourseLesson } from "../../../videoCourses/VideoCoursesTypes";
 import { useI18n } from "@/shared/i18n";
 import { getVideo } from "@/shared/utils/getFile";
 import { LessonItem, VideoControls } from "./components";
-import { useCallback, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 
 interface Props {
   lessons: ICourseLesson[];
@@ -16,6 +21,7 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
   const [showControls, setShowControls] = useState(false);
+  const [videoProgress, setVideoProgress] = useState(0);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activeLesson = useMemo(
     () =>
@@ -42,6 +48,14 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
     }, 2000);
   }, []);
 
+  const handleVideoProgress = (e: React.SyntheticEvent<HTMLVideoElement>) => {
+    const video = e.target as HTMLVideoElement;
+    if (video.buffered.length > 0 && video.duration > 0) {
+      const bufferedEnd = video.buffered.end(video.buffered.length - 1);
+      setVideoProgress((bufferedEnd / video.duration) * 100);
+    }
+  };
+
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1.3fr)_360px]">
       <Card className="theme-surface border max-sm:bg-transparent! max-sm:border-0">
@@ -53,6 +67,7 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
           className="overflow-hidden relative"
         >
           <video
+            onProgress={handleVideoProgress}
             ref={videoRef}
             key={activeLesson.path}
             src={getVideo(activeLesson.path)}
@@ -61,6 +76,7 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
             title={activeLesson.name}
           />
           <VideoControls
+            videoProgress={videoProgress}
             showControls={showControls}
             onFullScreen={handleFullscreen}
             videoRef={videoRef}

@@ -2,11 +2,11 @@ import { useState, useEffect, type RefObject } from "react";
 import { useGlobalStore } from "../store";
 
 const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
-export const QUALITIES = ["4K", "1080p", "720p", "480p", "360p"];
-export const QUALITY_BADGES: Record<string, string> = {
-  "4K": "UHD",
-  "1080p": "HD",
-};
+// export const QUALITIES = ["4K", "1080p", "720p", "480p", "360p"];
+// export const QUALITY_BADGES: Record<string, string> = {
+//   "4K": "UHD",
+//   "1080p": "HD",
+// };
 
 export const useVideoPlayer = (
   videoRef: RefObject<HTMLVideoElement | null>,
@@ -19,7 +19,7 @@ export const useVideoPlayer = (
   const [duration, setDuration] = useState(0);
   const [volume, setVolumeState] = useState(0.8);
   const [muted, setMuted] = useState(false);
-  const [quality, setQuality] = useState("1080p");
+  // const [quality, setQuality] = useState("1080p");
   const [speedIdx, setSpeedIdx] = useState(2);
 
   const speed = SPEEDS[speedIdx];
@@ -77,7 +77,7 @@ export const useVideoPlayer = (
     setDuration(0);
     setVolume(0.8);
     setMuted(false);
-    setQuality("1080p");
+    // setQuality("1080p");
     setSpeedIdx(2);
 
     const v = videoRef.current;
@@ -151,8 +151,8 @@ export const useVideoPlayer = (
     setVolume,
     muted,
     toggleMute,
-    quality,
-    setQuality,
+    // quality,
+    // setQuality,
     speed,
     cycleSpeed,
     fmt,

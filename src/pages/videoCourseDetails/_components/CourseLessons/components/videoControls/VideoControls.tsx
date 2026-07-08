@@ -1,6 +1,6 @@
 import {
-  QUALITIES,
-  QUALITY_BADGES,
+  // QUALITIES,
+  // QUALITY_BADGES,
   useVideoPlayer,
 } from "@/shared/hooks/useVideoPlayer";
 import { useGlobalStore } from "@/shared/store";
@@ -9,19 +9,21 @@ import {
   MaximizeIcon,
   Pause,
   Play,
-  SettingsIcon,
+  // SettingsIcon,
   SkipBackIcon,
   SkipForwardIcon,
   VolumeIcon,
   VolumeOffIcon,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface Props {
   onFullScreen: () => void;
   videoRef: React.RefObject<HTMLVideoElement | null>;
   showControls: boolean;
   activeLessonPath: string;
+  videoProgress: number;
 }
 
 export const VideoControls = ({
@@ -29,6 +31,7 @@ export const VideoControls = ({
   onFullScreen,
   showControls,
   activeLessonPath,
+  videoProgress,
 }: Props) => {
   const {
     playing,
@@ -42,14 +45,14 @@ export const VideoControls = ({
     setVolume,
     muted,
     toggleMute,
-    quality,
-    setQuality,
+    // quality,
+    // setQuality,
     speed,
     cycleSpeed,
     fmt,
     reset,
   } = useVideoPlayer(videoRef, activeLessonPath);
-  const [qualityOpen, setQualityOpen] = useState(false);
+  // const [qualityOpen, setQualityOpen] = useState(false);
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const volIconSize = 18;
 
@@ -84,7 +87,11 @@ export const VideoControls = ({
             aria-valuemax={100}
           >
             <div
-              className="h-full rounded-full bg-(--primary-color) transition-none"
+              className="absolute left-0 top-0 h-full rounded-full bg-neutral-400 transition-none"
+              style={{ width: `${videoProgress}%` }}
+            />
+            <div
+              className="absolute left-0 top-0 h-full rounded-full bg-(--primary-color) transition-none"
               style={{ width: `${progress * 100}%` }}
             />
             <div
@@ -146,7 +153,7 @@ export const VideoControls = ({
           </button>
 
           {/* Quality */}
-          <div className="relative">
+          {/* <div className="relative">
             <button
               onClick={() => setQualityOpen((v) => !v)}
               className={cn(
@@ -192,7 +199,7 @@ export const VideoControls = ({
                 </div>
               </>
             )}
-          </div>
+          </div> */}
 
           {/* Fullscreen */}
           <button
