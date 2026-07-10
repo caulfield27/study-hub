@@ -5,6 +5,7 @@ import {
   Book,
   Home,
   Library,
+  Profile,
   Quiz,
   Quizes,
   Search,
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
       {
         path: "/search",
         element: <Search/>
+      },
+      {
+        path: "/profile",
+        element: <Profile/>
       },
       {
         path: "/auth",

@@ -6,7 +6,7 @@ import { useGlobalStore } from "../store";
 
 export const api = {
   sendRequest: async function (
-    params: [SendRequestParams, "public" | "private"]
+    params: [SendRequestParams, "public" | "private"],
   ) {
     try {
       const [config, type] = params;
@@ -28,10 +28,12 @@ export const api = {
     }
   },
   getMe: async function () {
-    const { setUser } = useGlobalStore.getState();
+    const { setUser, setMeLoading } = useGlobalStore.getState();
+    setMeLoading(true);
     privateRequest
       .get(apiRoutes.me)
       .then((res) => setUser(res.data?.data ?? []))
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => setMeLoading(false));
   },
 };

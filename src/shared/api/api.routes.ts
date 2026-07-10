@@ -28,5 +28,7 @@ export const apiRoutes = {
   login: "/login",
   register: "/register",
   me: "/me",
+  updateMe: "/me",
+  changePassword: "/me/password",
   search: (query: string) => `/search?q=${query}`,
 };

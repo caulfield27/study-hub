@@ -8,16 +8,16 @@ import { useGlobalStore } from "@/shared/store";
 import { GlobalSearch, Profile } from "./_components";
 import { cn } from "@/shared/utils/clx";
 import { useI18n } from "@/shared/i18n";
-import { LanguageSelect } from "@/shared/ui/LanguageSelect/LanguageSelect";
-import { ThemeToggle } from "@/shared/ui/ThemeToggle/ThemeToggle";
 import { useTheme } from "@/shared/theme";
 import { PanelLeftClose, PanelRightClose } from "lucide-react";
+import { AvatarSkeleton } from "@/shared/skeletons/profile/AvatarSkeleton";
 
 export function Sidebar() {
   const { t } = useI18n();
   const { theme } = useTheme();
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const user = useGlobalStore((state) => state.user);
+  const meLoading = useGlobalStore((state) => state.meLoading);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const isSidebarHidden = useGlobalStore((state) => state.isSidebarHidden);
@@ -148,20 +148,19 @@ export function Sidebar() {
               );
             })}
           </nav>
-
-          {isOpen && (
-            <div className="mt-6 flex flex-col gap-3">
-              <LanguageSelect className="w-full" />
-              <ThemeToggle className="w-full" />
-            </div>
-          )}
-
-          {isAuthed && user && (
-            <div className="fixed bottom-8 left-0 w-full">
-              <Divider className="theme-border mb-5" />
-              <Profile />
-            </div>
-          )}
+          <div className="fixed bottom-8 left-0 w-full">
+            {meLoading ? (
+              <AvatarSkeleton />
+            ) : (
+              isAuthed &&
+              user && (
+                <>
+                  <Divider className="theme-border mb-5" />
+                  <Profile />
+                </>
+              )
+            )}
+          </div>
         </div>
       </aside>
     </>

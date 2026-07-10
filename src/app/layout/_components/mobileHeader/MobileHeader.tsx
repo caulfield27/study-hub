@@ -7,13 +7,14 @@ import { ProfileDropdown } from "../profileDropdown/ProfileDropdown";
 import { GlobalSearch } from "../sidebar/_components";
 import { useI18n } from "@/shared/i18n";
 import { useTheme } from "@/shared/theme";
-import { UiSettings } from "./_components";
+import { Skeleton } from "@heroui/skeleton";
 
 export const MobileHeader = () => {
   const { t } = useI18n();
   const { theme } = useTheme();
   const navigate = useNavigate();
   const isAuthed = useGlobalStore((state) => state.isAuthed);
+  const meLoading = useGlobalStore((state) => state.meLoading);
   // const { pathname } = useLocation();
 
   return (
@@ -30,12 +31,13 @@ export const MobileHeader = () => {
         />
       </div>
       <div className="flex flex-row gap-2 justify-center items-center">
-        <UiSettings/>
         <GlobalSearch />
         {!isAuthed ? (
           <Button onPress={() => navigate("/auth")} color="primary">
             {t("mobileHeader.signIn")}
           </Button>
+        ) : meLoading ? (
+          <Skeleton className="w-10 h-10 rounded-full" />
         ) : (
           <ProfileDropdown />
         )}

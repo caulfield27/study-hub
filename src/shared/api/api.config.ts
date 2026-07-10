@@ -1,15 +1,14 @@
 import axios from "axios";
 import { getToken, logout } from "../utils/auth";
 
-export const base_url =
-  import.meta.env?.VITE_BASE_API_URL;
+export const base_url = import.meta.env?.VITE_BASE_API_URL;
 
 export const publicRequest = axios.create({
-  baseURL: base_url + "/api"
+  baseURL: base_url + "/api",
 });
 
 export const privateRequest = axios.create({
-  baseURL: base_url + "/api"
+  baseURL: base_url + "/api",
 });
 
 privateRequest.interceptors.request.use((request) => {
@@ -23,5 +22,7 @@ privateRequest.interceptors.response.use(
     if (err.status === 401) {
       logout();
     }
-  }
+
+    return Promise.reject(err);
+  },
 );

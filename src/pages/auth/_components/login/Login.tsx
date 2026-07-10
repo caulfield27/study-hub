@@ -117,11 +117,7 @@ export const Login = () => {
         <Alert
           color="danger"
           description={requestError}
-          endContent={
-            <Button color="danger" size="md" variant="flat" type="reset">
-              {t("common.retry")}
-            </Button>
-          }
+          onClose={() => setRequestError(null)}
           title={t("auth.loginFailed")}
           variant="faded"
         />
