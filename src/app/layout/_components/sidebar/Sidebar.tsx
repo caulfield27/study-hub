@@ -1,5 +1,5 @@
 import { NavLink, useLocation, useNavigate } from "react-router";
-import { authedNavLinks, publicNavLinks } from "./Sidebar.constants";
+import { authedNavLinks, publicNavLinks } from "../../nav-links.constants";
 import logo from "/sh_logo_white.png";
 import logo_black from "/sh_logo.png";
 import { Divider } from "@heroui/divider";

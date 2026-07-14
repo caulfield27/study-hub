@@ -1,6 +1,6 @@
 import {House, BookOpenText, CircleQuestionMark, GraduationCap, type LucideIcon, LogIn} from 'lucide-react'
 
-interface ILinks {
+export interface ILinks {
   path: string;
   labelKey: string;
   icon: LucideIcon;

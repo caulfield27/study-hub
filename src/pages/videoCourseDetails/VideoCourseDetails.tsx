@@ -63,9 +63,9 @@ function VideoCourseDetails() {
         <BreadcrumbItem isDisabled>{course.name}</BreadcrumbItem>
       </Breadcrumbs>
 
-      <Card className="theme-surface overflow-hidden border max-sm:border-0 max-sm:bg-transparent! max-sm:shadow-none!">
+      <Card className="theme-surface overflow-visible border max-sm:border-0 max-sm:bg-transparent! max-sm:shadow-none!">
         <div className="grid gap-0 xl:grid-cols-[360px_minmax(0,1fr)]">
-          <div className="flex flex-col gap-5 p-2 max-sm:p-0 xl:sticky xl:top-4 self-start">
+          <div className="flex flex-col gap-5 p-2 max-sm:p-0 xl:sticky xl:top-6 self-start">
             <div className="overflow-hidden rounded-xl">
               <Image
                 removeWrapper

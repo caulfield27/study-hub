@@ -40,13 +40,15 @@
     "library": "Library",
     "quizzes": "Quizzes",
     "videos": "Video courses",
-    "auth": "Log in"
+    "auth": "Log in",
+    "menu": "Menu",
+    "openMenu": "Open menu"
   },
   "mobileHeader": {
     "signIn": "Log in"
   },
   "search": {
-    "placeholder": "Search courses, books, quizzes...",
+    "placeholder": "Search for anything",
     "shortPlaceholder": "search...",
     "results": "Search results",
     "found": "Found {{total}} results for \"{{query}}\"",

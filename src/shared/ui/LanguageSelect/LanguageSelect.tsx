@@ -130,7 +130,8 @@ export function LanguageSelect({ compact = false, className }: Props) {
           <div
             ref={menuRef}
             className={cn(
-              "absolute left-0 z-50 w-full overflow-hidden rounded-xl border p-1.5 shadow-[0_18px_40px_rgba(0,0,0,0.2)] theme-surface",
+              "absolute z-50 min-w-48 overflow-hidden rounded-xl border p-1.5 shadow-[0_18px_40px_rgba(0,0,0,0.2)] theme-surface",
+              compact ? "right-0" : "left-0 w-full",
               openUpward ? "bottom-full mb-2" : "top-full mt-2",
             )}
           >

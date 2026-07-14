@@ -14,7 +14,7 @@ function Home() {
       <section className="relative flex items-center">
         <div className="relative w-full">
           <div className="w-full">
-            <div className="flex flex-row max-[1600px]:flex-col gap-12 items-start justify-between">
+            <div className="flex flex-row max-md:flex-col gap-12 items-start justify-between">
               <div className="space-y-8 w-full">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-(--primary-color)/10 border border-(--primary-color)/20 rounded-full">
                   <Sparkles className="w-4 h-4 text-(--primary-color)" />

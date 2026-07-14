@@ -40,13 +40,15 @@
     "library": "Библиотека",
     "quizzes": "Тесты",
     "videos": "Видеоуроки",
-    "auth": "Войти"
+    "auth": "Войти",
+    "menu": "Меню",
+    "openMenu": "Открыть меню"
   },
   "mobileHeader": {
     "signIn": "Войти"
   },
   "search": {
-    "placeholder": "Ищите курсы, книги, тесты...",
+    "placeholder": "Ищите что угодно",
     "shortPlaceholder": "поиск...",
     "results": "Результаты поиска",
     "found": "Найдено {{total}} результатов для \"{{query}}\"",

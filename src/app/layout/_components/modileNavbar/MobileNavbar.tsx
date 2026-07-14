@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router";
 
 import { cn } from "@/shared/utils/clx";
-import { authedNavLinks } from "../sidebar/Sidebar.constants";
+import { authedNavLinks } from "../../nav-links.constants";
 import { useI18n } from "@/shared/i18n";
 
 export const MobileNavbar = () => {

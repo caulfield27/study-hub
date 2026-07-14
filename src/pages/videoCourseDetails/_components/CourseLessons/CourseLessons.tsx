@@ -58,7 +58,7 @@ export const CourseLessons = ({ lessons, activeLessonId, onSelect }: Props) => {
 
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1.3fr)_360px]">
-      <Card className="theme-surface border max-sm:bg-transparent! max-sm:border-0">
+      <Card className="theme-surface border max-sm:bg-transparent! max-sm:border-0 self-start">
         <div
           ref={playerRef}
           onClick={() => setShowControls(true)}

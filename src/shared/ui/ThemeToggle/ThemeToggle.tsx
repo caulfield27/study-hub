@@ -19,7 +19,7 @@ export function ThemeToggle({ compact = false, className }: Props) {
       aria-label={isLight ? t("common.darkTheme") : t("common.lightTheme")}
       onClick={toggleTheme}
       className={cn(
-        "group cursor-pointer flex items-center justify-between gap-3 rounded-xl border px-3 py-2 text-left transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary-color)/50",
+        "group self-stretch cursor-pointer flex items-center justify-between gap-3 rounded-xl border px-3 py-2 text-left transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary-color)/50",
         "theme-surface theme-text hover:bg-(--surface-soft)",
         compact ? "min-w-0" : "w-full",
         className,
