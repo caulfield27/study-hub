@@ -9,7 +9,13 @@ import { Card } from "@heroui/card";
 import { Image } from "@heroui/image";
 import { getFile } from "@/shared/utils/getFile";
 import { Button } from "@heroui/button";
-import { BookOpen, Calendar, Download, MessageSquare } from "lucide-react";
+import {
+  BookOpen,
+  Calendar,
+  Download,
+  HeartPlus,
+  MessageSquare,
+} from "lucide-react";
 import { Rating } from "@/shared/ui/Rating/Rating";
 import { Divider } from "@heroui/divider";
 import { useState } from "react";
@@ -75,7 +81,12 @@ const Book = () => {
             <div className="flex justify-center items-start shrink-0 self-start max-[1200px]:static sticky top-6">
               <div className="w-full">
                 <div className="w-full flex justify-center items-center">
-                  <Image src={getFile(book.image)} alt={book.name} width={270} height={330}/>
+                  <Image
+                    src={getFile(book.image)}
+                    alt={book.name}
+                    width={270}
+                    height={330}
+                  />
                 </div>
 
                 <div className="mt-6 space-y-3 flex flex-col">
@@ -95,16 +106,28 @@ const Book = () => {
                   >
                     {t("library.downloadPdf")}
                   </Button>
+                  <Button
+                    size="lg"
+                    variant={"ghost"}
+                    startContent={<HeartPlus className="shrink-0" />}
+                    onPress={() => {}}
+                  >
+                    {"В избранное"}
+                  </Button>
                 </div>
 
                 <div className="mt-6 p-4 rounded-xl space-y-3 border theme-border">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-5 h-5 shrink-0 theme-text-muted" />
-                    <span className="theme-text-muted text-sm">{t("library.published", { date: book.released })}</span>
+                    <span className="theme-text-muted text-sm">
+                      {t("library.published", { date: book.released })}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MessageSquare className="w-5 h-5 shrink-0 theme-text-muted" />
-                    <span className="theme-text-muted text-sm">{t("common.reviewsCount", { count: book.reviews_count })}</span>
+                    <span className="theme-text-muted text-sm">
+                      {t("common.reviewsCount", { count: book.reviews_count })}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -121,14 +144,20 @@ const Book = () => {
                 <div className="flex items-center gap-6 mb-8">
                   <div className="flex items-center gap-2">
                     <Rating rating={book.rating_avg ?? 0} />
-                    <span className="theme-text text-2xl font-bold ml-2">{book.rating_avg ?? 0}</span>
+                    <span className="theme-text text-2xl font-bold ml-2">
+                      {book.rating_avg ?? 0}
+                    </span>
                   </div>
-                  <span className="theme-text-muted">({t("common.ratingsCount", { count: book.reviews_count })})</span>
+                  <span className="theme-text-muted">
+                    ({t("common.ratingsCount", { count: book.reviews_count })})
+                  </span>
                 </div>
               </div>
               <Divider className="theme-border mb-0" />
               <div className="pt-6">
-                <h2 className="theme-text text-2xl font-bold mb-4 max-sm:text-xl">{t("library.aboutBook")}</h2>
+                <h2 className="theme-text text-2xl font-bold mb-4 max-sm:text-xl">
+                  {t("library.aboutBook")}
+                </h2>
                 <p className="theme-text-muted leading-relaxed text-lg max-sm:text-medium">
                   {book.description}
                 </p>
@@ -136,7 +165,11 @@ const Book = () => {
               <Divider className="theme-border mb-0" />
 
               <div className="pt-8">
-                <PostReview bookId={book.id} reviews={book.reviews} onSuccess={() => mutate()} />
+                <PostReview
+                  bookId={book.id}
+                  reviews={book.reviews}
+                  onSuccess={() => mutate()}
+                />
               </div>
             </div>
           </div>

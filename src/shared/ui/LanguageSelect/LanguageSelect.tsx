@@ -102,19 +102,6 @@ export function LanguageSelect({ compact = false, className }: Props) {
             >
               {activeOption.flag}
             </span>
-
-            <span className="min-w-0">
-              <span
-                className={cn(
-                  "block truncate text-sm font-medium",
-                  compact && "text-xs tracking-[0.18em]",
-                )}
-              >
-                {compact
-                  ? activeOption.shortLabel
-                  : t(`locales.${activeOption.code}`)}
-              </span>
-            </span>
           </span>
 
           <ChevronDown

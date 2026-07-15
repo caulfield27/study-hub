@@ -202,7 +202,7 @@ export const PasswordForm = () => {
             isLoading={submitting}
             isDisabled={submitting || !canSubmit}
           >
-            {t("common.submit")}
+            {t("common.save")}
           </Button>
         </Form>
       </CardBody>

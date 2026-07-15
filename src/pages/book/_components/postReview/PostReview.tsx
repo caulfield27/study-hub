@@ -1,7 +1,6 @@
 import { useGlobalStore } from "@/shared/store";
 import type { Props } from "./PostReview.types";
 import { Alert } from "@heroui/alert";
-import { Link } from "react-router";
 import { ControlledRating, Rating } from "@/shared/ui/Rating/Rating";
 import { useState } from "react";
 import { Button } from "@heroui/button";
@@ -17,6 +16,7 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
   // zustand store states
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const user = useGlobalStore((state) => state.user);
+  const setIsAuthModalopen = useGlobalStore((state) => state.setAuthModalOpen);
 
   // locale states
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -71,7 +71,15 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
           <div className="flex items-center justify-center w-full">
             <Alert
               color="warning"
-              endContent={<Link to={"/auth"}>{t("common.login")}</Link>}
+              endContent={
+                <Button
+                  variant="light"
+                  color="primary"
+                  onPress={() => setIsAuthModalopen(true)}
+                >
+                  {t("common.login")}
+                </Button>
+              }
               description={t("library.loginToReview")}
               variant="flat"
             />
@@ -103,11 +111,15 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
           </div>
         ) : (
           <>
-            <h3 className="theme-text text-lg font-semibold mb-4">{t("library.shareThoughts")}</h3>
+            <h3 className="theme-text text-lg font-semibold mb-4">
+              {t("library.shareThoughts")}
+            </h3>
 
             <div className="space-y-4">
               <div>
-                <label className="theme-text-muted block text-sm font-medium mb-2">{t("library.yourRating")}</label>
+                <label className="theme-text-muted block text-sm font-medium mb-2">
+                  {t("library.yourRating")}
+                </label>
                 <ControlledRating
                   value={newRating}
                   onChange={(rating) => setNewRating(rating)}
@@ -116,7 +128,9 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
               </div>
 
               <div>
-                <label className="theme-text-muted block text-sm font-medium mb-2">{t("library.yourReview")}</label>
+                <label className="theme-text-muted block text-sm font-medium mb-2">
+                  {t("library.yourReview")}
+                </label>
                 <textarea
                   value={newReview}
                   onChange={(e) => setNewReview(e.target.value)}
@@ -145,9 +159,7 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
       <div className="space-y-4">
         {reviews.length === 0 ? (
           <div className="text-center py-12">
-            <p className="theme-text-muted text-lg">
-              {t("library.noReviews")}
-            </p>
+            <p className="theme-text-muted text-lg">{t("library.noReviews")}</p>
           </div>
         ) : (
           reviews.map((review) => (
@@ -160,12 +172,18 @@ export const PostReview = ({ bookId, reviews, onSuccess }: Props) => {
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h4 className="theme-text font-semibold">{review.username}</h4>
-                      <p className="theme-text-muted text-sm">{formatDate(review.created_at, locale, t)}</p>
+                      <h4 className="theme-text font-semibold">
+                        {review.username}
+                      </h4>
+                      <p className="theme-text-muted text-sm">
+                        {formatDate(review.created_at, locale, t)}
+                      </p>
                     </div>
                     <Rating rating={review.rating} />
                   </div>
-                  <p className="theme-text-muted leading-relaxed">{review.comment}</p>
+                  <p className="theme-text-muted leading-relaxed">
+                    {review.comment}
+                  </p>
                 </div>
               </div>
             </div>

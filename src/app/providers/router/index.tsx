@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import Layout from "../../layout/layout";
 import {
-  Auth,
   Book,
   Home,
   Library,
@@ -12,7 +11,6 @@ import {
   VideoCourseDetails,
   VideoCourses,
 } from "../../lazy";
-import { GuestRoutes } from "../accessProviders/GuestRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -54,15 +52,7 @@ export const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile/>
-      },
-      {
-        path: "/auth",
-        element: (
-          <GuestRoutes>
-            <Auth />
-          </GuestRoutes>
-        ),
-      },
+      }
     ],
   },
 ]);

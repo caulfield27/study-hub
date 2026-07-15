@@ -2,11 +2,10 @@ import { UserRound } from "lucide-react";
 import { motion } from "framer-motion";
 import { PageHeader } from "@/shared/ui/PageHeader/PageHeader";
 import { useI18n } from "@/shared/i18n";
-import { AccountForm, PasswordForm, Preferences } from "./_components";
+import { AccountForm, PasswordForm } from "./_components";
 import { useGlobalStore } from "@/shared/store";
 import { AccountFormSkeleton } from "@/shared/skeletons/profile/AccountFormSkeleton";
 import { PasswordFormSkeleton } from "@/shared/skeletons/profile/PasswordFormSkeleton";
-import { PreferencesSkeleton } from "@/shared/skeletons/profile/PreferencesSkeleton";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -54,23 +53,19 @@ function Profile() {
           <>
             <AccountFormSkeleton />
             <PasswordFormSkeleton />
-            <PreferencesSkeleton />
           </>
         ) : (
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="flex flex-col gap-6"
+            className="w-full flex flex-row gap-8"
           >
-            <motion.div variants={itemVariants}>
+            <motion.div className="w-1/2" variants={itemVariants}>
               <AccountForm />
             </motion.div>
-            <motion.div variants={itemVariants}>
+            <motion.div className="w-1/2" variants={itemVariants}>
               <PasswordForm />
-            </motion.div>
-            <motion.div variants={itemVariants}>
-              <Preferences />
             </motion.div>
           </motion.div>
         )}

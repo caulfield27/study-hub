@@ -40,6 +40,7 @@ function VideoCourseDetails() {
     mutate,
   } = useSwr<ICourse>([swrKey, "public"], api.sendRequest);
 
+  const setAuthModalOpen = useGlobalStore((state) => state.setAuthModalOpen);
   const [activeLessonId, setActiveLessonId] = useState(
     course?.lessons[0]?.path ?? "",
   );
@@ -225,7 +226,15 @@ function VideoCourseDetails() {
             <Alert
               className="max-w-162.5 max-sm:max-w-full"
               color="warning"
-              endContent={<Link to={"/auth"}>{t("common.login")}</Link>}
+              endContent={
+                <Button
+                  variant="light"
+                  color="primary"
+                  onPress={() => setAuthModalOpen(true)}
+                >
+                  {t("common.login")}
+                </Button>
+              }
               description={t("common.courseUnavailable")}
               variant="flat"
             />

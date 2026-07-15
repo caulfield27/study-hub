@@ -1,4 +1,5 @@
 export const getFile = (src: string) => {
+  if(!src) return src;
   return (import.meta.env?.VITE_BASE_CLAUDFLARE_MEDIA_PATH ?? "")+src;
 };
 

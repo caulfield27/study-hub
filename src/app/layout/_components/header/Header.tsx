@@ -12,6 +12,7 @@ import { ProfileDropdown } from "../profileDropdown/ProfileDropdown";
 import { authedNavLinks } from "../../nav-links.constants";
 import { HeaderNav } from "./HeaderNav";
 import { HeaderMobileNav } from "./HeaderMobileNav";
+import { HeaderSearch } from "./HeaderSearch";
 
 export function Header() {
   const { t } = useI18n();
@@ -19,11 +20,12 @@ export function Header() {
   const navigate = useNavigate();
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const meLoading = useGlobalStore((state) => state.meLoading);
+  const setAuthModalOpen = useGlobalStore((state) => state.setAuthModalOpen);
 
   return (
     <header className="sticky top-0 z-40 w-full max-sm:hidden theme-surface-soft border-b theme-border">
-      <div className="flex items-center justify-between gap-4 px-6 py-3">
-        <div className="flex justify-center items-center gap-4">
+      <div className="flex items-center gap-4 px-6 py-3">
+        <div className="flex justify-center items-center gap-4 shrink-0">
           <div
             role="button"
             className="cursor-pointer shrink-0"
@@ -40,14 +42,18 @@ export function Header() {
 
         <HeaderNav
           links={authedNavLinks}
-          className="hidden lg:flex flex-1 pl-4"
+          className="hidden lg:flex shrink-0 pl-2"
         />
+
+        <div className="flex-1 min-w-0 flex justify-center px-2 sm:justify-start sm:px-0">
+          <HeaderSearch className="w-full max-w-md" />
+        </div>
 
         <div className="flex items-center gap-2 shrink-0">
           <LanguageSelect compact />
           <ThemeToggle compact />
           {!isAuthed ? (
-            <Button onPress={() => navigate("/auth")} color="primary">
+            <Button onPress={() => setAuthModalOpen(true)} color="primary">
               {t("mobileHeader.signIn")}
             </Button>
           ) : meLoading ? (

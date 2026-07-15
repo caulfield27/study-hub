@@ -170,7 +170,7 @@ export const AccountForm = () => {
             isLoading={submitting}
             isDisabled={submitting}
           >
-            {t("common.submit")}
+            {t("common.save")}
           </Button>
         </Form>
       </CardBody>

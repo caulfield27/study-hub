@@ -16,7 +16,7 @@ export const Book = ({ book, isScrollable }: Props) => {
   return (
     <Card
       className={cn(
-        "theme-surface w-[270px] shrink-0 border",
+        "theme-surface w-67.5 shrink-0 border",
         !isScrollable && "max-sm:w-full",
         isScrollable && "shadow-none!",
       )}

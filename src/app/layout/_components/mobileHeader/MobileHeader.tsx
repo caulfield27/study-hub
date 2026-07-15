@@ -15,7 +15,7 @@ export const MobileHeader = () => {
   const navigate = useNavigate();
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const meLoading = useGlobalStore((state) => state.meLoading);
-  // const { pathname } = useLocation();
+  const setAuthModalOpen = useGlobalStore((state) => state.setAuthModalOpen);
 
   return (
     <header className="w-full p-4 flex flex-row justify-between items-center gap-3">
@@ -33,7 +33,7 @@ export const MobileHeader = () => {
       <div className="flex flex-row gap-2 justify-center items-center">
         <GlobalSearch />
         {!isAuthed ? (
-          <Button onPress={() => navigate("/auth")} color="primary">
+          <Button onPress={() => setAuthModalOpen(true)} color="primary">
             {t("mobileHeader.signIn")}
           </Button>
         ) : meLoading ? (

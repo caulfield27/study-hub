@@ -3,7 +3,6 @@ import { Alert } from "@heroui/alert";
 import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
 import { Card } from "@heroui/card";
-import { Link } from "react-router";
 import { Send } from "lucide-react";
 import { Rating, ControlledRating } from "@/shared/ui/Rating/Rating";
 import { useGlobalStore } from "@/shared/store";
@@ -21,8 +20,11 @@ interface Props {
 
 export const CourseReviews = ({ course_id, reviews, onSuccess }: Props) => {
   const { locale, t } = useI18n();
+
   const isAuthed = useGlobalStore((state) => state.isAuthed);
   const user = useGlobalStore((state) => state.user);
+  const setAuthModalOpen = useGlobalStore((state) => state.setAuthModalOpen);
+
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -78,7 +80,15 @@ export const CourseReviews = ({ course_id, reviews, onSuccess }: Props) => {
             <Alert
               color="warning"
               description={t("courses.loginToReview")}
-              endContent={<Link to="/auth">{t("common.login")}</Link>}
+              endContent={
+                <Button
+                  variant="light"
+                  color="primary"
+                  onPress={() => setAuthModalOpen(true)}
+                >
+                  {t("common.login")}
+                </Button>
+              }
               variant="flat"
             />
           )}
@@ -151,7 +161,10 @@ export const CourseReviews = ({ course_id, reviews, onSuccess }: Props) => {
           </Card>
         ) : (
           reviews.map((review) => (
-            <Card key={review.id} className="theme-surface border p-5 max-sm:py-4 max-sm:px-3">
+            <Card
+              key={review.id}
+              className="theme-surface border p-5 max-sm:py-4 max-sm:px-3"
+            >
               <div className="flex gap-4">
                 <Avatar color="primary" name={review.username} />
                 <div className="min-w-0 flex-1 space-y-2">

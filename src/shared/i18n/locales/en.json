@@ -8,6 +8,7 @@
     "submit": "Submit",
     "reset": "Reset",
     "free": "Free",
+    "save": "Save",
     "reviewsCount": "{{count}} reviews",
     "ratingsCount": "{{count}} ratings",
     "lessonsCount": "{{count}} lessons",
