@@ -6,4 +6,7 @@ export interface Props {
   onClose: () => void;
 }
 
-export type PostData = Omit<IBook, 'id' | 'rating_avg' | 'reviews_count'>;
+export type PostData = Omit<
+  IBook,
+  "id" | "rating_avg" | "reviews_count" | "image" | "pdf"
+> & { image: File | null; pdf: File | null };

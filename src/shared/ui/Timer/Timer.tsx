@@ -35,7 +35,7 @@ export function Timer({ mintes, seconds, onTimeOver, startTimerTrigger }: Props)
       ${
         sec.current < 31 && min.current === 0
           ? "text-red-500 border-red-500"
-          : "border-white"
+          : "border-(--foreground)"
       }
     `}
     >

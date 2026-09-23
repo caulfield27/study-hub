@@ -1,25 +1,31 @@
 import { api } from "@/shared/api/api.handlers";
 import { apiRoutes } from "@/shared/api/api.routes";
-import { useGlobalStore } from "@/shared/store";
 import { Alert } from "@heroui/alert";
 import { Button } from "@heroui/button";
 import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";
 import { addToast } from "@heroui/toast";
 import { Eye, EyeOff } from "lucide-react";
-import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router";
+import {
+  useState,
+  type Dispatch,
+  type FormEvent,
+  type SetStateAction,
+} from "react";
 import { useI18n } from "@/shared/i18n";
 
-export const Login = () => {
+export const Register = ({
+  setAuthType,
+}: {
+  setAuthType: Dispatch<SetStateAction<string>>;
+}) => {
   const { t } = useI18n();
-  const setIsAuthed = useGlobalStore((state) => state.setIsAuthed);
-  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [requestError, setRequestError] = useState<string | null>(null);
   const [payload, setPayload] = useState({
     username: "",
+    email: "",
     password: "",
   });
 
@@ -27,16 +33,17 @@ export const Login = () => {
     e.preventDefault();
     try {
       setSubmitting(true);
-      const result = await api.sendRequest([{
-        method: "post",
-        url: apiRoutes.login,
-        data: JSON.stringify(payload),
-        headers: { "Content-Type": "application/json" },
-      }, 'public']);
-      localStorage.setItem("token", result.data);
-      addToast({ color: "success", title: t("auth.loginSuccess") });
-      setIsAuthed(true);
-      navigate(-1);
+      await api.sendRequest([
+        {
+          method: "post",
+          url: apiRoutes.register,
+          data: JSON.stringify(payload),
+          headers: { "Content-Type": "application/json" },
+        },
+        "public",
+      ]);
+      addToast({ color: "success", title: t("auth.registerSuccess") });
+      setAuthType("login");
     } catch (e: any) {
       setRequestError(e?.response?.data?.message ?? t("auth.unknownError"));
     } finally {
@@ -49,12 +56,11 @@ export const Login = () => {
       onSubmit={handleSubmit}
       onReset={() => {
         setRequestError(null);
-        setPayload({ username: "", password: "" });
+        setPayload({ username: "", password: "", email: "" });
       }}
       className="flex flex-col gap-6"
     >
       <Input
-        color="secondary"
         isRequired
         errorMessage={t("auth.required")}
         label={t("auth.name")}
@@ -62,9 +68,41 @@ export const Login = () => {
         name="username"
         placeholder={t("auth.enterName")}
         type="text"
+        color="secondary"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, username: e.target.value }))
         }
+        classNames={{
+          input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+          inputWrapper: [
+            "bg-(--surface)",
+            "border border-(--border-color)",
+            "focus-within:ring-2 focus-within:ring-(--primary-color)",
+          ],
+          label: "text-(--foreground)",
+        }}
+      />
+      <Input
+        isRequired
+        errorMessage={t("auth.invalidEmail")}
+        label={t("auth.email")}
+        labelPlacement="outside"
+        name="email"
+        placeholder={t("auth.enterEmail")}
+        type="email"
+        color="secondary"
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setPayload((prev) => ({ ...prev, email: e.target.value }))
+        }
+        classNames={{
+          input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+          inputWrapper: [
+            "bg-(--surface)",
+            "border border-(--border-color)",
+            "focus-within:ring-2 focus-within:ring-(--primary-color)",
+          ],
+          label: "text-(--foreground)",
+        }}
       />
       <Input
         isRequired
@@ -91,6 +129,15 @@ export const Login = () => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPayload((prev) => ({ ...prev, password: e.target.value }))
         }
+        classNames={{
+          input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+          inputWrapper: [
+            "bg-(--surface)",
+            "border border-(--border-color)",
+            "focus-within:ring-2 focus-within:ring-(--primary-color)",
+          ],
+          label: "text-(--foreground)",
+        }}
       />
       {requestError ? (
         <Alert
@@ -112,7 +159,7 @@ export const Login = () => {
         type="submit"
         color="primary"
       >
-        {t("common.login")}
+        {t("auth.registerButton")}
       </Button>
     </Form>
   );

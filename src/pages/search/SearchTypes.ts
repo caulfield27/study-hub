@@ -1,9 +1,10 @@
 import type { IBook, IQuizResponse } from "@/shared/types/types";
+import type { ICourse } from "../videoCourses/VideoCoursesTypes";
 
 export interface ISearchData {
   books: IBook[];
   quizes: IQuizResponse[];
-  courses: unknown[];
+  courses: ICourse[];
 }
 
 export interface ISearchDataResponse{

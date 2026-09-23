@@ -1,17 +1,16 @@
 import { createBrowserRouter } from "react-router";
 import Layout from "../../layout/layout";
 import {
-  Auth,
   Book,
   Home,
   Library,
+  Profile,
   Quiz,
   Quizes,
   Search,
   VideoCourseDetails,
   VideoCourses,
 } from "../../lazy";
-import { GuestRoutes } from "../accessProviders/GuestRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -51,13 +50,9 @@ export const router = createBrowserRouter([
         element: <Search/>
       },
       {
-        path: "/auth",
-        element: (
-          <GuestRoutes>
-            <Auth />
-          </GuestRoutes>
-        ),
-      },
+        path: "/profile",
+        element: <Profile/>
+      }
     ],
   },
 ]);

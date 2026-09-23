@@ -10,9 +10,11 @@ export const SearchNotFound = ({ query }: Props) => {
   return (
     <div className="h-full flex items-center justify-center p-4">
       <div className="text-center">
-        <Search className="w-16 h-16 text-neutral-50 mx-auto mb-4" />
-        <h2 className="text-2xl font-semibold text-neutral-300 mb-2">{t("search.noResults")}</h2>
-        <p className="text-gray-400">
+        <Search className="w-16 h-16 text-(--muted-foreground) mx-auto mb-4" />
+        <h2 className="text-2xl font-semibold text-(--foreground) mb-2">
+          {t("search.noResults")}
+        </h2>
+        <p className="text-(--muted-foreground)">
           {t("search.noResultsDescription", { query })}
         </p>
       </div>

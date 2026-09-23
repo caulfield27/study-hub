@@ -38,7 +38,7 @@ export const Progress = ({ value, maxPoint, handleShowResult }: Props) => {
         >
           {t("quizzes.points", { value, maxPoint })}
         </Chip>
-        <Button variant="light" color="secondary" onPress={handleShowResult}>
+        <Button variant="light" className="text-white!" onPress={handleShowResult}>
           {t("quizzes.showAnswers")}
         </Button>
       </CardFooter>

@@ -6,11 +6,11 @@ import { Rating } from "@/shared/ui/Rating/Rating";
 import { Progress } from "./_components";
 import { Modal, ModalContent } from "@heroui/modal";
 import { Button } from "@heroui/button";
-const success = "/success.png";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CircleX } from "lucide-react";
 import { useNavigate } from "react-router";
 import type { Props } from "./Result.types";
 import { useI18n } from "@/shared/i18n";
+import { CircleCheckBig } from "lucide-react";
 
 export function Result({ result, quiz, userSelects }: Props) {
   const { t } = useI18n();
@@ -24,18 +24,24 @@ export function Result({ result, quiz, userSelects }: Props) {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         size={window.innerWidth <= 768 ? "full" : "xl"}
+        classNames={{
+          backdrop: "z-[100]",
+          wrapper: "z-[101]",
+        }}
       >
         <ModalContent>
           <div className="p-4">
             <div className="h-[430px] flex flex-col gap-6 overflow-y-scroll overflow-x-hidden mt-5 max-md:h-screen max-md:overflow-y-auto max-md:pb-[50px]">
               {quiz.questions.map((question, ind) => {
                 const [questionText, questionCode] = splitQuestion(
-                  question.question
+                  question.question,
                 );
                 return (
                   <div className="flex flex-col gap-3" key={question.id}>
-                    <div className="text-[18px] font-bold">{t("quizzes.questionWithNumber", { id: question.id })}</div>
-                    <div className="w-full flex flex-col justify-center text-white font-semibold">
+                    <div className="text-[18px] font-bold">
+                      {t("quizzes.questionWithNumber", { id: question.id })}
+                    </div>
+                    <div className="w-full flex flex-col justify-center text-(--foreground) font-semibold">
                       <p className="m-0">{questionText}</p>
                       {questionCode ? (
                         <SyntaxHighlighter
@@ -54,28 +60,23 @@ export function Result({ result, quiz, userSelects }: Props) {
                         return (
                           <div
                             key={option}
-                            className={`rounded-lg flex flex-row items-center w-full p-2 pl-2 ${
+                            className={`rounded-lg gap-1.5 flex flex-row items-center w-full p-2 pl-2 ${
                               isCorrect
                                 ? "bg-[#5ec98e] text-white"
                                 : isSelected
-                                ? "bg-[#fa6579] text-white"
-                                : "bg-[#404040]"
+                                  ? "bg-[#fa6579] text-white"
+                                  : "bg-(--surface-strong)"
                             }`}
                           >
                             {userSelects[ind] === question.correct &&
-                              userSelects[ind] === option && (
-                                <img
-                                  src={success}
-                                  alt="success icon"
-                                  className="w-5 h-5 mr-2 block"
-                                />
-                              )}
+                              userSelects[ind] === option && <CircleCheckBig />}
+                            {isSelected && !isCorrect && <CircleX />}
                             <div className="w-full flex flex-row justify-between items-center">
                               <div className="max-w-[300px]">{option}</div>
                               <span
                                 className={`${
                                   isSelected
-                                    ? "bg-[#404040] px-2 py-1 text-white rounded"
+                                    ? "bg-(--surface-soft) px-2 py-1 text-(--foreground) rounded"
                                     : "hidden"
                                 }`}
                               >
@@ -100,13 +101,15 @@ export function Result({ result, quiz, userSelects }: Props) {
             <img src={quiz.img} alt={quiz.name} className="w-[120px]" />
 
             <div className="flex flex-col gap-2">
-              <span className="text-white flex items-center gap-1">
+              <span className="text-(--foreground) flex items-center gap-1">
                 {t("quizzes.resultTitle")}
                 <span className="font-semibold">{quiz.name}</span>
               </span>
 
               <div className="flex items-center justify-center gap-1">
-                <span className="text-white">{t("quizzes.complexity")}</span>
+                <span className="text-(--foreground)">
+                  {t("quizzes.complexity")}
+                </span>
                 <Rating rating={quiz.complexity} />
               </div>
             </div>

@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { isLink } from "@/shared/utils/utils";
 import type { IPostBookValidation } from "../../Library.types";
 import { api } from "@/shared/api/api.handlers";
 import { apiRoutes } from "@/shared/api/api.routes";
@@ -19,8 +18,8 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
   const [postData, setPostData] = useState<PostData>({
     name: "",
     author: "",
-    image: "",
-    pdf: "",
+    image: null,
+    pdf: null,
     released: "",
     description: "",
   });
@@ -66,19 +65,13 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
   // event handlers
   function handleDataChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    if (name === "image") {
+    if (name === "image" || name === "pdf") {
       const file = e.target.files?.[0];
       if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          if (reader.result) {
-            setPostData((prev) => ({
-              ...prev,
-              image: typeof reader.result === "string" ? reader.result : "",
-            }));
-          }
-        };
+        setPostData((prev) => ({
+          ...prev,
+          [name]: file,
+        }));
       }
     } else {
       setPostData({ ...postData, [name]: value });
@@ -95,16 +88,6 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
           message: t("auth.required"),
         },
       }));
-    } else if (name === "pdf") {
-      if (!isLink(value)) {
-        setValidation((prev) => ({
-          ...prev,
-          [name]: {
-            isValid: false,
-            message: t("library.invalidLink"),
-          },
-        }));
-      }
     } else if (name === "rating") {
       if (Number(value) > 5) {
         setValidation((prev) => ({
@@ -127,15 +110,15 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
       const formData = new FormData();
       formData.append("name", postData.name);
       formData.append("author", postData.author);
-      formData.append("image", postData.image);
-      formData.append("pdf", postData.pdf);
+      formData.append("image", postData.image!);
+      formData.append("pdf", postData.pdf!);
       formData.append("released", postData.released);
       formData.append("description", postData.description);
 
       const result = await api.sendRequest([
         {
           method: "post",
-          url: apiRoutes.books.post,
+          url: apiRoutes.suggestions,
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
@@ -158,7 +141,15 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
   }
 
   return (
-    <Modal onClose={onClose} isOpen={isOpen} size={window.innerWidth <= 768 ? "full" : "xl"}>
+    <Modal
+      classNames={{
+        backdrop: "z-[100]",
+        wrapper: "z-[101]",
+      }}
+      onClose={onClose}
+      isOpen={isOpen}
+      size={window.innerWidth <= 768 ? "full" : "xl"}
+    >
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1">{t("library.addBookTitle")}</ModalHeader>
         <ModalBody className="max-md:overflow-scroll max-md:pb-8">
@@ -187,6 +178,15 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
                 })
               }
               onBlur={handleBlur}
+              classNames={{
+                input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+                inputWrapper: [
+                  "bg-(--surface)",
+                  "border border-(--border-color)",
+                  "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                ],
+                label: "text-(--foreground)",
+              }}
             />
             <Input
               color="secondary"
@@ -207,6 +207,15 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
                 })
               }
               onBlur={handleBlur}
+              classNames={{
+                input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+                inputWrapper: [
+                  "bg-(--surface)",
+                  "border border-(--border-color)",
+                  "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                ],
+                label: "text-(--foreground)",
+              }}
             />
             <Input
               name="image"
@@ -216,26 +225,33 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
               isInvalid={!validation.image.isValid}
               errorMessage={validation.image.message}
               onChange={handleDataChange}
+              classNames={{
+                input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+                inputWrapper: [
+                  "bg-(--surface)",
+                  "border border-(--border-color)",
+                  "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                ],
+                label: "text-(--foreground)",
+              }}
             />
             <Input
-              value={postData.pdf}
               name="pdf"
               label={t("library.pdfLink")}
               color="secondary"
               isInvalid={!validation.pdf.isValid}
               errorMessage={validation.pdf.message}
-              type="url"
+              type="file"
               onChange={handleDataChange}
-              onFocus={() =>
-                setValidation({
-                  ...validation,
-                  pdf: {
-                    isValid: true,
-                    message: "",
-                  },
-                })
-              }
-              onBlur={handleBlur}
+              classNames={{
+                input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+                inputWrapper: [
+                  "bg-(--surface)",
+                  "border border-(--border-color)",
+                  "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                ],
+                label: "text-(--foreground)",
+              }}
             />
             <DateInput
               onChange={(value) =>
@@ -249,6 +265,15 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
               }
               color="secondary"
               label={t("library.releaseDate")}
+              classNames={{
+                input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+                inputWrapper: [
+                  "bg-(--surface)",
+                  "border border-(--border-color)",
+                  "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                ],
+                label: "text-(--foreground)",
+              }}
             />
             <Textarea
               value={postData.description}
@@ -269,19 +294,25 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
                 })
               }
               onBlur={handleBlur}
+              classNames={{
+                input: "placeholder:text-(--muted-foreground) text-(--foreground)",
+                inputWrapper: [
+                  "bg-(--surface)",
+                  "border border-(--border-color)",
+                  "focus-within:ring-2 focus-within:ring-(--primary-color)",
+                ],
+                label: "text-(--foreground)",
+              }}
             />
-            <div className="flex flex-col gap-2">
-              <ReCAPTCHA ref={captchaRef} sitekey={import.meta.env.VITE_BASE_RECAPTCHA_SITE_KEY!} />
-
-              <Button
-                isDisabled={!readyToSend() || loading}
-                type="submit"
-                color="primary"
-                variant="ghost"
-              >
-                {loading ? t("library.inProgress") : t("common.submit")}
-              </Button>
-            </div>
+            <ReCAPTCHA ref={captchaRef} sitekey={import.meta.env.VITE_BASE_RECAPTCHA_SITE_KEY!} />
+            <Button
+              isDisabled={!readyToSend() || loading}
+              type="submit"
+              color="primary"
+              variant="ghost"
+            >
+              {loading ? t("library.inProgress") : t("common.submit")}
+            </Button>
           </form>
         </ModalBody>
       </ModalContent>

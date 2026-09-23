@@ -1,7 +1,13 @@
 export const apiRoutes = {
+  suggestions: '/books/suggestions',
   books: {
     post: "/books",
-    get: (search: string, page: number, pageSize: number, sort_by_rating: boolean = false) =>
+    get: (
+      search: string,
+      page: number,
+      pageSize: number,
+      sort_by_rating: boolean = false,
+    ) =>
       `/books?page=${page}&pageSize=${pageSize}${
         search ? `&search=${search}` : ""
       }${sort_by_rating ? "&sort_by_rating=true" : ""}`,
@@ -13,8 +19,16 @@ export const apiRoutes = {
     getById: (id: string) => `/quizes/${id}`,
     getRecommended: "/quizes?recommended=true",
   },
+  courses: {
+    get: (query: string) => `/courses${query}`,
+    getBySlug: (slug: string) => `/courses/${slug}`,
+    getCategories: "/courses/categories",
+    postReview: (id: number) => `/courses/review/${id}`,
+  },
   login: "/login",
   register: "/register",
   me: "/me",
+  updateMe: "/me",
+  changePassword: "/me/password",
   search: (query: string) => `/search?q=${query}`,
 };

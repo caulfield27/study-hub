@@ -3,8 +3,8 @@ import type { LucideIcon } from "lucide-react";
 
 interface Props {
   label: string;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   Icon: LucideIcon;
 }
 
@@ -22,8 +22,12 @@ export const PageHeader = ({ label, title, description, Icon }: Props) => {
         </div>
       </Chip>
       <div className="space-y-2">
-        <h1 className="theme-text text-3xl font-bold md:text-4xl">{title}</h1>
-        <p className="theme-text-muted max-w-3xl">{description}</p>
+        {title !== undefined && (
+          <h1 className="theme-text text-3xl font-bold md:text-4xl">{title}</h1>
+        )}
+        {description !== undefined && (
+          <p className="theme-text-muted max-w-3xl">{description}</p>
+        )}
       </div>
     </div>
   );

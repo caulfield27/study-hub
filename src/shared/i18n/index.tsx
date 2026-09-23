@@ -98,18 +98,6 @@ export function getLocalizedCourseLanguageLabel(language: Locale, t: (key: strin
   return t(`locales.${language}`);
 }
 
-export function getLocalizedCategoryLabel(category: string, t: (key: string, params?: TranslateParams) => string) {
-  const map: Record<string, string> = {
-    Frontend: "courses.frontend",
-    Backend: "courses.backend",
-    DevOps: "courses.devops",
-    Mobile: "courses.mobile",
-    "Data Science": "courses.dataScience",
-    Career: "courses.career",
-  };
-
-  return map[category] ? t(map[category]) : category;
-}
 
 export function formatRelativeDate(
   dateString: string,

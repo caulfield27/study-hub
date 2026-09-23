@@ -12,5 +12,4 @@ export function logout() {
   const { setIsAuthed } = useGlobalStore.getState();
   localStorage.removeItem("token");
   setIsAuthed(false);
-  window.location.href = "/auth";
 }

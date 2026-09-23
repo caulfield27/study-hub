@@ -14,7 +14,7 @@ function Home() {
       <section className="relative flex items-center">
         <div className="relative w-full">
           <div className="w-full">
-            <div className="flex flex-row max-[1600px]:flex-col gap-12 items-start justify-between">
+            <div className="flex flex-row max-md:flex-col gap-12 items-start justify-between">
               <div className="space-y-8 w-full">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-(--primary-color)/10 border border-(--primary-color)/20 rounded-full">
                   <Sparkles className="w-4 h-4 text-(--primary-color)" />
@@ -49,7 +49,7 @@ function Home() {
                   <Button
                     onPress={() => navigate("quizes")}
                     className="max-sm:w-full"
-                    variant="shadow"
+                    variant="flat"
                     size={"lg"}
                     endContent={<GraduationCap />}
                   >
@@ -89,7 +89,7 @@ function Home() {
               </div>
 
               <div className="w-full relative lg:block min-[1600px]:mt-24">
-                <div className="absolute inset-0 bg-linear-to-tr from-(--primary-color)/20 to-(--primary-color-dark)/20 rounded-3xl blur-3xl" />
+                <div className="absolute inset-0 rounded-3xl" />
                 <div className="relative">
                   <div className="relative rounded-2xl overflow-hidden border theme-border shadow-2xl shadow-black/20">
                     <img
@@ -97,7 +97,6 @@ function Home() {
                       alt="Developer coding on laptop with multiple screens"
                       className="w-full h-auto object-cover min-[1600px]:max-w-3xl"
                     />
-                    <div className="absolute inset-0" style={{ background: "linear-gradient(to top, var(--hero-overlay), transparent 55%)" }} />
                   </div>
 
                   <div className="theme-surface absolute -bottom-6 -left-6 max-sm:-bottom-2 max-sm:left-3 border rounded-xl p-4 max-sm:p-2.5 shadow-xl backdrop-blur-sm">
@@ -128,28 +127,8 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="flex flex-col gap-6">
-        <div className="w-full flex flex-row items-center justify-between">
-          <h2 className="theme-text text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight">
-            {t("home.popularBooks")}
-          </h2>
-          <Button size="lg" color="primary" onClick={() => navigate("/library")} variant="light">
-            {t("home.allBooks")}
-          </Button>
-        </div>
-        <PopularBooks />
-      </section>
-      <section className="flex flex-col gap-6">
-        <div className="w-full flex flex-row items-center justify-between">
-          <h2 className="theme-text text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight">
-            {t("home.recommendedQuizzes")}
-          </h2>
-          <Button size="lg" color="primary" onClick={() => navigate("/quizes")} variant="light">
-            {t("home.allQuizzes")}
-          </Button>
-        </div>
-        <RecomendedQuizes />
-      </section>
+      <PopularBooks/>
+      <RecomendedQuizes/>
     </div>
   );
 }

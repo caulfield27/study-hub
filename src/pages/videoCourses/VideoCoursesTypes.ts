@@ -1,19 +1,14 @@
 export type CourseLanguage = "en" | "ru" | "tg";
 
-export type CourseCategory =
-  | "Frontend"
-  | "Backend"
-  | "DevOps"
-  | "Mobile"
-  | "Data Science"
-  | "Career";
+export type CourseCategory = {
+  id: number;
+  name: string;
+}
 
 export interface ICourseLesson {
-  id: number;
-  title: string;
+  name: string;
   duration: string;
-  preview: string;
-  description: string;
+  path: string;
 }
 
 export interface ICourseReview {
@@ -24,34 +19,35 @@ export interface ICourseReview {
   created_at: string;
 }
 
+export interface ICoursesResponse{
+  data: ICourse[]
+}
+
 export interface ICourse {
   id: number;
   slug: string;
   poster: string;
   name: string;
   author: string;
-  authorRole: string;
   description: string;
-  shortDescription: string;
   reviews_count: number;
   rating_avg: number;
   language: CourseLanguage;
-  duration: number;
-  lessons_count: number;
+  duration: string;
   is_free: boolean;
   price: number | null;
   categories: CourseCategory[];
-  dateAdded: string;
-  popularity: number;
+  created_at: string;
   lessons: ICourseLesson[];
   reviews: ICourseReview[];
 }
 
-export type CourseSortKey = "popularity" | "rating" | "dateAdded";
+export type CourseSortKey = "popularity" | "rating" | "created_at";
 
 export interface CourseFiltersState {
-  categories: CourseCategory[];
-  price: "all" | "free" | "paid";
-  rating: "all" | "4" | "4.5";
-  language: "all" | CourseLanguage;
+  category: string[];
+  price: 'all' | 'free' | 'paid';
+  rating: number | 'all';
+  lang: 'all' | 'en' | 'ru';
+  sort: CourseSortKey;
 }

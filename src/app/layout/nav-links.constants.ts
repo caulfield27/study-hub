@@ -1,6 +1,6 @@
-import {House, BookOpenText, CircleQuestionMark, GraduationCap, type LucideIcon, LogIn} from 'lucide-react'
+import {House, BookOpenText, CircleQuestionMark, GraduationCap, type LucideIcon} from 'lucide-react'
 
-interface ILinks {
+export interface ILinks {
   path: string;
   labelKey: string;
   icon: LucideIcon;
@@ -49,10 +49,5 @@ export const publicNavLinks: ILinks[] = [
     path: "/video-courses",
     labelKey: "nav.videos",
     icon: GraduationCap,
-  },
-  {
-    path: "/auth",
-    labelKey: "nav.auth",
-    icon: LogIn
   }
 ];
