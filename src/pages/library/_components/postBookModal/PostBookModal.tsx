@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { isLink } from "@/shared/utils/utils";
 import type { IPostBookValidation } from "../../Library.types";
 import { api } from "@/shared/api/api.handlers";
@@ -11,8 +11,11 @@ import { DateInput } from "@heroui/date-input";
 import { addToast } from "@heroui/toast";
 import { useI18n } from "@/shared/i18n";
 
+import ReCAPTCHA from "react-google-recaptcha";
+
 export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
   const { t } = useI18n();
+  const captchaRef = useRef<ReCAPTCHA>(null);
   const [postData, setPostData] = useState<PostData>({
     name: "",
     author: "",
@@ -118,6 +121,8 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
+      console.log(captchaRef.current?.getValue());
+
       setLoading(true);
       const formData = new FormData();
       formData.append("name", postData.name);
@@ -127,8 +132,8 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
       formData.append("released", postData.released);
       formData.append("description", postData.description);
 
-      const result = await api.sendRequest(
-        [{
+      const result = await api.sendRequest([
+        {
           method: "post",
           url: apiRoutes.books.post,
           data: formData,
@@ -136,8 +141,8 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
             "Content-Type": "multipart/form-data",
           },
         },
-        "public"]
-      );
+        "public",
+      ]);
 
       addToast({
         color: "success",
@@ -153,11 +158,9 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
   }
 
   return (
-    <Modal onClose={onClose} isOpen={isOpen} size={window.innerWidth <= 768 ? 'full' : 'xl'}>
+    <Modal onClose={onClose} isOpen={isOpen} size={window.innerWidth <= 768 ? "full" : "xl"}>
       <ModalContent>
-        <ModalHeader className="flex flex-col gap-1">
-          {t("library.addBookTitle")}
-        </ModalHeader>
+        <ModalHeader className="flex flex-col gap-1">{t("library.addBookTitle")}</ModalHeader>
         <ModalBody className="max-md:overflow-scroll max-md:pb-8">
           <form
             className="
@@ -191,9 +194,7 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
               value={postData.author}
               name="author"
               placeholder={t("library.enterAuthorName")}
-              isInvalid={
-                !validation.author.isValid && !!validation.author.message
-              }
+              isInvalid={!validation.author.isValid && !!validation.author.message}
               errorMessage={validation.author.message}
               onChange={handleDataChange}
               onFocus={() =>
@@ -242,7 +243,7 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
                   ...prev,
                   released: `${value?.year}-${String(value?.day).padStart(
                     2,
-                    "0"
+                    "0",
                   )}-${String(value?.month).padStart(2, "0")}`,
                 }))
               }
@@ -269,14 +270,18 @@ export function PostBookModal({ onSuccess, isOpen, onClose }: Props) {
               }
               onBlur={handleBlur}
             />
-            <Button
-              isDisabled={!readyToSend() || loading}
-              type="submit"
-              color="primary"
-              variant="ghost"
-            >
-              {loading ? t("library.inProgress") : t("common.submit")}
-            </Button>
+            <div className="flex flex-col gap-2">
+              <ReCAPTCHA ref={captchaRef} sitekey={import.meta.env.VITE_BASE_RECAPTCHA_SITE_KEY!} />
+
+              <Button
+                isDisabled={!readyToSend() || loading}
+                type="submit"
+                color="primary"
+                variant="ghost"
+              >
+                {loading ? t("library.inProgress") : t("common.submit")}
+              </Button>
+            </div>
           </form>
         </ModalBody>
       </ModalContent>
